@@ -15,7 +15,7 @@
   justify-content: center;
   align-items: flex-start;
   min-height: 100vh;
-  padding: 40px 24px 24px;
+  padding: 56px 24px 24px;
 }
 
     .container {
@@ -820,7 +820,7 @@
   gap: 12px;
   flex-wrap: nowrap;
   white-space: nowrap;
-  width: max-content;
+  width: 100%;
   min-width: 0;
   margin-top: 2px;
 }
@@ -1471,9 +1471,11 @@
               ${createPosButton(note.id, posList, '감', 'active-excl')}
             </div>
 
-           ${createCheckLabel(note.id, 'checkWord', note.checkWord, '단어')}
-${createCheckLabel(note.id, 'checkMeaning', note.checkMeaning, '뜻')}
-${createCheckLabel(note.id, 'checkMemorized', note.checkMemorized, '외움')}
+         <div class="check-row">
+  ${createCheckLabel(note.id, 'checkWord', note.checkWord, '단어')}
+  ${createCheckLabel(note.id, 'checkMeaning', note.checkMeaning, '뜻')}
+  ${createCheckLabel(note.id, 'checkMemorized', note.checkMemorized, '외움')}
+</div>
 
 <div class="menu-wrap">
   <button class="menu-btn" data-menu-btn="${note.id}">⋯</button>
