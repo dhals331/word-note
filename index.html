@@ -292,9 +292,10 @@
     }
 
     .search-input {
-      padding: 12px 40px 12px 12px;
+      min-height: 48px;
+      padding: 10px 40px 10px 10px;
       border-radius: 10px;
-      font-size: 13px;
+      font-size: 12px;
       background: #fff;
     }
 
@@ -329,17 +330,18 @@
 
     .tool-chip,
     .tool-select {
-      min-height: 44px;
-      padding: 0 14px;
-      border: 1px solid #dfdfdf;
-      border-radius: 10px;
-      background: #fff;
-      font-size: 13px;
-      color: #333;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      white-space: nowrap;
+      min-height: 48px;
+      padding: 10px 12px;
+  border: 1px solid #d8d8d8;
+  border-radius: 12px;
+  background: #fff;
+  font-size: 12px;
+  color: #333;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  font-family: "바탕", Batang, serif;
     }
 
     .tool-chip label {
@@ -358,16 +360,16 @@
 
     .toolbar-delete-btn,
     .unlock-reset-btn {
-      min-height: 44px;
-      padding: 0 16px;
-      border-radius: 10px;
-      border: none;
-      background: #d85b5b;
-      color: #fff;
-      font-size: 13px;
-      font-family: "바탕", Batang, serif;
-      cursor: pointer;
-      white-space: nowrap;
+  min-height: 48px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: none;
+  background: #d85b5b;
+  color: #fff;
+  font-size: 12px;
+  font-family: "바탕", Batang, serif;
+  cursor: pointer;
+  white-space: nowrap;
     }
 
     .toolbar-delete-btn:hover,
@@ -702,11 +704,17 @@
   }
 
   .note-line {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-  }
+    display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "word word"
+    "meaning meaning"
+    "pos pos"
+    "checks menu";
+  column-gap: 10px;
+  row-gap: 12px;
+  align-items: center;
+}
 
   .toolbar-main {
     flex-wrap: wrap;
@@ -725,7 +733,7 @@
   }
 
   .delete-check-wrap {
-    justify-content: flex-start;
+    display: none;
   }
 
   .word-inline,
@@ -735,31 +743,49 @@
     gap: 4px;
   }
 
-  .word-area,
-  .note-line > div[data-load] {
-    width: 100%;
-  }
+  .word-area {
+  grid-area: word;
+  width: 100%;
+}
+
+.note-line > div[data-load] {
+  width: 100%;
+}
 
   .pos-buttons {
-    transform: none;
-    margin-right: 0;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
+  grid-area: pos;
+  transform: none;
+  margin-right: 0;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 
-  .check-box {
-    justify-content: flex-start;
-    font-size: 13px;
-  }
+  .check-row {
+  grid-area: checks;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: nowrap;
+}
+
+.check-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 13px;
+  white-space: nowrap;
+}
 
   .menu-wrap {
-    justify-content: flex-start;
-  }
+  grid-area: menu;
+  justify-content: flex-end;
+  align-self: center;
+}
 
   .menu-popup {
-    right: auto;
-    left: 0;
-  }
+  right: 0;
+  left: auto;
+}
 
   .tool-chip,
   .tool-select,
@@ -791,6 +817,11 @@
     padding: 16px;
   }
 }
+
+    .check-row {
+  display: contents;
+}
+    
   </style>
 </head>
 <body>
@@ -1373,9 +1404,11 @@
               ${createPosButton(note.id, posList, '감', 'active-excl')}
             </div>
 
-            ${createCheckLabel(note.id, 'checkWord', note.checkWord, '단어')}
-            ${createCheckLabel(note.id, 'checkMeaning', note.checkMeaning, '뜻')}
-            ${createCheckLabel(note.id, 'checkMemorized', note.checkMemorized, '외움')}
+            <div class="check-row">
+  ${createCheckLabel(note.id, 'checkWord', note.checkWord, '단어')}
+  ${createCheckLabel(note.id, 'checkMeaning', note.checkMeaning, '뜻')}
+  ${createCheckLabel(note.id, 'checkMemorized', note.checkMemorized, '외움')}
+</div>
 
             <div class="menu-wrap">
               <button class="menu-btn" data-menu-btn="${note.id}">⋯</button>
