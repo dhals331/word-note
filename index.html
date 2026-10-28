@@ -769,6 +769,7 @@
         <label class="file-label" for="fileInput">파일 불러오기</label>
         <input class="hidden-file" type="file" id="fileInput" accept=".txt,.csv" />
         <button class="action-btn" id="bulkToggleButton" type="button">복붙 가져오기</button>
+        <button class="action-btn danger-btn" id="lockButton" type="button">다시 잠그기</button>
       </div>
 
       <div class="bulk-box" id="bulkBox">
@@ -913,6 +914,7 @@
       saveButton: $('saveButton'),
       fileInput: $('fileInput'),
       bulkToggleButton: $('bulkToggleButton'),
+      lockButton: $('lockButton'),
       bulkBox: $('bulkBox'),
       bulkInput: $('bulkInput'),
       bulkPreviewButton: $('bulkPreviewButton'),
@@ -1654,6 +1656,7 @@
     els.naverButton.addEventListener('click', () => openNaverDictionary(els.wordInput.value));
     els.saveButton.addEventListener('click', () => saveCurrentNote());
     els.bulkToggleButton.addEventListener('click', () => els.bulkBox.classList.toggle('show'));
+    els.lockButton.addEventListener('click', lockApp);
     els.bulkPreviewButton.addEventListener('click', () => previewImportText(els.bulkInput.value, 'bulk.txt'));
     els.bulkClearButton.addEventListener('click', () => {
       els.bulkInput.value = '';
