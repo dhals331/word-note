@@ -248,11 +248,6 @@
   color: #333;
 }
 
-.inline-meaning {
-  display: inline;
-  font-size: 13px;
-  color: #333;
-}
 
     .message {
       min-height: 20px;
@@ -973,8 +968,8 @@
         <div class="info-inline">
   <div class="info-word" id="resultWord"></div>
   <div class="info-pron" id="resultPronunciation"></div>
-  <div class="info-meaning inline-meaning" id="resultMeaning"></div>
 </div>
+<div class="info-meaning" id="resultMeaning"></div>
         
       <div class="message" id="message"></div>
     </div>
@@ -1328,8 +1323,8 @@
       const cleanedWord = word.trim().toLowerCase();
 
       if (!cleanedWord) {
-  els.meaningInput.value = '';
-  els.pronunciationInput.value = '';
+  if (!els.meaningInput.value.trim()) els.meaningInput.value = '';
+  if (!els.pronunciationInput.value.trim()) els.pronunciationInput.value = '';
   resetResult();
   return false;
 }
