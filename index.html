@@ -401,10 +401,10 @@
 
     .note-line {
   display: grid;
-  grid-template-columns: 44px minmax(220px, 1.5fr) minmax(220px, 1.8fr) max-content auto;
+  grid-template-columns: 44px minmax(220px, 1.5fr) minmax(220px, 1.8fr) max-content auto auto auto auto;
   column-gap: 14px;
   row-gap: 10px;
-  align-items: start;
+  align-items: center;
 }
 
     .pos-buttons {
@@ -428,8 +428,6 @@
 
 .menu-wrap {
   position: relative;
-  justify-self: end;
-  align-self: start;
 }
 
     .note-word {
@@ -970,15 +968,15 @@
       </div>
 
       <div class="info-box">
-        <div class="info-title">조회 결과</div>
-        <div class="info-inline">
-  <div class="info-word" id="resultWord"></div>
-  <div class="info-pron" id="resultPronunciation"></div>
+  <div class="info-title">조회 결과</div>
+  <div class="info-inline">
+    <div class="info-word" id="resultWord"></div>
+    <div class="info-pron" id="resultPronunciation"></div>
+  </div>
+  <div class="info-meaning" id="resultMeaning"></div>
 </div>
-<div class="info-meaning" id="resultMeaning"></div>
-        
-      <div class="message" id="message"></div>
-    </div>
+
+<div class="message" id="message"></div>
 
     <div class="toolbar-box">
       <div class="toolbar-head">
@@ -1469,21 +1467,16 @@
               ${createPosButton(note.id, posList, '감', 'active-excl')}
             </div>
 
-           <div class="check-menu-row">
-  <div class="check-row">
-    ${createCheckLabel(note.id, 'checkWord', note.checkWord, '단어')}
-    ${createCheckLabel(note.id, 'checkMeaning', note.checkMeaning, '뜻')}
-    ${createCheckLabel(note.id, 'checkMemorized', note.checkMemorized, '외움')}
-  </div>
+           ${createCheckLabel(note.id, 'checkWord', note.checkWord, '단어')}
+${createCheckLabel(note.id, 'checkMeaning', note.checkMeaning, '뜻')}
+${createCheckLabel(note.id, 'checkMemorized', note.checkMemorized, '외움')}
 
-  <div class="menu-wrap">
-    <button class="menu-btn" data-menu-btn="${note.id}">⋯</button>
-    <div class="menu-popup" id="menu-${note.id}">
-      <button class="menu-item" data-edit="${note.id}">수정</button>
-      <button class="menu-item" data-delete="${note.id}">삭제</button>
-    </div>
+<div class="menu-wrap">
+  <button class="menu-btn" data-menu-btn="${note.id}">⋯</button>
+  <div class="menu-popup" id="menu-${note.id}">
+    <button class="menu-item" data-edit="${note.id}">수정</button>
+    <button class="menu-item" data-delete="${note.id}">삭제</button>
   </div>
-</div>
 </div>
         `;
 
