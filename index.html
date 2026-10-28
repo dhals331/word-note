@@ -697,14 +697,100 @@
     }
 
     @media (max-width: 980px) {
-      .note-line { grid-template-columns: 1fr; }
-      .toolbar-main { flex-wrap: wrap; overflow-x: visible; }
-      .toolbar-controls { flex-wrap: wrap; }
-      .search-wrap { min-width: 100%; }
-      .delete-check-wrap { justify-content: flex-start; }
-      .word-inline,
-      .info-inline { align-items: flex-start; }
-    }
+  .container {
+    max-width: 100%;
+  }
+
+  .note-line {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .toolbar-main {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+
+  .toolbar-controls {
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .search-wrap {
+    min-width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .delete-check-wrap {
+    justify-content: flex-start;
+  }
+
+  .word-inline,
+  .info-inline {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .word-area,
+  .note-line > div[data-load] {
+    width: 100%;
+  }
+
+  .pos-buttons {
+    transform: none;
+    margin-right: 0;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .check-box {
+    justify-content: flex-start;
+    font-size: 13px;
+  }
+
+  .menu-wrap {
+    justify-content: flex-start;
+  }
+
+  .menu-popup {
+    right: auto;
+    left: 0;
+  }
+
+  .tool-chip,
+  .tool-select,
+  .toolbar-delete-btn {
+    flex: 1 1 calc(50% - 5px);
+    min-width: 0;
+    width: 100%;
+  }
+
+  .tool-chip label {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .tool-select,
+  .toolbar-delete-btn,
+  .tool-chip {
+    min-height: 52px;
+  }
+
+  .toolbar-box,
+  .note-item,
+  .info-box,
+  .bulk-box {
+    border-radius: 16px;
+  }
+
+  .note-item {
+    padding: 16px;
+  }
+}
   </style>
 </head>
 <body>
