@@ -8,15 +8,15 @@
     * { box-sizing: border-box; }
 
     body {
-      margin: 0;
-      background: #fff;
-      color: #111;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 24px;
-    }
+  margin: 0;
+  background: #fff;
+  color: #111;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 40px 24px 24px;
+}
 
     .container {
       width: 100%;
@@ -816,11 +816,12 @@
   grid-area: checks;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: flex-start;
+  gap: 12px;
   flex-wrap: nowrap;
   white-space: nowrap;
+  width: max-content;
   min-width: 0;
-  width: 100%;
   margin-top: 2px;
 }
 
