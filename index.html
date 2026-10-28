@@ -722,12 +722,12 @@
       text-align: center;
     }
 
-    @media (max-width: 980px) {
+   @media (max-width: 980px) {
   .container {
     max-width: 100%;
   }
 
-        .check-box {
+  .check-box {
     font-size: 11px;
   }
 
@@ -735,20 +735,19 @@
     width: 14px;
     height: 14px;
   }
-}
 
   .note-line {
     display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-areas:
-    "word word"
-    "meaning meaning"
-    "pos pos"
-    "checks menu";
-  column-gap: 10px;
-  row-gap: 12px;
-  align-items: center;
-}
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "word menu"
+      "meaning meaning"
+      "pos pos"
+      "checks checks";
+    column-gap: 10px;
+    row-gap: 12px;
+    align-items: start;
+  }
 
   .toolbar-main {
     flex-wrap: wrap;
@@ -771,101 +770,103 @@
   }
 
   .word-inline {
-  align-items: flex-start;
-  flex-direction: column;
-  gap: 4px;
-}
+    display: flex;
+    align-items: baseline;
+    flex-direction: row;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
 
-.info-inline {
-  align-items: baseline;
-  flex-direction: row;
-  gap: 6px;
-  flex-wrap: wrap;
-}
+  .info-inline {
+    align-items: baseline;
+    flex-direction: row;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
 
   .word-area {
-  grid-area: word;
-  width: 100%;
-}
+    grid-area: word;
+    width: 100%;
+  }
 
-.note-line > div[data-load] {
-  width: 100%;
-}
+  .note-line > div[data-load] {
+    width: 100%;
+  }
 
-.note-line > div[data-load]:has(.note-meaning) {
-  grid-area: meaning;
-}
+  .note-line > div[data-load]:has(.note-meaning) {
+    grid-area: meaning;
+  }
 
   .pos-buttons {
-  grid-area: pos;
-  transform: none;
-  margin-right: 0;
-  flex-wrap: wrap;
-  gap: 8px;
-}
+    grid-area: pos;
+    transform: none;
+    margin-right: 0;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
 
   .check-row {
-  grid-area: checks;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: nowrap;
-  min-width: 0;
-}
+    grid-area: checks;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: nowrap;
+    min-width: 0;
+  }
 
-.check-box {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-start;
-  font-size: 13px;
-  white-space: nowrap;
-}
+  .check-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 13px;
+    white-space: nowrap;
+  }
 
   .menu-wrap {
-  grid-area: menu;
-  display: flex;
-  justify-content: flex-end;
-  align-self: center;
-}
+    grid-area: menu;
+    display: flex;
+    justify-content: flex-end;
+    align-self: start;
+  }
 
   .menu-popup {
-  right: 0;
-  left: auto;
-}
+    right: 0;
+    left: auto;
+  }
 
   .tool-chip,
-.tool-select,
-.toolbar-delete-btn {
-  flex: 1 1 calc(50% - 5px);
-  min-width: 0;
-  width: 100%;
-  min-height: 44px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  font-size: 12px;
-  box-sizing: border-box;
-}
+  .tool-select,
+  .toolbar-delete-btn {
+    flex: 1 1 calc(50% - 5px);
+    min-width: 0;
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    box-sizing: border-box;
+  }
 
-.tool-chip {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .tool-chip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.tool-chip label {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
+  .tool-chip label {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
 
-.tool-select,
-.toolbar-delete-btn,
-.tool-chip {
-  min-height: 44px;
-}
+  .tool-select,
+  .toolbar-delete-btn,
+  .tool-chip {
+    min-height: 44px;
+  }
 
   .toolbar-box,
   .note-item,
@@ -878,11 +879,6 @@
     padding: 16px;
   }
 }
-
-    .check-menu-row {
-  display: contents;
-}
-
 
     
   </style>
