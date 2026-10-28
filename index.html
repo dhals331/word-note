@@ -157,6 +157,14 @@
     .danger-btn:hover,
     .modal-btn.danger:hover { background: #b93c3c; }
 
+    #lockButton {
+  background: #999;
+}
+
+#lockButton:hover {
+  background: #777;
+}
+
     .file-label {
       display: inline-flex;
       justify-content: center;
@@ -794,23 +802,38 @@
 }
 
   .tool-chip,
-  .tool-select,
-  .toolbar-delete-btn {
-    flex: 1 1 calc(50% - 5px);
-    min-width: 0;
-    width: 100%;
-  }
+.tool-select,
+.toolbar-delete-btn {
+  flex: 1 1 calc(50% - 5px);
+  min-width: 0;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  box-sizing: border-box;
+}
 
-  .tool-chip label {
-    width: 100%;
-    justify-content: center;
-  }
+.tool-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .tool-select,
-  .toolbar-delete-btn,
-  .tool-chip {
-    min-height: 52px;
-  }
+.tool-chip label {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.tool-select,
+.toolbar-delete-btn,
+.tool-chip {
+  min-height: 44px;
+}
 
   .toolbar-box,
   .note-item,
@@ -892,7 +915,7 @@
         <label class="file-label" for="fileInput">파일 불러오기</label>
         <input class="hidden-file" type="file" id="fileInput" accept=".txt,.csv" />
         <button class="action-btn" id="bulkToggleButton" type="button">복붙 가져오기</button>
-        <button class="action-btn danger-btn" id="lockButton" type="button">다시 잠그기</button>
+        <button class="action-btn" id="lockButton" type="button">다시 잠그기</button>
       </div>
 
       <div class="bulk-box" id="bulkBox">
