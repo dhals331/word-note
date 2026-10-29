@@ -16,7 +16,7 @@
   justify-content: center;
   align-items: flex-start;
   min-height: 100vh;
-  padding: 140px 24px 24px;
+  padding: 100px 24px 24px;
 }
 
     /* ===== 전체 레이아웃 ===== */
@@ -267,13 +267,6 @@
   background: #fcfcfc;
   margin-bottom: 16px;
   padding: 16px;
-  position: fixed;
-  top: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 48px);
-  max-width: 1120px;
-  z-index: 20;
 }
     .toolbar-head {
       display: flex;
@@ -701,6 +694,33 @@
     .password-screen.hidden {
       display: none;
     }
+
+    /* ===== 숨기기 버튼 플로팅 ===== */
+    .floating-hide-box {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 70;
+  background: #111;
+  color: #fff;
+  padding: 12px 14px;
+  border-radius: 14px;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.16);
+  font-size: 12px;
+  font-family: "바탕", Batang, serif;
+}
+
+.floating-hide-box label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.floating-hide-box input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+}
 
     /* ===== 잠금 화면 ===== */
     .password-screen {
@@ -1169,7 +1189,8 @@
     previewNote: $('previewNote'),
     previewCancel: $('previewCancel'),
     previewConfirm: $('previewConfirm'),
-    topButton: $('topButton')
+    topButton: $('topButton'),
+    floatingHideMemorized: $('floatingHideMemorized')
   };
 
   let pendingUpdateWord = null;
@@ -1887,12 +1908,22 @@
 
   els.searchInput.addEventListener('input', renderNotes);
 
+    <!-- 일단 플로팅 작업-->
+els.floatingHideMemorized.addEventListener('change', () => {
+  els.hideMemorized.checked = els.floatingHideMemorized.checked;
+  renderNotes();
+});
+
+els.hideMemorized.addEventListener('change', () => {
+  els.floatingHideMemorized.checked = els.hideMemorized.checked;
+  renderNotes();
+});
+    
   els.searchClearButton.addEventListener('click', () => {
     els.searchInput.value = '';
     renderNotes();
   });
 
-  els.hideMemorized.addEventListener('change', renderNotes);
   els.sortSelect.addEventListener('change', renderNotes);
 
   els.modalCancel.addEventListener('click', closeConfirmModal);
@@ -1929,16 +1960,26 @@
   document.addEventListener('click', closeAllMenus);
 
   window.addEventListener('load', () => {
-    if (isUnlocked()) {
-      unlockApp();
-    } else {
-      els.passwordScreen.classList.remove('hidden');
-      els.appShell.classList.add('hidden');
-      els.passwordInput.focus();
-    }
-  });
+  els.floatingHideMemorized.checked = els.hideMemorized.checked;
+
+  if (isUnlocked()) {
+    unlockApp();
+  } else {
+    els.passwordScreen.classList.remove('hidden');
+    els.appShell.classList.add('hidden');
+    els.passwordInput.focus();
+  }
+});
 
   window.lockApp = lockApp;
 </script>
+
+    <div class="floating-hide-box">
+  <label>
+    <input type="checkbox" id="floatingHideMemorized" />
+    외운 단어 숨기기
+  </label>
+</div>
+    
 </body>
 </html>
