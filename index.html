@@ -31,7 +31,7 @@
     }
 
     .top-box { gap: 12px; margin-bottom: 24px; }
-    .word-area { gap: 2px; padding-left: 0; }
+    .word-area { gap: 2px; padding-left: 0; min-width: 0; }
     .note-list { gap: 10px; }
 
     .word-input,
@@ -118,10 +118,17 @@
     }
 
     .info-inline,
-    .word-inline {
-      gap: 8px;
-      align-items: baseline;
-    }
+.word-inline {
+  gap: 8px;
+  align-items: baseline;
+}
+
+.word-inline {
+  display: flex;
+  flex-wrap: nowrap;
+  min-width: 0;
+  overflow: hidden;
+}
 
     .action-btn,
     .file-label,
@@ -170,14 +177,19 @@
     }
 
     #backToListButton {
-      display: none;
-    }
+  display: none;
+  background: #4a78ff;
+}
 
-    #backToListButton.show {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-    }
+#backToListButton:hover {
+  background: #365fe0;
+}
+
+#backToListButton.show {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
 
     .file-label {
       display: inline-flex;
@@ -446,21 +458,26 @@
     }
 
     .note-word {
-      font-size: 16px;
-      font-weight: 700;
-      word-break: break-word;
-      font-family: "맑은 고딕", "Malgun Gothic", sans-serif;
-      display: inline;
-    }
+  font-size: 16px;
+  font-weight: 700;
+  white-space: nowrap;
+  flex: 0 0 auto;
+  font-family: "맑은 고딕", "Malgun Gothic", sans-serif;
+  display: inline;
+}
 
     .note-pron {
-      font-size: 12px;
-      color: #666;
-      word-break: break-word;
-      font-family: "바탕", Batang, serif;
-      display: inline;
-      margin-left: 6px;
-    }
+  font-size: 12px;
+  color: #666;
+  font-family: "바탕", Batang, serif;
+  display: inline-block;
+  margin-left: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  flex: 1 1 auto;
+}
 
     .selected-pos-text {
       font-size: 11px;
