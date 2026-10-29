@@ -998,44 +998,40 @@
   }
 }
 
-    .floating-circle-button {
+    .floating-mini-button {
   position: fixed;
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   border: none;
   border-radius: 50%;
-  background: rgba(17, 17, 17, 0.82);
+  background: rgba(17, 17, 17, 0.16);
   color: #fff;
-  font-size: 13px;
+  font-size: 10px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.16);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
   display: none;
   z-index: 70;
   font-family: "바탕", Batang, serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   line-height: 1;
-}
-
-.floating-circle-button:hover {
-  background: rgba(17, 17, 17, 0.92);
+  text-align: center;
+  padding: 0;
 }
 
 .floating-lock-button {
-  top: 18px;
-  right: 74px;
+  top: 22px;
+  right: 126px;
 }
 
 .floating-hide-button {
-  top: 18px;
-  right: 20px;
+  top: 22px;
+  right: 72px;
 }
 
 .floating-quiz-button {
-  right: 20px;
-  bottom: 20px;
+  top: auto;
+  right: 22px;
+  bottom: 22px;
 }
 
 .floating-hide-button.active {
@@ -1203,25 +1199,28 @@
     order: 8;
   }
 
-  .floating-circle-button {
-  width: 42px;
-  height: 42px;
-  font-size: 12px;
-}
+  @media (max-width: 480px) {
+  .floating-mini-button {
+    width: 44px;
+    height: 44px;
+    font-size: 9px;
+  }
 
-.floating-lock-button {
-  top: 14px;
-  right: 64px;
-}
+  .floating-lock-button {
+    top: 16px;
+    right: 116px;
+  }
 
-.floating-hide-button {
-  top: 14px;
-  right: 14px;
-}
+  .floating-hide-button {
+    top: 16px;
+    right: 66px;
+  }
 
-.floating-quiz-button {
-  right: 14px;
-  bottom: 14px;
+  .floating-quiz-button {
+    right: 16px;
+    bottom: 16px;
+    top: auto;
+  }
 }
 
   .note-line {
