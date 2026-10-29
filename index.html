@@ -1262,7 +1262,6 @@
     editingId = null;
     updateWordInputFont();
     resetResult();
-    els.wordInput.focus();
   }
 
   function setTopFields(word, meaning, pronunciation = '') {
@@ -1888,7 +1887,6 @@
   els.searchClearButton.addEventListener('click', () => {
     els.searchInput.value = '';
     renderNotes();
-    els.searchInput.focus();
   });
 
   els.hideMemorized.addEventListener('change', renderNotes);
