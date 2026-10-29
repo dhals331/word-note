@@ -1086,6 +1086,7 @@
 
     <div class="note-list" id="noteList"></div>
   </div>
+  </div>
 
   <div class="modal-backdrop" id="confirmModal">
     <div class="modal small">
@@ -1914,15 +1915,17 @@
 
   els.searchInput.addEventListener('input', renderNotes);
 
-els.floatingHideMemorized.addEventListener('change', () => {
-  els.hideMemorized.checked = els.floatingHideMemorized.checked;
-  renderNotes();
-});
+if (els.floatingHideMemorized && els.hideMemorized) {
+  els.floatingHideMemorized.addEventListener('change', () => {
+    els.hideMemorized.checked = els.floatingHideMemorized.checked;
+    renderNotes();
+  });
 
-els.hideMemorized.addEventListener('change', () => {
-  els.floatingHideMemorized.checked = els.hideMemorized.checked;
-  renderNotes();
-});
+  els.hideMemorized.addEventListener('change', () => {
+    els.floatingHideMemorized.checked = els.hideMemorized.checked;
+    renderNotes();
+  });
+}
     
   els.searchClearButton.addEventListener('click', () => {
     els.searchInput.value = '';
@@ -1965,7 +1968,9 @@ els.hideMemorized.addEventListener('change', () => {
   document.addEventListener('click', closeAllMenus);
 
   window.addEventListener('load', () => {
-  els.floatingHideMemorized.checked = els.hideMemorized.checked;
+  if (els.floatingHideMemorized && els.hideMemorized) {
+    els.floatingHideMemorized.checked = els.hideMemorized.checked;
+  }
 
   if (isUnlocked()) {
     unlockApp();
