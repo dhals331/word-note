@@ -1433,12 +1433,12 @@
           </div>
 
           <div class="word-area" data-load="${note.id}">
-            <div class="word-inline">
-              <span class="note-word ${note.checkWord ? 'highlight-word' : ''}">${escapeHtml(note.word)}</span>
-              <span class="note-pron">${escapeHtml(note.pronunciation || '')}</span>
-            </div>
-            <div class="selected-pos-text">${escapeHtml(posText)}</div>
-          </div>
+  <div class="word-inline">
+    <span class="note-word ${note.checkWord ? 'highlight-word' : ''}">${escapeHtml(note.word)}</span>
+    <span class="note-pron">${escapeHtml(note.pronunciation || '')}</span>
+  </div>
+  ${posText ? `<div class="selected-pos-text">${escapeHtml(posText)}</div>` : ''}
+</div>
 
           <div data-load="${note.id}">
             <span class="note-meaning ${note.checkMeaning ? 'highlight-meaning' : ''}">${escapeHtml(note.meaning)}</span>
