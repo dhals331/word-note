@@ -147,10 +147,13 @@
     }
 
     .action-btn:hover,
-    .file-label:hover,
-    .top-button:hover,
-    .password-btn:hover,
-    .floating-hide-button:hover { background: #444; }
+.file-label:hover,
+.top-button:hover,
+.password-btn:hover { background: #444; }
+
+.floating-hide-button:hover {
+  background: rgba(17, 17, 17, 0.18);
+}
 
     .danger-btn,
     .modal-btn.danger { background: #c94f4f; }
@@ -687,27 +690,27 @@
     .top-button.show { display: block; }
 
     .floating-hide-button {
-      position: fixed;
-      top: 22px;
-      right: 22px;
-      width: 48px;
-      height: 48px;
-      border: none;
-      border-radius: 999px;
-      background: rgba(17, 17, 17, 0.8);
-      color: #fff;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.16);
-      display: none;
-      z-index: 70;
-    }
+  position: fixed;
+  top: 22px;
+  right: 22px;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(17, 17, 17, 0.1);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  display: none;
+  z-index: 70;
+}
 
     .floating-hide-button.active {
-      background: rgba(216, 91, 91, 0.8);
-    }
-
+  background: rgba(70, 130, 255, 0.1);
+}
+    
     .app-shell.hidden,
     .password-screen.hidden {
       display: none;
@@ -922,12 +925,12 @@
       }
 
       .floating-hide-button {
-        top: 16px;
-        right: 16px;
-        width: 44px;
-        height: 44px;
-        font-size: 13px;
-      }
+  top: 16px;
+  right: 16px;
+  width: 38px;
+  height: 38px;
+  font-size: 11px;
+}
     }
   </style>
 </head>
