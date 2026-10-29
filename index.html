@@ -697,15 +697,20 @@
 
     /* ===== 잠금 화면 ===== */
     .password-screen {
-      width: 100%;
-      max-width: 460px;
-      margin: 0 auto;
-    }
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  max-width: none;
+  margin: 0;
+}
 
     .password-box {
-      background: #fff;
-      padding: 22px;
-    }
+  width: 100%;
+  max-width: 460px;
+}
 
     .password-title {
       font-size: 20px;
