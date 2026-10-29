@@ -16,7 +16,7 @@
   justify-content: center;
   align-items: flex-start;
   min-height: 100vh;
-  padding: 56px 24px 24px;
+  padding: 140px 24px 24px;
 }
 
     /* ===== 전체 레이아웃 ===== */
@@ -267,11 +267,14 @@
   background: #fcfcfc;
   margin-bottom: 16px;
   padding: 16px;
-  position: sticky;
+  position: fixed;
   top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 48px);
+  max-width: 1120px;
   z-index: 20;
 }
-
     .toolbar-head {
       display: flex;
       justify-content: space-between;
