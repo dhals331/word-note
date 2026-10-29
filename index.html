@@ -1074,7 +1074,7 @@
       <div class="modal-text" id="modalText"></div>
       <div class="modal-actions">
         <button class="modal-btn cancel" id="modalCancel">취소</button>
-        <button class="modal-btn" id="modalConfirm">수정 저장</button>
+        <button class="modal-btn" id="modalConfirm">수정</button>
       </div>
     </div>
   </div>
@@ -1581,7 +1581,7 @@
         '새 뜻: ' + meaning + '\n\n' +
         '이전 발음: ' + oldPron + '\n' +
         '새 발음: ' + newPron + '\n\n' +
-        '수정 저장하시겠습니까?';
+        '수정하시겠습니까?';
 
       pendingUpdateWord = word;
       els.confirmModal.classList.add('show');
@@ -1592,7 +1592,7 @@
       notes[existingIndex].meaning = meaning;
       notes[existingIndex].pronunciation = pronunciation;
       saveNotes(notes);
-      showMessage('기존 단어를 수정 저장했습니다.');
+      showMessage('기존 단어를 수정했습니다.');
     } else {
       notes.push(createNote({
         word,
