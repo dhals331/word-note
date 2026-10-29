@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>영단어 오답노트</title>
   <style>
+    /* ===== 기본 설정 ===== */
     * { box-sizing: border-box; }
 
     body {
@@ -18,6 +19,7 @@
   padding: 56px 24px 24px;
 }
 
+    /* ===== 전체 레이아웃 ===== */
     .container {
       width: 100%;
       max-width: 1120px;
@@ -34,6 +36,7 @@
     .word-area { gap: 2px; padding-left: 0; }
     .note-list { gap: 10px; }
 
+    /* ===== 입력창 영역 ===== */
     .word-input,
     .meaning-input,
     .pronunciation-input,
@@ -123,6 +126,7 @@
       align-items: baseline;
     }
 
+    /* ===== 버튼 공통 ===== */
     .action-btn,
     .file-label,
     .modal-btn,
@@ -200,6 +204,7 @@
       margin-top: -4px;
     }
 
+    /* ===== 조회 결과 박스 ===== */
     .info-box,
     .bulk-box,
     .note-item,
@@ -690,6 +695,7 @@
       display: none;
     }
 
+    /* ===== 잠금 화면 ===== */
     .password-screen {
       width: 100%;
       max-width: 460px;
@@ -728,7 +734,7 @@
       text-align: center;
     }
 
-    /* 모바일 버전8*/
+    /* 모바일 버전 */
    @media (max-width: 480px) {
   .password-desc {
     font-size: 11px;
@@ -898,13 +904,18 @@
   </style>
 </head>
 <body>
+  <!-- ===== 잠금 화면 ===== -->
   <div class="password-screen" id="passwordScreen">
     <div class="password-box">
       <div class="password-title">영단어 오답노트</div>
+
+      <!-- 잠금 안내 문구 -->
       <div class="password-desc">
         사용하려면 비밀번호를 입력하세요.<br>
         한 번 통과하면 같은 브라우저에서는 다시 묻지 않습니다.
       </div>
+
+       <!-- 비밀번호 입력 -->
       <input
         type="password"
         id="passwordInput"
@@ -912,15 +923,21 @@
         placeholder="비밀번호 입력"
         autocomplete="current-password"
       />
+
+      <!-- 잠금 해제 버튼 -->
       <div class="password-actions" style="margin-top:12px;">
         <button class="password-btn" id="passwordSubmitButton" type="button">들어가기</button>
       </div>
-     
+
+       <!-- 잠금 오류 메시지 -->
       <div class="password-message" id="passwordMessage"></div>
     </div>
   </div>
 
+  <!-- ===== 앱 본문 ===== -->
   <div class="container app-shell hidden" id="appShell">
+
+    <!-- ===== 상단 입력 영역 ===== -->
     <div class="top-box">
       <input
         type="text"
@@ -946,10 +963,12 @@
         placeholder="발음 입력 (선택사항)"
       />
 
+      <!-- 입력 도움말 -->
       <div class="help-text">
         단어, 뜻, 발음을 입력한 뒤 Enter 또는 저장 버튼으로 저장할 수 있습니다.
       </div>
 
+      <!-- 상단 기능 버튼들 -->
       <div class="button-row">
         <button class="action-btn" id="resetButton" type="button">초기화</button>
         <button class="action-btn" id="naverButton" type="button">사전</button>
@@ -960,6 +979,7 @@
         <button class="action-btn" id="lockButton" type="button">다시 잠그기</button>
       </div>
 
+      <!-- 여러 줄 복붙 가져오기 -->
       <div class="bulk-box" id="bulkBox">
         <div class="info-title">여러 줄 가져오기</div>
         <textarea
@@ -973,6 +993,7 @@
         </div>
       </div>
 
+      <!-- 조회 결과 -->
       <div class="info-box">
   <div class="info-title">조회 결과</div>
   <div class="info-inline">
@@ -982,8 +1003,10 @@
   <div class="info-meaning" id="resultMeaning"></div>
 </div>
 
+      <!-- 안내 메시지 -->
 <div class="message" id="message"></div>
 
+      <!-- ===== 검색 / 정렬 / 삭제 툴바 ===== -->
     <div class="toolbar-box">
       <div class="toolbar-head">
         <div class="toolbar-title">저장된 단어</div>
@@ -991,6 +1014,7 @@
       </div>
 
       <div class="toolbar-main">
+        <!-- 검색창 -->
         <div class="search-wrap">
           <input
             type="text"
@@ -1001,6 +1025,7 @@
           <button id="searchClearButton" class="search-clear-btn" type="button">×</button>
         </div>
 
+        <!-- 정렬 / 숨김 / 선택삭제 -->
         <div class="toolbar-controls">
           <div class="tool-chip">
             <label>
@@ -1139,69 +1164,6 @@
     let pendingDeleteAction = null;
     let pendingImportRows = [];
 
-    const dictionary = {
-      hurt: '다치게 하다, 상처 주다, 아프다',
-      hunt: '사냥하다, 찾다',
-      heart: '심장, 마음',
-      heat: '열, 더위, 가열하다',
-      head: '머리, 우두머리',
-      hard: '어려운, 딱딱한, 열심히',
-      heard: 'hear의 과거형, 들었다',
-      receive: '받다, 수령하다',
-      recipe: '조리법, 요리법',
-      recent: '최근의',
-      deceive: '속이다',
-      believe: '믿다',
-      piece: '조각, 한 개',
-      peace: '평화',
-      environment: '환경',
-      government: '정부',
-      develop: '개발하다, 발달시키다',
-      development: '발달, 개발',
-      surprise: '놀라게 하다, 놀람',
-      support: '지원하다, 지지하다',
-      suppose: '가정하다, 생각하다',
-      success: '성공',
-      successful: '성공적인',
-      through: '통과하여, 통해서',
-      though: '비록 ~일지라도, 하지만',
-      thought: '생각, 사고',
-      tough: '힘든, 질긴',
-      enough: '충분한, 충분히',
-      bought: 'buy의 과거형, 샀다',
-      caught: 'catch의 과거형, 잡았다',
-      write: '쓰다',
-      right: '오른쪽, 옳은, 권리',
-      light: '빛, 가벼운, 밝은',
-      late: '늦은, 늦게',
-      wait: '기다리다',
-      weight: '무게',
-      weather: '날씨',
-      whether: '~인지 아닌지',
-      quiet: '조용한',
-      quite: '꽤, 상당히',
-      world: '세계',
-      word: '단어, 말',
-      work: '일하다, 일, 작품',
-      walk: '걷다, 산책',
-      people: '사람들, 국민',
-      paper: '종이, 신문',
-      favorite: '가장 좋아하는 것, 매우 좋아하는',
-      beautiful: '아름다운',
-      because: '왜냐하면',
-      library: '도서관',
-      restaurant: '식당',
-      different: '다른',
-      important: '중요한',
-      interest: '관심, 흥미, 이자',
-      business: '사업, 업무',
-      question: '질문, 문제',
-      answer: '대답, 답하다',
-      language: '언어',
-      schedule: '일정',
-      usually: '보통, 대개'
-    };
-
     const POS_MAP = {
       '명': '명', '명사': '명',
       '동': '동', '동사': '동',
@@ -1330,39 +1292,46 @@
     }
 
     function fetchMeaning(word) {
-      const cleanedWord = word.trim().toLowerCase();
+  const cleanedWord = word.trim().toLowerCase();
 
-      if (!cleanedWord) {
-  if (!els.meaningInput.value.trim()) els.meaningInput.value = '';
-  if (!els.pronunciationInput.value.trim()) els.pronunciationInput.value = '';
-  resetResult();
+  if (!cleanedWord) {
+    if (!els.meaningInput.value.trim()) els.meaningInput.value = '';
+    if (!els.pronunciationInput.value.trim()) els.pronunciationInput.value = '';
+    resetResult();
+    return false;
+  }
+
+  if (!isEnglishWord(cleanedWord)) {
+    els.resultWord.textContent = cleanedWord;
+    els.resultPronunciation.textContent = '';
+    els.resultMeaning.textContent = '정확한 영어 단어를 입력해주세요.';
+    return false;
+  }
+
+  els.resultWord.textContent = cleanedWord;
+
+  const notes = getNotes();
+  const savedNote = notes.find(item => item.word.toLowerCase() === cleanedWord);
+
+  if (savedNote) {
+    els.resultPronunciation.textContent = savedNote.pronunciation || '';
+    els.resultMeaning.textContent = savedNote.meaning;
+
+    if (!els.meaningInput.value.trim()) {
+      els.meaningInput.value = savedNote.meaning;
+    }
+
+    if (!els.pronunciationInput.value.trim() && savedNote.pronunciation) {
+      els.pronunciationInput.value = savedNote.pronunciation;
+    }
+
+    return true;
+  }
+
+  els.resultPronunciation.textContent = '';
+  els.resultMeaning.textContent = '저장된 단어가 없습니다.';
   return false;
 }
-
-      if (!isEnglishWord(cleanedWord)) {
-        els.resultWord.textContent = cleanedWord;
-        els.resultPronunciation.textContent = '';
-        els.resultMeaning.textContent = '정확한 영어 단어를 입력해야 뜻 조회가 가능합니다.';
-        return false;
-      }
-
-      els.resultWord.textContent = cleanedWord;
-
-      const notes = getNotes();
-      const savedNote = notes.find(item => item.word.toLowerCase() === cleanedWord);
-
-      if (savedNote) {
-        els.resultPronunciation.textContent = savedNote.pronunciation || '';
-        els.resultMeaning.textContent = savedNote.meaning;
-        if (!els.meaningInput.value.trim()) els.meaningInput.value = savedNote.meaning;
-        if (!els.pronunciationInput.value.trim() && savedNote.pronunciation) {
-          els.pronunciationInput.value = savedNote.pronunciation;
-        }
-        return true;
-      }
-
-      els.resultPronunciation.textContent = '';
-
       if (!dictionary[cleanedWord]) {
         els.resultMeaning.textContent = '사전에 없는 단어이거나 철자가 정확하지 않습니다.';
         return false;
