@@ -998,48 +998,52 @@
   }
 }
 
-    .floating-mini-button {
+    .floating-circle-button {
   position: fixed;
-  top: 22px;
-  width: 52px;
-  height: 42px;
+  width: 46px;
+  height: 46px;
   border: none;
-  border-radius: 999px;
-  background: rgba(17, 17, 17, 0.16);
+  border-radius: 50%;
+  background: rgba(17, 17, 17, 0.82);
   color: #fff;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.16);
   display: none;
   z-index: 70;
   font-family: "바탕", Batang, serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
-.floating-mini-button:hover {
-  background: rgba(17, 17, 17, 0.28);
+.floating-circle-button:hover {
+  background: rgba(17, 17, 17, 0.92);
 }
 
 .floating-lock-button {
-  right: 136px;
+  top: 18px;
+  right: 74px;
 }
 
 .floating-hide-button {
-  right: 76px;
+  top: 18px;
+  right: 20px;
 }
 
 .floating-quiz-button {
-  top: auto;
-  right: 22px;
-  bottom: 22px;
+  right: 20px;
+  bottom: 20px;
 }
 
 .floating-hide-button.active {
-  background: rgba(70, 130, 255, 0.18);
+  background: rgba(70, 130, 255, 0.88);
 }
 
 .floating-hide-button.active:hover {
-  background: rgba(70, 130, 255, 0.28);
+  background: rgba(70, 130, 255, 0.98);
 }
 
 .quiz-modal {
@@ -1199,27 +1203,26 @@
     order: 8;
   }
 
-  .floating-mini-button {
-    width: 48px;
-    height: 38px;
-    font-size: 10px;
-  }
+  .floating-circle-button {
+  width: 42px;
+  height: 42px;
+  font-size: 12px;
+}
 
-  .floating-lock-button {
-    top: 16px;
-    right: 124px;
-  }
+.floating-lock-button {
+  top: 14px;
+  right: 64px;
+}
 
-  .floating-hide-button {
-    top: 16px;
-    right: 68px;
-  }
+.floating-hide-button {
+  top: 14px;
+  right: 14px;
+}
 
-  .floating-quiz-button {
-    right: 16px;
-    bottom: 16px;
-    top: auto;
-  }
+.floating-quiz-button {
+  right: 14px;
+  bottom: 14px;
+}
 
   .note-line {
     display: grid;
@@ -1577,10 +1580,9 @@
     </div>
   </div>
 
-  <button id="quizButton" class="floating-mini-button floating-quiz-button" type="button" title="단어퀴즈">퀴즈</button>
-  <button id="floatingLockButton" class="floating-mini-button floating-lock-button" type="button" title="다시 잠그기">잠금</button>
-  <button id="floatingHideButton" class="floating-mini-button floating-hide-button" type="button" title="외운 단어 숨기기">숨김</button>
-
+  <button id="quizButton" class="floating-circle-button floating-quiz-button" type="button" title="단어퀴즈">퀴즈</button>
+<button id="floatingLockButton" class="floating-circle-button floating-lock-button" type="button" title="다시 잠그기">잠금</button>
+<button id="floatingHideButton" class="floating-circle-button floating-hide-button" type="button" title="외운 단어 숨기기">숨김</button>
   <script>
   const APP_PASSWORD = 'dhekqshxm';
   const UNLOCK_KEY = 'wrongAnswerWordsUnlocked';
