@@ -178,11 +178,11 @@
 
     #backToListButton {
       display: none;
-      background: #6f86a8;
+      background: #8a8f98;
     }
 
     #backToListButton:hover {
-      background: #5d7394;
+      background: #727780;
     }
 
     #backToListButton.show {
@@ -708,6 +708,10 @@
       z-index: 70;
     }
 
+    .floating-lock-button {
+  right: 72px;
+}
+
     .floating-hide-button.active {
       background: rgba(70, 130, 255, 0.1);
     }
@@ -822,17 +826,24 @@
     order: 7;
   }
 
-  #lockButton {
-    grid-column: 1 / -1;
-    order: 8;
-  }
-
   #backToListButton.show {
     display: inline-flex;
     justify-content: center;
     align-items: center;
     grid-column: 1 / -1;
-    order: 9;
+    order: 8;
+  }
+
+  .floating-hide-button {
+    top: 16px;
+    right: 16px;
+    width: 38px;
+    height: 38px;
+    font-size: 11px;
+  }
+
+  .floating-lock-button {
+    right: 60px;
   }
 
   .note-line {
@@ -985,14 +996,6 @@
   .note-item {
     padding: 16px;
   }
-
-  .floating-hide-button {
-    top: 16px;
-    right: 16px;
-    width: 38px;
-    height: 38px;
-    font-size: 11px;
-  }
 }
   </style>
 </head>
@@ -1058,7 +1061,6 @@
 <button class="action-btn" id="bulkToggleButton" type="button">복붙 가져오기</button>
 <button class="action-btn" id="saveBackupButton" type="button">백업 저장</button>
 <button class="action-btn" id="restoreBackupButton" type="button">백업 복원</button>
-<button class="action-btn" id="lockButton" type="button">다시 잠그기</button>
       </div>
 
       <div class="bulk-box" id="bulkBox">
@@ -1155,7 +1157,8 @@
   </div>
 
   <button id="topButton" class="top-button" type="button">↑</button>
-  <button id="floatingHideButton" class="floating-hide-button" type="button">숨</button>
+<button id="floatingLockButton" class="floating-hide-button floating-lock-button" type="button" title="다시 잠그기">🔒</button>
+<button id="floatingHideButton" class="floating-hide-button" type="button">숨</button>
 
   <script>
     const APP_PASSWORD = 'dhekqshxm';
@@ -1210,7 +1213,8 @@
       deleteModalCancel: $('deleteModalCancel'),
       deleteModalConfirm: $('deleteModalConfirm'),
       topButton: $('topButton'),
-      floatingHideButton: $('floatingHideButton')
+floatingLockButton: $('floatingLockButton'),
+floatingHideButton: $('floatingHideButton')
     };
 
     let pendingUpdateWord = null;
@@ -1268,12 +1272,14 @@
     }
 
     function showFloatingHideButton() {
-      if (els.floatingHideButton) els.floatingHideButton.style.display = 'block';
-    }
+  if (els.floatingHideButton) els.floatingHideButton.style.display = 'block';
+  if (els.floatingLockButton) els.floatingLockButton.style.display = 'block';
+}
 
     function hideFloatingHideButton() {
-      if (els.floatingHideButton) els.floatingHideButton.style.display = 'none';
-    }
+  if (els.floatingHideButton) els.floatingHideButton.style.display = 'none';
+  if (els.floatingLockButton) els.floatingLockButton.style.display = 'none';
+}
 
     function showBackToListButton() {
       if (els.backToListButton) {
@@ -1928,8 +1934,11 @@
     els.saveBackupButton.addEventListener('click', saveManualBackup);
     els.restoreBackupButton.addEventListener('click', restoreBackupNotes);
     els.bulkToggleButton.addEventListener('click', () => els.bulkBox.classList.toggle('show'));
-    els.lockButton.addEventListener('click', lockApp);
 
+if (els.floatingLockButton) {
+  els.floatingLockButton.addEventListener('click', lockApp);
+}
+    
     els.bulkPreviewButton.addEventListener('click', () => previewImportText(els.bulkInput.value, 'bulk.txt'));
 
     els.bulkClearButton.addEventListener('click', () => {
