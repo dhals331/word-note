@@ -5,21 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>영단어 오답노트</title>
   <style>
-    /* ===== 기본 설정 ===== */
     * { box-sizing: border-box; }
 
     body {
-  margin: 0;
-  background: #fff;
-  color: #111;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  padding: 56px 24px 24px;
-}
+      margin: 0;
+      background: #fff;
+      color: #111;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 100px 24px 24px;
+    }
 
-    /* ===== 전체 레이아웃 ===== */
     .container {
       width: 100%;
       max-width: 1120px;
@@ -36,7 +34,6 @@
     .word-area { gap: 2px; padding-left: 0; }
     .note-list { gap: 10px; }
 
-    /* ===== 입력창 영역 ===== */
     .word-input,
     .meaning-input,
     .pronunciation-input,
@@ -126,7 +123,6 @@
       align-items: baseline;
     }
 
-    /* ===== 버튼 공통 ===== */
     .action-btn,
     .file-label,
     .modal-btn,
@@ -162,12 +158,12 @@
     .modal-btn.danger:hover { background: #b93c3c; }
 
     #lockButton {
-  background: #999;
-}
+      background: #999;
+    }
 
-#lockButton:hover {
-  background: #777;
-}
+    #lockButton:hover {
+      background: #777;
+    }
 
     .file-label {
       display: inline-flex;
@@ -204,7 +200,6 @@
       margin-top: -4px;
     }
 
-    /* ===== 조회 결과 박스 ===== */
     .info-box,
     .bulk-box,
     .note-item,
@@ -246,14 +241,13 @@
     }
 
     .info-meaning {
-  font-size: 13px;
-  line-height: 1.5;
-  white-space: pre-wrap;
-  font-family: "바탕", Batang, serif;
-  color: #333;
-  margin-top: 6px;
+      font-size: 13px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      font-family: "바탕", Batang, serif;
+      color: #333;
+      margin-top: 6px;
     }
-
 
     .message {
       min-height: 20px;
@@ -295,6 +289,7 @@
     }
 
     .toolbar-main::-webkit-scrollbar { height: 8px; }
+
     .toolbar-main::-webkit-scrollbar-thumb {
       background: #ddd;
       border-radius: 999px;
@@ -347,16 +342,16 @@
     .tool-select {
       min-height: 48px;
       padding: 10px 12px;
-  border: 1px solid #d8d8d8;
-  border-radius: 12px;
-  background: #fff;
-  font-size: 12px;
-  color: #333;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
-  font-family: "바탕", Batang, serif;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      background: #fff;
+      font-size: 12px;
+      color: #333;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      font-family: "바탕", Batang, serif;
     }
 
     .tool-chip label {
@@ -375,16 +370,16 @@
 
     .toolbar-delete-btn,
     .unlock-reset-btn {
-  min-height: 48px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  border: none;
-  background: #d85b5b;
-  color: #fff;
-  font-size: 12px;
-  font-family: "바탕", Batang, serif;
-  cursor: pointer;
-  white-space: nowrap;
+      min-height: 48px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: none;
+      background: #d85b5b;
+      color: #fff;
+      font-size: 12px;
+      font-family: "바탕", Batang, serif;
+      cursor: pointer;
+      white-space: nowrap;
     }
 
     .toolbar-delete-btn:hover,
@@ -405,12 +400,12 @@
     .note-clickable { cursor: pointer; }
 
     .note-line {
-  display: grid;
-  grid-template-columns: 44px minmax(220px, 1.5fr) minmax(220px, 1.8fr) max-content auto auto auto auto;
-  column-gap: 14px;
-  row-gap: 10px;
-  align-items: center;
-}
+      display: grid;
+      grid-template-columns: 44px minmax(220px, 1.5fr) minmax(220px, 1.8fr) max-content auto auto auto auto;
+      column-gap: 14px;
+      row-gap: 10px;
+      align-items: center;
+    }
 
     .pos-buttons {
       display: flex;
@@ -425,15 +420,15 @@
     }
 
     .delete-check-wrap,
-.menu-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    .menu-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-.menu-wrap {
-  position: relative;
-}
+    .menu-wrap {
+      position: relative;
+    }
 
     .note-word {
       font-size: 16px;
@@ -444,29 +439,29 @@
     }
 
     .note-pron {
-  font-size: 12px;
-  color: #666;
-  word-break: break-word;
-  font-family: "바탕", Batang, serif;
-  display: inline;
-  margin-left: 6px;
-}
+      font-size: 12px;
+      color: #666;
+      word-break: break-word;
+      font-family: "바탕", Batang, serif;
+      display: inline;
+      margin-left: 6px;
+    }
 
     .selected-pos-text {
-  font-size: 11px;
-  color: #777;
-  line-height: 1.3;
-  min-height: 14px;
-}
+      font-size: 11px;
+      color: #777;
+      line-height: 1.3;
+      min-height: 14px;
+    }
 
     .note-meaning {
-  font-size: 13px;
-  line-height: 1.4;
-  word-break: break-word;
-  font-family: "바탕", Batang, serif;
-  display: inline-block;
-  margin-top: 2px;
-}
+      font-size: 13px;
+      line-height: 1.4;
+      word-break: break-word;
+      font-family: "바탕", Batang, serif;
+      display: inline-block;
+      margin-top: 2px;
+    }
 
     .pos-btn {
       border: 1px solid #dfe6ff;
@@ -490,29 +485,28 @@
     .pos-btn.active-conj { background: #67cfc5; color: #fff; border-color: #67cfc5; }
     .pos-btn.active-excl { background: #f48db3; color: #fff; border-color: #f48db3; }
 
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+    }
 
-   .check-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: nowrap;
-  white-space: nowrap;
-}
+    .check-box {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      font-size: 11px;
+      white-space: nowrap;
+      text-align: center;
+    }
 
-.check-box {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  font-size: 11px;
-  white-space: nowrap;
-  text-align: center;
-}
-
-.check-box input[type="checkbox"] {
-  width: 14px;
-  height: 14px;
-}
+    .check-box input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+    }
 
     .menu-wrap { position: relative; }
 
@@ -695,16 +689,47 @@
       display: none;
     }
 
-    /* ===== 잠금 화면 ===== */
+    .floating-hide-box {
+      position: fixed;
+      right: 16px;
+      bottom: 82px;
+      z-index: 70;
+      background: #111;
+      color: #fff;
+      padding: 12px 14px;
+      border-radius: 14px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.16);
+      font-size: 12px;
+      font-family: "바탕", Batang, serif;
+      display: none;
+    }
+
+    .floating-hide-box label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .floating-hide-box input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+    }
+
     .password-screen {
-      width: 100%;
-      max-width: 460px;
-      margin: 0 auto;
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      max-width: none;
+      margin: 0;
     }
 
     .password-box {
-      background: #fff;
-      padding: 22px;
+      width: 100%;
+      max-width: 460px;
     }
 
     .password-title {
@@ -734,183 +759,190 @@
       text-align: center;
     }
 
-    /* 모바일 버전 */
-   @media (max-width: 480px) {
-  .password-desc {
-    font-size: 11px;
-    line-height: 1.5;
-  }
-}
-  .check-box {
-    font-size: 11px;
-  }
+    @media (max-width: 480px) {
+      .password-desc {
+        font-size: 11px;
+        line-height: 1.5;
+      }
 
-  .check-box input[type="checkbox"] {
-    width: 14px;
-    height: 14px;
-  }
+      .check-box {
+        font-size: 11px;
+      }
 
-  .note-line {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      "word menu"
-      "meaning meaning"
-      "pos pos"
-      "checks checks";
-    column-gap: 10px;
-    row-gap: 14px;
-    align-items: start;
-  }
+      .check-box input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+      }
 
-  .toolbar-main {
-    flex-wrap: wrap;
-    overflow-x: visible;
-  }
+      .note-line {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+          "word menu"
+          "meaning meaning"
+          "pos pos"
+          "checks checks";
+        column-gap: 10px;
+        row-gap: 14px;
+        align-items: start;
+      }
 
-  .toolbar-controls {
-    flex-wrap: wrap;
-    width: 100%;
-    gap: 10px;
-  }
+      .toolbar-main {
+        flex-wrap: wrap;
+        overflow-x: visible;
+      }
 
-  .search-wrap {
-    min-width: 100%;
-    flex: 1 1 100%;
-  }
+      .toolbar-controls {
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 10px;
+      }
 
-  .delete-check-wrap {
-    display: none;
-  }
+      .search-wrap {
+        min-width: 100%;
+        flex: 1 1 100%;
+      }
 
-  .word-inline {
-    display: flex;
-    align-items: baseline;
-    flex-direction: row;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
+      .delete-check-wrap {
+        display: none;
+      }
 
-  .info-inline {
-    align-items: baseline;
-    flex-direction: row;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
+      .word-inline {
+        display: flex;
+        align-items: baseline;
+        flex-direction: row;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
 
-  .word-area {
-  grid-area: word;
-  width: 100%;
-  padding-right: 8px;
-}
+      .info-inline {
+        align-items: baseline;
+        flex-direction: row;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
 
-  .note-line > div[data-load] {
-    width: 100%;
-  }
+      .word-area {
+        grid-area: word;
+        width: 100%;
+        padding-right: 8px;
+      }
 
-  .note-line > div[data-load]:has(.note-meaning) {
-    grid-area: meaning;
-  }
+      .note-line > div[data-load] {
+        width: 100%;
+      }
 
-  .pos-buttons {
-    grid-area: pos;
-    transform: none;
-    margin-right: 0;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
+      .note-line > div[data-load]:has(.note-meaning) {
+        grid-area: meaning;
+      }
 
-  .check-row {
-  grid-area: checks;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 12px;
-  flex-wrap: nowrap;
-  white-space: nowrap;
-  width: 100%;
-  min-width: 0;
-  margin-top: 2px;
-}
+      .pos-buttons {
+        grid-area: pos;
+        transform: none;
+        margin-right: 0;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
 
-.check-box {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-start;
-  font-size: 13px;
-  white-space: nowrap;
-  flex: 0 0 auto;
-}
-  .menu-wrap {
-  grid-area: menu;
-  display: flex;
-  justify-content: flex-end;
-  align-self: start;
-  justify-self: end;
-}
+      .check-row {
+        grid-area: checks;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 12px;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+        width: 100%;
+        min-width: 0;
+        margin-top: 2px;
+      }
 
-  .menu-popup {
-    right: 0;
-    left: auto;
-  }
+      .check-box {
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-start;
+        font-size: 13px;
+        white-space: nowrap;
+        flex: 0 0 auto;
+      }
 
-  .tool-chip,
-  .tool-select,
-  .toolbar-delete-btn {
-    flex: 1 1 calc(50% - 5px);
-    min-width: 0;
-    width: 100%;
-    min-height: 44px;
-    padding: 10px 12px;
-    border-radius: 12px;
-    font-size: 12px;
-    box-sizing: border-box;
-  }
+      .menu-wrap {
+        grid-area: menu;
+        display: flex;
+        justify-content: flex-end;
+        align-self: start;
+        justify-self: end;
+      }
 
-  .tool-chip {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+      .menu-popup {
+        right: 0;
+        left: auto;
+      }
 
-  .tool-chip label {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-  }
+      .tool-chip,
+      .tool-select,
+      .toolbar-delete-btn {
+        flex: 1 1 calc(50% - 5px);
+        min-width: 0;
+        width: 100%;
+        min-height: 44px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        box-sizing: border-box;
+      }
 
-  .tool-select,
-  .toolbar-delete-btn,
-  .tool-chip {
-    min-height: 44px;
-  }
+      .tool-chip {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-  .toolbar-box,
-  .note-item,
-  .info-box,
-  .bulk-box {
-    border-radius: 16px;
-  }
+      .tool-chip label {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
 
-  .note-item {
-    padding: 16px;
-  }
-}
+      .tool-select,
+      .toolbar-delete-btn,
+      .tool-chip {
+        min-height: 44px;
+      }
 
-    
+      .toolbar-box,
+      .note-item,
+      .info-box,
+      .bulk-box {
+        border-radius: 16px;
+      }
+
+      .note-item {
+        padding: 16px;
+      }
+
+      .floating-hide-box {
+        right: 12px;
+        bottom: 76px;
+        padding: 10px 12px;
+        font-size: 11px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="password-screen" id="passwordScreen">
     <div class="password-box">
       <div class="password-title">영단어 오답노트</div>
+
       <div class="password-desc">
         사용하려면 비밀번호를 입력하세요.<br>
         한 번 통과하면 같은 브라우저에서는 다시 묻지 않습니다.
       </div>
+
       <input
         type="password"
         id="passwordInput"
@@ -918,10 +950,11 @@
         placeholder="비밀번호 입력"
         autocomplete="current-password"
       />
+
       <div class="password-actions" style="margin-top:12px;">
         <button class="password-btn" id="passwordSubmitButton" type="button">들어가기</button>
       </div>
-     
+
       <div class="password-message" id="passwordMessage"></div>
     </div>
   </div>
@@ -980,60 +1013,61 @@
       </div>
 
       <div class="info-box">
-  <div class="info-title">조회 결과</div>
-  <div class="info-inline">
-    <div class="info-word" id="resultWord"></div>
-    <div class="info-pron" id="resultPronunciation"></div>
-  </div>
-  <div class="info-meaning" id="resultMeaning"></div>
-</div>
-
-<div class="message" id="message"></div>
-
-    <div class="toolbar-box">
-      <div class="toolbar-head">
-        <div class="toolbar-title">저장된 단어</div>
-        <div class="toolbar-meta" id="statsText">전체 0개 · 숨김 0개</div>
+        <div class="info-title">조회 결과</div>
+        <div class="info-inline">
+          <div class="info-word" id="resultWord"></div>
+          <div class="info-pron" id="resultPronunciation"></div>
+        </div>
+        <div class="info-meaning" id="resultMeaning"></div>
       </div>
 
-      <div class="toolbar-main">
-        <div class="search-wrap">
-          <input
-            type="text"
-            id="searchInput"
-            class="search-input"
-            placeholder="검색 / 단어 / 뜻 / 발음 / 품사"
-          />
-          <button id="searchClearButton" class="search-clear-btn" type="button">×</button>
+      <div class="message" id="message"></div>
+
+      <div class="toolbar-box">
+        <div class="toolbar-head">
+          <div class="toolbar-title">저장된 단어</div>
+          <div class="toolbar-meta" id="statsText">전체 0개 · 숨김 0개</div>
         </div>
 
-        <div class="toolbar-controls">
-          <div class="tool-chip">
-            <label>
-              <input type="checkbox" id="selectAllDelete" />
-              전체 선택
-            </label>
+        <div class="toolbar-main">
+          <div class="search-wrap">
+            <input
+              type="text"
+              id="searchInput"
+              class="search-input"
+              placeholder="검색 / 단어 / 뜻 / 발음 / 품사"
+            />
+            <button id="searchClearButton" class="search-clear-btn" type="button">×</button>
           </div>
 
-          <button class="toolbar-delete-btn" id="deleteSelectedButton" type="button">선택 삭제</button>
+          <div class="toolbar-controls">
+            <div class="tool-chip">
+              <label>
+                <input type="checkbox" id="selectAllDelete" />
+                전체 선택
+              </label>
+            </div>
 
-          <div class="tool-chip">
-            <label>
-              <input type="checkbox" id="hideMemorized" />
-              외운 단어 숨기기
-            </label>
+            <button class="toolbar-delete-btn" id="deleteSelectedButton" type="button">선택 삭제</button>
+
+            <div class="tool-chip">
+              <label>
+                <input type="checkbox" id="hideMemorized" />
+                외운 단어 숨기기
+              </label>
+            </div>
+
+            <select id="sortSelect" class="tool-select">
+              <option value="latest">정렬: 최신순</option>
+              <option value="alphabet">정렬: 알파벳순</option>
+              <option value="memorized">정렬: 외운 순</option>
+            </select>
           </div>
-
-          <select id="sortSelect" class="tool-select">
-            <option value="latest">정렬: 최신순</option>
-            <option value="alphabet">정렬: 알파벳순</option>
-            <option value="memorized">정렬: 외운 순</option>
-          </select>
         </div>
       </div>
+
+      <div class="note-list" id="noteList"></div>
     </div>
-
-    <div class="note-list" id="noteList"></div>
   </div>
 
   <div class="modal-backdrop" id="confirmModal">
@@ -1041,8 +1075,8 @@
       <div class="modal-title">이미 저장된 단어입니다</div>
       <div class="modal-text" id="modalText"></div>
       <div class="modal-actions">
-        <button class="modal-btn cancel" id="modalCancel">취소</button>
-        <button class="modal-btn" id="modalConfirm">수정 저장</button>
+        <button class="modal-btn cancel" id="modalCancel" type="button">취소</button>
+        <button class="modal-btn" id="modalConfirm" type="button">수정</button>
       </div>
     </div>
   </div>
@@ -1052,8 +1086,8 @@
       <div class="modal-title" id="deleteModalTitle">삭제 확인</div>
       <div class="modal-text" id="deleteModalText">정말 삭제하시겠습니까?</div>
       <div class="modal-actions">
-        <button class="modal-btn cancel" id="deleteModalCancel">취소</button>
-        <button class="modal-btn danger" id="deleteModalConfirm">삭제</button>
+        <button class="modal-btn cancel" id="deleteModalCancel" type="button">취소</button>
+        <button class="modal-btn danger" id="deleteModalConfirm" type="button">삭제</button>
       </div>
     </div>
   </div>
@@ -1077,13 +1111,20 @@
         </table>
       </div>
       <div class="modal-actions">
-        <button class="modal-btn cancel" id="previewCancel">취소</button>
-        <button class="modal-btn" id="previewConfirm">가져오기 실행</button>
+        <button class="modal-btn cancel" id="previewCancel" type="button">취소</button>
+        <button class="modal-btn" id="previewConfirm" type="button">가져오기 실행</button>
       </div>
     </div>
   </div>
 
   <button id="topButton" class="top-button" type="button">↑</button>
+
+  <div class="floating-hide-box" id="floatingHideBox">
+    <label>
+      <input type="checkbox" id="floatingHideMemorized" />
+      외운 단어 숨기기
+    </label>
+  </div>
 
   <script>
     const APP_PASSWORD = 'dhekqshxm';
@@ -1137,76 +1178,15 @@
       previewNote: $('previewNote'),
       previewCancel: $('previewCancel'),
       previewConfirm: $('previewConfirm'),
-      topButton: $('topButton')
+      topButton: $('topButton'),
+      floatingHideBox: $('floatingHideBox'),
+      floatingHideMemorized: $('floatingHideMemorized')
     };
 
     let pendingUpdateWord = null;
     let editingId = null;
     let pendingDeleteAction = null;
     let pendingImportRows = [];
-
-    const dictionary = {
-      hurt: '다치게 하다, 상처 주다, 아프다',
-      hunt: '사냥하다, 찾다',
-      heart: '심장, 마음',
-      heat: '열, 더위, 가열하다',
-      head: '머리, 우두머리',
-      hard: '어려운, 딱딱한, 열심히',
-      heard: 'hear의 과거형, 들었다',
-      receive: '받다, 수령하다',
-      recipe: '조리법, 요리법',
-      recent: '최근의',
-      deceive: '속이다',
-      believe: '믿다',
-      piece: '조각, 한 개',
-      peace: '평화',
-      environment: '환경',
-      government: '정부',
-      develop: '개발하다, 발달시키다',
-      development: '발달, 개발',
-      surprise: '놀라게 하다, 놀람',
-      support: '지원하다, 지지하다',
-      suppose: '가정하다, 생각하다',
-      success: '성공',
-      successful: '성공적인',
-      through: '통과하여, 통해서',
-      though: '비록 ~일지라도, 하지만',
-      thought: '생각, 사고',
-      tough: '힘든, 질긴',
-      enough: '충분한, 충분히',
-      bought: 'buy의 과거형, 샀다',
-      caught: 'catch의 과거형, 잡았다',
-      write: '쓰다',
-      right: '오른쪽, 옳은, 권리',
-      light: '빛, 가벼운, 밝은',
-      late: '늦은, 늦게',
-      wait: '기다리다',
-      weight: '무게',
-      weather: '날씨',
-      whether: '~인지 아닌지',
-      quiet: '조용한',
-      quite: '꽤, 상당히',
-      world: '세계',
-      word: '단어, 말',
-      work: '일하다, 일, 작품',
-      walk: '걷다, 산책',
-      people: '사람들, 국민',
-      paper: '종이, 신문',
-      favorite: '가장 좋아하는 것, 매우 좋아하는',
-      beautiful: '아름다운',
-      because: '왜냐하면',
-      library: '도서관',
-      restaurant: '식당',
-      different: '다른',
-      important: '중요한',
-      interest: '관심, 흥미, 이자',
-      business: '사업, 업무',
-      question: '질문, 문제',
-      answer: '대답, 답하다',
-      language: '언어',
-      schedule: '일정',
-      usually: '보통, 대개'
-    };
 
     const POS_MAP = {
       '명': '명', '명사': '명',
@@ -1221,13 +1201,34 @@
       return localStorage.getItem(UNLOCK_KEY) === 'true';
     }
 
+    function showFloatingHideBox() {
+      if (els.floatingHideBox) {
+        els.floatingHideBox.style.display = 'block';
+      }
+    }
+
+    function hideFloatingHideBox() {
+      if (els.floatingHideBox) {
+        els.floatingHideBox.style.display = 'none';
+      }
+    }
+
+    function syncHideMemorizedUI() {
+      if (els.hideMemorized && els.floatingHideMemorized) {
+        els.floatingHideMemorized.checked = els.hideMemorized.checked;
+      }
+    }
+
     function unlockApp() {
       localStorage.setItem(UNLOCK_KEY, 'true');
       els.passwordScreen.classList.add('hidden');
       els.appShell.classList.remove('hidden');
+      showFloatingHideBox();
+
       setTimeout(() => {
         updateWordInputFont();
         resetResult();
+        syncHideMemorizedUI();
         renderNotes();
         els.wordInput.focus();
       }, 0);
@@ -1237,6 +1238,7 @@
       localStorage.removeItem(UNLOCK_KEY);
       els.appShell.classList.add('hidden');
       els.passwordScreen.classList.remove('hidden');
+      hideFloatingHideBox();
       els.passwordInput.value = '';
       els.passwordMessage.textContent = '잠금이 다시 설정되었습니다.';
       els.passwordInput.focus();
@@ -1295,7 +1297,6 @@
       editingId = null;
       updateWordInputFont();
       resetResult();
-      els.wordInput.focus();
     }
 
     function setTopFields(word, meaning, pronunciation = '') {
@@ -1309,7 +1310,7 @@
     }
 
     function isEnglishWord(word) {
-      return /^[A-Za-z]+$/.test(word);
+      return /^[A-Za-z][A-Za-z\s'-]*$/.test(word);
     }
 
     function normalizeText(value) {
@@ -1328,7 +1329,7 @@
 
     function updateWordInputFont() {
       const value = els.wordInput.value.trim();
-      if (value && /^[A-Za-z]+$/.test(value)) {
+      if (value && isEnglishWord(value)) {
         els.wordInput.classList.add('is-english');
       } else {
         els.wordInput.classList.remove('is-english');
@@ -1339,16 +1340,14 @@
       const cleanedWord = word.trim().toLowerCase();
 
       if (!cleanedWord) {
-  if (!els.meaningInput.value.trim()) els.meaningInput.value = '';
-  if (!els.pronunciationInput.value.trim()) els.pronunciationInput.value = '';
-  resetResult();
-  return false;
-}
+        resetResult();
+        return false;
+      }
 
       if (!isEnglishWord(cleanedWord)) {
         els.resultWord.textContent = cleanedWord;
         els.resultPronunciation.textContent = '';
-        els.resultMeaning.textContent = '정확한 영어 단어를 입력해야 뜻 조회가 가능합니다.';
+        els.resultMeaning.textContent = '정확한 영어 단어를 입력해주세요.';
         return false;
       }
 
@@ -1360,23 +1359,21 @@
       if (savedNote) {
         els.resultPronunciation.textContent = savedNote.pronunciation || '';
         els.resultMeaning.textContent = savedNote.meaning;
-        if (!els.meaningInput.value.trim()) els.meaningInput.value = savedNote.meaning;
+
+        if (!els.meaningInput.value.trim()) {
+          els.meaningInput.value = savedNote.meaning;
+        }
+
         if (!els.pronunciationInput.value.trim() && savedNote.pronunciation) {
           els.pronunciationInput.value = savedNote.pronunciation;
         }
+
         return true;
       }
 
       els.resultPronunciation.textContent = '';
-
-      if (!dictionary[cleanedWord]) {
-        els.resultMeaning.textContent = '사전에 없는 단어이거나 철자가 정확하지 않습니다.';
-        return false;
-      }
-
-      els.resultMeaning.textContent = dictionary[cleanedWord];
-      if (!els.meaningInput.value.trim()) els.meaningInput.value = dictionary[cleanedWord];
-      return true;
+      els.resultMeaning.textContent = '저장된 단어가 없습니다.';
+      return false;
     }
 
     function openNaverDictionary(word) {
@@ -1390,6 +1387,21 @@
 
     function findNoteIndex(word, notes = getNotes()) {
       return notes.findIndex(item => item.word.toLowerCase() === word.toLowerCase());
+    }
+
+    function createNote({ word, meaning, pronunciation = '', pos = [] }) {
+      return {
+        id: Date.now() + Math.random(),
+        word,
+        meaning,
+        pronunciation,
+        pos,
+        checkWord: false,
+        checkMeaning: false,
+        checkMemorized: false,
+        checkedForDelete: false,
+        createdAt: Date.now()
+      };
     }
 
     function sortNotes(notes) {
@@ -1436,6 +1448,7 @@
       updateStats(notes);
       updateSearchClearButton();
       syncSelectAllState(notes);
+      syncHideMemorizedUI();
 
       if (!filtered.length) {
         els.noteList.innerHTML = '<div class="empty-text">저장된 오답노트가 없습니다.</div>';
@@ -1463,7 +1476,7 @@
                 <span class="note-word ${note.checkWord ? 'highlight-word' : ''}">${escapeHtml(note.word)}</span>
                 <span class="note-pron">${escapeHtml(note.pronunciation || '')}</span>
               </div>
-              <div class="selected-pos-text">${escapeHtml(posText)}</div>
+              ${posText ? `<div class="selected-pos-text">${escapeHtml(posText)}</div>` : ''}
             </div>
 
             <div data-load="${note.id}">
@@ -1479,19 +1492,20 @@
               ${createPosButton(note.id, posList, '감', 'active-excl')}
             </div>
 
-         <div class="check-row">
-  ${createCheckLabel(note.id, 'checkWord', note.checkWord, '단어')}
-  ${createCheckLabel(note.id, 'checkMeaning', note.checkMeaning, '뜻')}
-  ${createCheckLabel(note.id, 'checkMemorized', note.checkMemorized, '외움')}
-</div>
+            <div class="check-row">
+              ${createCheckLabel(note.id, 'checkWord', note.checkWord, '단어')}
+              ${createCheckLabel(note.id, 'checkMeaning', note.checkMeaning, '뜻')}
+              ${createCheckLabel(note.id, 'checkMemorized', note.checkMemorized, '외움')}
+            </div>
 
-<div class="menu-wrap">
-  <button class="menu-btn" data-menu-btn="${note.id}">⋯</button>
-  <div class="menu-popup" id="menu-${note.id}">
-    <button class="menu-item" data-edit="${note.id}">수정</button>
-    <button class="menu-item" data-delete="${note.id}">삭제</button>
-  </div>
-</div>
+            <div class="menu-wrap">
+              <button class="menu-btn" data-menu-btn="${note.id}" type="button">⋯</button>
+              <div class="menu-popup" id="menu-${note.id}">
+                <button class="menu-item" data-edit="${note.id}" type="button">수정</button>
+                <button class="menu-item" data-delete="${note.id}" type="button">삭제</button>
+              </div>
+            </div>
+          </div>
         `;
 
         els.noteList.appendChild(item);
@@ -1501,7 +1515,7 @@
     }
 
     function createPosButton(id, posList, label, activeClass) {
-      return `<button class="pos-btn ${posList.includes(label) ? activeClass : ''}" data-pos-id="${id}" data-pos="${label}">${label}</button>`;
+      return `<button class="pos-btn ${posList.includes(label) ? activeClass : ''}" data-pos-id="${id}" data-pos="${label}" type="button">${label}</button>`;
     }
 
     function createCheckLabel(id, key, checked, label) {
@@ -1600,7 +1614,7 @@
           '새 뜻: ' + meaning + '\n\n' +
           '이전 발음: ' + oldPron + '\n' +
           '새 발음: ' + newPron + '\n\n' +
-          '수정 저장하시겠습니까?';
+          '수정하시겠습니까?';
 
         pendingUpdateWord = word;
         els.confirmModal.classList.add('show');
@@ -1611,20 +1625,14 @@
         notes[existingIndex].meaning = meaning;
         notes[existingIndex].pronunciation = pronunciation;
         saveNotes(notes);
-        showMessage('기존 단어를 수정 저장했습니다.');
+        showMessage('기존 단어를 수정했습니다.');
       } else {
-        notes.push({
-          id: Date.now() + Math.random(),
+        notes.push(createNote({
           word,
           meaning,
           pronunciation,
-          pos: [],
-          checkWord: false,
-          checkMeaning: false,
-          checkMemorized: false,
-          checkedForDelete: false,
-          createdAt: Date.now()
-        });
+          pos: []
+        }));
         saveNotes(notes);
         showMessage('오답노트에 저장되었습니다.');
       }
@@ -1801,18 +1809,12 @@
           notes[existingIndex].pos = cleanPos;
           updated++;
         } else {
-          notes.push({
-            id: Date.now() + Math.random(),
+          notes.push(createNote({
             word: cleanWord,
             meaning: cleanMeaning,
             pronunciation: cleanPron,
-            pos: cleanPos,
-            checkWord: false,
-            checkMeaning: false,
-            checkMemorized: false,
-            checkedForDelete: false,
-            createdAt: Date.now()
-          });
+            pos: cleanPos
+          }));
           added++;
         }
       });
@@ -1833,20 +1835,22 @@
     }
 
     els.passwordSubmitButton.addEventListener('click', tryUnlock);
+
     els.passwordInput.addEventListener('keydown', e => {
       if (e.key === 'Enter') {
         e.preventDefault();
         tryUnlock();
       }
     });
-   
 
     els.resetButton.addEventListener('click', clearInputs);
     els.naverButton.addEventListener('click', () => openNaverDictionary(els.wordInput.value));
     els.saveButton.addEventListener('click', () => saveCurrentNote());
     els.bulkToggleButton.addEventListener('click', () => els.bulkBox.classList.toggle('show'));
     els.lockButton.addEventListener('click', lockApp);
+
     els.bulkPreviewButton.addEventListener('click', () => previewImportText(els.bulkInput.value, 'bulk.txt'));
+
     els.bulkClearButton.addEventListener('click', () => {
       els.bulkInput.value = '';
       els.bulkInput.focus();
@@ -1855,6 +1859,7 @@
     els.fileInput.addEventListener('change', e => {
       const file = e.target.files[0];
       if (!file) return;
+
       const reader = new FileReader();
       reader.onload = event => {
         previewImportText(event.target.result, file.name);
@@ -1864,6 +1869,7 @@
     });
 
     els.previewCancel.addEventListener('click', closePreviewModal);
+
     els.previewConfirm.addEventListener('click', () => {
       if (pendingImportRows.length) importWordPairs(pendingImportRows);
       closePreviewModal();
@@ -1872,9 +1878,13 @@
     els.selectAllDelete.addEventListener('change', () => {
       const visibleIds = getFilteredNotes(getNotes()).map(item => item.id);
       const notes = getNotes();
+
       notes.forEach(note => {
-        if (visibleIds.includes(note.id)) note.checkedForDelete = els.selectAllDelete.checked;
+        if (visibleIds.includes(note.id)) {
+          note.checkedForDelete = els.selectAllDelete.checked;
+        }
       });
+
       saveNotes(notes);
       renderNotes();
     });
@@ -1909,22 +1919,35 @@
     });
 
     els.searchInput.addEventListener('input', renderNotes);
+
+    els.hideMemorized.addEventListener('change', () => {
+      syncHideMemorizedUI();
+      renderNotes();
+    });
+
+    if (els.floatingHideMemorized) {
+      els.floatingHideMemorized.addEventListener('change', () => {
+        els.hideMemorized.checked = els.floatingHideMemorized.checked;
+        renderNotes();
+      });
+    }
+
     els.searchClearButton.addEventListener('click', () => {
       els.searchInput.value = '';
       renderNotes();
-      els.searchInput.focus();
     });
 
-    els.hideMemorized.addEventListener('change', renderNotes);
     els.sortSelect.addEventListener('change', renderNotes);
 
     els.modalCancel.addEventListener('click', closeConfirmModal);
+
     els.modalConfirm.addEventListener('click', () => {
       if (pendingUpdateWord) saveCurrentNote(true);
       closeConfirmModal();
     });
 
     els.deleteModalCancel.addEventListener('click', closeDeleteConfirm);
+
     els.deleteModalConfirm.addEventListener('click', () => {
       if (typeof pendingDeleteAction === 'function') pendingDeleteAction();
       closeDeleteConfirm();
@@ -1950,9 +1973,12 @@
     document.addEventListener('click', closeAllMenus);
 
     window.addEventListener('load', () => {
+      syncHideMemorizedUI();
+
       if (isUnlocked()) {
         unlockApp();
       } else {
+        hideFloatingHideBox();
         els.passwordScreen.classList.remove('hidden');
         els.appShell.classList.add('hidden');
         els.passwordInput.focus();
