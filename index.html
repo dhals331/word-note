@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>단어장</title>
+  <title>영단어 오답노트</title>
   <style>
     * { box-sizing: border-box; }
 
@@ -191,12 +191,20 @@
       align-items: center;
     }
 
-    #restoreBackupButton {
+    #saveBackupButton {
       background: #20a464;
     }
 
-    #restoreBackupButton:hover {
+    #saveBackupButton:hover {
       background: #188452;
+    }
+
+    #restoreBackupButton {
+      background: #2e7cf6;
+    }
+
+    #restoreBackupButton:hover {
+      background: #1f68d8;
     }
 
     .file-label {
@@ -210,7 +218,6 @@
     .help-text,
     .info-title,
     .message,
-    .preview-note,
     .selected-pos-text,
     .check-box,
     .menu-item,
@@ -403,8 +410,7 @@
       width: auto;
     }
 
-    .toolbar-delete-btn,
-    .unlock-reset-btn {
+    .toolbar-delete-btn {
       min-height: 48px;
       padding: 10px 12px;
       border-radius: 12px;
@@ -417,8 +423,7 @@
       white-space: nowrap;
     }
 
-    .toolbar-delete-btn:hover,
-    .unlock-reset-btn:hover { background: #c74848; }
+    .toolbar-delete-btn:hover { background: #c74848; }
 
     .bulk-box { display: none; }
     .bulk-box.show { display: block; }
@@ -548,8 +553,6 @@
       height: 14px;
     }
 
-    .menu-wrap { position: relative; }
-
     .menu-btn {
       width: 34px;
       height: 34px;
@@ -632,21 +635,18 @@
 
     .modal {
       width: 100%;
-      max-width: 760px;
+      max-width: 460px;
       background: #fff;
       border-radius: 14px;
       padding: 20px;
       box-shadow: 0 10px 24px rgba(0,0,0,0.12);
-      max-height: 90vh;
-      overflow: auto;
     }
-
-    .modal.small { max-width: 460px; }
 
     .modal-title {
       font-size: 16px;
       margin-bottom: 12px;
       text-align: center;
+      font-family: "바탕", Batang, serif;
     }
 
     .modal-text {
@@ -656,6 +656,7 @@
       white-space: pre-line;
       margin-bottom: 16px;
       text-align: center;
+      font-family: "바탕", Batang, serif;
     }
 
     .modal-btn {
@@ -664,6 +665,7 @@
       border-radius: 10px;
       font-size: 13px;
       background: #111;
+      font-family: "바탕", Batang, serif;
     }
 
     .modal-btn.cancel { background: #999; }
@@ -990,7 +992,8 @@
         <button class="action-btn" id="naverButton" type="button">사전</button>
         <button class="action-btn" id="saveButton" type="button">저장</button>
         <button class="action-btn" id="backToListButton" type="button">제자리</button>
-        <button class="action-btn" id="restoreBackupButton" type="button">백업 하기</button>
+        <button class="action-btn" id="saveBackupButton" type="button">백업 저장</button>
+        <button class="action-btn" id="restoreBackupButton" type="button">백업 복원</button>
         <label class="file-label" for="fileInput">파일 불러오기</label>
         <input class="hidden-file" type="file" id="fileInput" accept=".txt,.csv" />
         <button class="action-btn" id="bulkToggleButton" type="button">복붙 가져오기</button>
@@ -1069,7 +1072,7 @@
   </div>
 
   <div class="modal-backdrop" id="confirmModal">
-    <div class="modal small">
+    <div class="modal">
       <div class="modal-title">이미 저장된 단어입니다</div>
       <div class="modal-text" id="modalText"></div>
       <div class="modal-actions">
@@ -1080,7 +1083,7 @@
   </div>
 
   <div class="modal-backdrop" id="deleteConfirmModal">
-    <div class="modal small">
+    <div class="modal">
       <div class="modal-title" id="deleteModalTitle">삭제 확인</div>
       <div class="modal-text" id="deleteModalText">정말 삭제하시겠습니까?</div>
       <div class="modal-actions">
@@ -1115,6 +1118,7 @@
       naverButton: $('naverButton'),
       saveButton: $('saveButton'),
       backToListButton: $('backToListButton'),
+      saveBackupButton: $('saveBackupButton'),
       restoreBackupButton: $('restoreBackupButton'),
       fileInput: $('fileInput'),
       bulkToggleButton: $('bulkToggleButton'),
@@ -1181,34 +1185,17 @@
     }
 
     function hasBackup() {
-  return localStorage.getItem(BACKUP_KEY) !== null;
-}
-
-    function updateBackupButton() {
-      if (!els.restoreBackupButton) return;
-
-      if (hasBackup()) {
-        els.restoreBackupButton.textContent = '백업 복원';
-        els.restoreBackupButton.title = '저장해 둔 백업 상태로 복원';
-      } else {
-        els.restoreBackupButton.textContent = '백업 하기';
-        els.restoreBackupButton.title = '현재 상태를 백업';
-      }
+      return localStorage.getItem(BACKUP_KEY) !== null;
     }
 
-    function markBackupDirty() {
-  updateBackupButton();
-}
-
     function saveManualBackup() {
-  localStorage.setItem(BACKUP_KEY, localStorage.getItem(NOTES_KEY) || '[]');
-  updateBackupButton();
-  showMessage('현재 상태를 백업했습니다.');
-}
-    
+      localStorage.setItem(BACKUP_KEY, localStorage.getItem(NOTES_KEY) || '[]');
+      showMessage('현재 상태를 백업했습니다.');
+    }
+
     function restoreBackupNotes() {
       if (!hasBackup()) {
-        showMessage('복원할 백업이 없습니다. 먼저 백업 하기를 눌러주세요.');
+        showMessage('복원할 백업이 없습니다. 먼저 백업 저장을 눌러주세요.');
         return;
       }
 
@@ -1228,11 +1215,15 @@
     }
 
     function showBackToListButton() {
-      if (els.backToListButton) els.backToListButton.classList.add('show');
+      if (els.backToListButton) {
+        els.backToListButton.classList.add('show');
+      }
     }
 
     function hideBackToListButton() {
-      if (els.backToListButton) els.backToListButton.classList.remove('show');
+      if (els.backToListButton) {
+        els.backToListButton.classList.remove('show');
+      }
     }
 
     function syncHideMemorizedUI() {
@@ -1255,7 +1246,6 @@
         updateWordInputFont();
         resetResult();
         syncHideMemorizedUI();
-        updateBackupButton();
         hideBackToListButton();
         renderNotes();
         els.wordInput.focus();
@@ -1329,7 +1319,7 @@
     }
 
     function isEnglishWord(word) {
-      return /^[A-Za-z][A-Za-z\\s'-]*$/.test(word);
+      return /^[A-Za-z][A-Za-z\s'-]*$/.test(word);
     }
 
     function normalizeText(value) {
@@ -1468,7 +1458,6 @@
       updateSearchClearButton();
       syncSelectAllState(notes);
       syncHideMemorizedUI();
-      updateBackupButton();
 
       if (!filtered.length) {
         els.noteList.innerHTML = '<div class="empty-text">저장된 오답노트가 없습니다.</div>';
@@ -1614,7 +1603,6 @@
           target.meaning = meaning;
           target.pronunciation = pronunciation;
           saveNotes(notes);
-          markBackupDirty();
           showMessage('수정되었습니다.');
         }
         clearInputs();
@@ -1646,7 +1634,6 @@
         notes[existingIndex].meaning = meaning;
         notes[existingIndex].pronunciation = pronunciation;
         saveNotes(notes);
-        markBackupDirty();
         showMessage('기존 단어를 수정했습니다.');
       } else {
         notes.push(createNote({
@@ -1656,7 +1643,6 @@
           pos: []
         }));
         saveNotes(notes);
-        markBackupDirty();
         showMessage('오답노트에 저장되었습니다.');
       }
 
@@ -1700,7 +1686,6 @@
       if (!target) return;
       target[key] = !target[key];
       saveNotes(notes);
-      markBackupDirty();
       renderNotes();
     }
 
@@ -1722,7 +1707,6 @@
         ? target.pos.filter(item => item !== pos)
         : [...target.pos, pos];
       saveNotes(notes);
-      markBackupDirty();
       renderNotes();
     }
 
@@ -1731,14 +1715,16 @@
       const target = notes.find(item => item.id === id);
       if (!target) return;
 
-      if (!confirm(`"${target.word}" 단어를 삭제하시겠습니까?`)) return;
+      pendingDeleteAction = () => {
+        saveNotes(notes.filter(item => item.id !== id));
+        clearInputs();
+        renderNotes();
+        showMessage('삭제되었습니다.');
+      };
 
-      const nextNotes = notes.filter(item => item.id !== id);
-      saveNotes(nextNotes);
-      markBackupDirty();
-      clearInputs();
-      renderNotes();
-      showMessage('삭제되었습니다.');
+      els.deleteModalTitle.textContent = '삭제 확인';
+      els.deleteModalText.textContent = `"${target.word}" 단어를 삭제하시겠습니까?`;
+      els.deleteConfirmModal.classList.add('show');
     }
 
     function deleteSelectedNotes() {
@@ -1750,19 +1736,27 @@
         return;
       }
 
-      if (!confirm(`선택한 ${selected.length}개 항목을 삭제하시겠습니까?`)) return;
+      pendingDeleteAction = () => {
+        saveNotes(notes.filter(note => !note.checkedForDelete));
+        els.selectAllDelete.checked = false;
+        clearInputs();
+        renderNotes();
+        showMessage(`${selected.length}개 항목을 삭제했습니다.`);
+      };
 
-      saveNotes(notes.filter(note => !note.checkedForDelete));
-      markBackupDirty();
-      els.selectAllDelete.checked = false;
-      clearInputs();
-      renderNotes();
-      showMessage(`${selected.length}개 항목을 삭제했습니다.`);
+      els.deleteModalTitle.textContent = '선택 삭제 확인';
+      els.deleteModalText.textContent = `선택한 ${selected.length}개 항목을 삭제하시겠습니까?`;
+      els.deleteConfirmModal.classList.add('show');
     }
 
     function closeConfirmModal() {
       els.confirmModal.classList.remove('show');
       pendingUpdateWord = null;
+    }
+
+    function closeDeleteConfirm() {
+      els.deleteConfirmModal.classList.remove('show');
+      pendingDeleteAction = null;
     }
 
     function parseLine(line, modeHint = '') {
@@ -1835,7 +1829,6 @@
       });
 
       saveNotes(notes);
-      markBackupDirty();
       clearInputs();
       renderNotes();
       showMessage(`가져오기 완료: 추가 ${added}개, 수정 ${updated}개, 건너뜀 ${skipped}개`);
@@ -1871,15 +1864,8 @@
     els.naverButton.addEventListener('click', () => openNaverDictionary(els.wordInput.value));
     els.saveButton.addEventListener('click', () => saveCurrentNote());
     els.backToListButton.addEventListener('click', backToSavedPosition);
-
-    els.restoreBackupButton.addEventListener('click', () => {
-      if (hasBackup()) {
-        restoreBackupNotes();
-      } else {
-        saveManualBackup();
-      }
-    });
-
+    els.saveBackupButton.addEventListener('click', saveManualBackup);
+    els.restoreBackupButton.addEventListener('click', restoreBackupNotes);
     els.bulkToggleButton.addEventListener('click', () => els.bulkBox.classList.toggle('show'));
     els.lockButton.addEventListener('click', lockApp);
 
@@ -1974,6 +1960,21 @@
       closeConfirmModal();
     });
 
+    els.deleteModalCancel.addEventListener('click', closeDeleteConfirm);
+
+    els.deleteModalConfirm.addEventListener('click', () => {
+      if (typeof pendingDeleteAction === 'function') pendingDeleteAction();
+      closeDeleteConfirm();
+    });
+
+    [els.confirmModal, els.deleteConfirmModal].forEach(modal => {
+      modal.addEventListener('click', e => {
+        if (e.target !== modal) return;
+        if (modal === els.confirmModal) closeConfirmModal();
+        if (modal === els.deleteConfirmModal) closeDeleteConfirm();
+      });
+    });
+
     window.addEventListener('scroll', () => {
       els.topButton.classList.toggle('show', window.scrollY > 240);
     });
@@ -1986,7 +1987,6 @@
 
     window.addEventListener('load', () => {
       syncHideMemorizedUI();
-      updateBackupButton();
 
       if (isUnlocked()) {
         unlockApp();
