@@ -147,13 +147,13 @@
     }
 
     .action-btn:hover,
-.file-label:hover,
-.top-button:hover,
-.password-btn:hover { background: #444; }
+    .file-label:hover,
+    .top-button:hover,
+    .password-btn:hover { background: #444; }
 
-.floating-hide-button:hover {
-  background: rgba(17, 17, 17, 0.18);
-}
+    .floating-hide-button:hover {
+      background: rgba(17, 17, 17, 0.18);
+    }
 
     .danger-btn,
     .modal-btn.danger { background: #c94f4f; }
@@ -167,6 +167,16 @@
 
     #lockButton:hover {
       background: #777;
+    }
+
+    #backToListButton {
+      display: none;
+    }
+
+    #backToListButton.show {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .file-label {
@@ -690,27 +700,31 @@
     .top-button.show { display: block; }
 
     .floating-hide-button {
-  position: fixed;
-  top: 22px;
-  right: 22px;
-  width: 42px;
-  height: 42px;
-  border: none;
-  border-radius: 999px;
-  background: rgba(17, 17, 17, 0.1);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
-  display: none;
-  z-index: 70;
-}
+      position: fixed;
+      top: 22px;
+      right: 22px;
+      width: 42px;
+      height: 42px;
+      border: none;
+      border-radius: 999px;
+      background: rgba(17, 17, 17, 0.1);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+      display: none;
+      z-index: 70;
+    }
 
     .floating-hide-button.active {
-  background: rgba(70, 130, 255, 0.1);
-}
-    
+      background: rgba(70, 130, 255, 0.1);
+    }
+
+    .floating-hide-button.active:hover {
+      background: rgba(70, 130, 255, 0.18);
+    }
+
     .app-shell.hidden,
     .password-screen.hidden {
       display: none;
@@ -925,12 +939,12 @@
       }
 
       .floating-hide-button {
-  top: 16px;
-  right: 16px;
-  width: 38px;
-  height: 38px;
-  font-size: 11px;
-}
+        top: 16px;
+        right: 16px;
+        width: 38px;
+        height: 38px;
+        font-size: 11px;
+      }
     }
   </style>
 </head>
@@ -994,6 +1008,7 @@
         <button class="action-btn" id="resetButton" type="button">초기화</button>
         <button class="action-btn" id="naverButton" type="button">사전</button>
         <button class="action-btn" id="saveButton" type="button">저장</button>
+        <button class="action-btn" id="backToListButton" type="button">제자리</button>
         <label class="file-label" for="fileInput">파일 불러오기</label>
         <input class="hidden-file" type="file" id="fileInput" accept=".txt,.csv" />
         <button class="action-btn" id="bulkToggleButton" type="button">복붙 가져오기</button>
@@ -1140,6 +1155,7 @@
       resetButton: $('resetButton'),
       naverButton: $('naverButton'),
       saveButton: $('saveButton'),
+      backToListButton: $('backToListButton'),
       fileInput: $('fileInput'),
       bulkToggleButton: $('bulkToggleButton'),
       lockButton: $('lockButton'),
@@ -1181,6 +1197,8 @@
     let editingId = null;
     let pendingDeleteAction = null;
     let pendingImportRows = [];
+    let lastScrollY = 0;
+    let canReturnToList = false;
 
     const POS_MAP = {
       '명': '명', '명사': '명',
@@ -1207,6 +1225,18 @@
       }
     }
 
+    function showBackToListButton() {
+      if (els.backToListButton) {
+        els.backToListButton.classList.add('show');
+      }
+    }
+
+    function hideBackToListButton() {
+      if (els.backToListButton) {
+        els.backToListButton.classList.remove('show');
+      }
+    }
+
     function syncHideMemorizedUI() {
       if (els.hideMemorized && els.floatingHideButton) {
         els.floatingHideButton.classList.toggle('active', els.hideMemorized.checked);
@@ -1227,6 +1257,7 @@
         updateWordInputFont();
         resetResult();
         syncHideMemorizedUI();
+        hideBackToListButton();
         renderNotes();
         els.wordInput.focus();
       }, 0);
@@ -1237,6 +1268,8 @@
       els.appShell.classList.add('hidden');
       els.passwordScreen.classList.remove('hidden');
       hideFloatingHideButton();
+      hideBackToListButton();
+      canReturnToList = false;
       els.passwordInput.value = '';
       els.passwordMessage.textContent = '잠금이 다시 설정되었습니다.';
       els.passwordInput.focus();
@@ -1295,6 +1328,8 @@
       editingId = null;
       updateWordInputFont();
       resetResult();
+      hideBackToListButton();
+      canReturnToList = false;
     }
 
     function setTopFields(word, meaning, pronunciation = '') {
@@ -1642,6 +1677,9 @@
     function startEdit(id) {
       const target = getNotes().find(item => item.id === id);
       if (!target) return;
+      lastScrollY = window.scrollY;
+      canReturnToList = true;
+      showBackToListButton();
       editingId = id;
       setTopFields(target.word, target.meaning, target.pronunciation || '');
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1651,9 +1689,19 @@
     function loadNoteToTop(id) {
       const target = getNotes().find(item => item.id === id);
       if (!target) return;
+      lastScrollY = window.scrollY;
+      canReturnToList = true;
+      showBackToListButton();
       editingId = null;
       setTopFields(target.word, target.meaning, target.pronunciation || '');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function backToSavedPosition() {
+      if (!canReturnToList) return;
+      window.scrollTo({ top: lastScrollY, behavior: 'smooth' });
+      hideBackToListButton();
+      canReturnToList = false;
     }
 
     function toggleCheck(id, key) {
@@ -1844,6 +1892,7 @@
     els.resetButton.addEventListener('click', clearInputs);
     els.naverButton.addEventListener('click', () => openNaverDictionary(els.wordInput.value));
     els.saveButton.addEventListener('click', () => saveCurrentNote());
+    els.backToListButton.addEventListener('click', backToSavedPosition);
     els.bulkToggleButton.addEventListener('click', () => els.bulkBox.classList.toggle('show'));
     els.lockButton.addEventListener('click', lockApp);
 
@@ -1978,6 +2027,7 @@
         unlockApp();
       } else {
         hideFloatingHideButton();
+        hideBackToListButton();
         els.passwordScreen.classList.remove('hidden');
         els.appShell.classList.add('hidden');
         els.passwordInput.focus();
