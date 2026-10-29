@@ -1136,6 +1136,13 @@
 
   <button id="topButton" class="top-button" type="button">↑</button>
 
+<div class="floating-hide-box">
+  <label>
+    <input type="checkbox" id="floatingHideMemorized" />
+    외운 단어 숨기기
+  </label>
+</div>
+
   <script>
   const APP_PASSWORD = 'dhekqshxm';
   const UNLOCK_KEY = 'wrongAnswerWordsUnlocked';
@@ -1971,13 +1978,5 @@ els.hideMemorized.addEventListener('change', () => {
 
   window.lockApp = lockApp;
 </script>
-
-    <div class="floating-hide-box">
-  <label>
-    <input type="checkbox" id="floatingHideMemorized" />
-    외운 단어 숨기기
-  </label>
-</div>
-    
 </body>
 </html>
