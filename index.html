@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>영단어 오답노트</title>
+  <title>단어장</title>
   <style>
     * { box-sizing: border-box; }
 
@@ -759,186 +759,247 @@
       color: #c74848;
     }
 
-    @media (max-width: 480px) {
-      .password-desc {
-        font-size: 11px;
-        line-height: 1.5;
-      }
+   @media (max-width: 480px) {
+  .password-desc {
+    font-size: 11px;
+    line-height: 1.5;
+  }
 
-      .check-box {
-        font-size: 11px;
-      }
+  .check-box {
+    font-size: 11px;
+  }
 
-      .check-box input[type="checkbox"] {
-        width: 14px;
-        height: 14px;
-      }
+  .check-box input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+  }
 
-      .note-line {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        grid-template-areas:
-          "word menu"
-          "meaning meaning"
-          "pos pos"
-          "checks checks";
-        column-gap: 10px;
-        row-gap: 14px;
-        align-items: start;
-      }
+  .button-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+  }
 
-      .toolbar-main {
-        flex-wrap: wrap;
-        overflow-x: visible;
-      }
+  .button-row > .action-btn,
+  .button-row > .file-label {
+    width: 100%;
+    min-width: 0;
+    flex: unset;
+  }
 
-      .toolbar-controls {
-        flex-wrap: wrap;
-        width: 100%;
-        gap: 10px;
-      }
+  #resetButton {
+    grid-column: span 2;
+    order: 1;
+  }
 
-      .search-wrap {
-        min-width: 100%;
-        flex: 1 1 100%;
-      }
+  #saveButton {
+    grid-column: span 2;
+    order: 2;
+  }
 
-      .delete-check-wrap {
-        display: none;
-      }
+  #naverButton {
+    grid-column: span 2;
+    order: 3;
+  }
 
-      .word-inline {
-        display: flex;
-        align-items: baseline;
-        flex-direction: row;
-        gap: 6px;
-        flex-wrap: nowrap;
-        overflow: hidden;
-      }
+  .file-label[for="fileInput"] {
+    grid-column: span 3;
+    order: 4;
+  }
 
-      .info-inline {
-        align-items: baseline;
-        flex-direction: row;
-        gap: 6px;
-        flex-wrap: wrap;
-      }
+  #bulkToggleButton {
+    grid-column: span 3;
+    order: 5;
+  }
 
-      .word-area {
-        grid-area: word;
-        width: 100%;
-        padding-right: 8px;
-      }
+  #saveBackupButton {
+    grid-column: span 3;
+    order: 6;
+  }
 
-      .note-line > div[data-load] {
-        width: 100%;
-      }
+  #restoreBackupButton {
+    grid-column: span 3;
+    order: 7;
+  }
 
-      .note-line > div[data-load]:has(.note-meaning) {
-        grid-area: meaning;
-      }
+  #lockButton {
+    grid-column: 1 / -1;
+    order: 8;
+  }
 
-      .pos-buttons {
-        grid-area: pos;
-        transform: none;
-        margin-right: 0;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
+  #backToListButton.show {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    grid-column: 1 / -1;
+    order: 9;
+  }
 
-      .check-row {
-        grid-area: checks;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 12px;
-        flex-wrap: nowrap;
-        white-space: nowrap;
-        width: 100%;
-        min-width: 0;
-        margin-top: 2px;
-      }
+  .note-line {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "word menu"
+      "meaning meaning"
+      "pos pos"
+      "checks checks";
+    column-gap: 10px;
+    row-gap: 14px;
+    align-items: start;
+  }
 
-      .check-box {
-        display: inline-flex;
-        align-items: center;
-        justify-content: flex-start;
-        font-size: 13px;
-        white-space: nowrap;
-        flex: 0 0 auto;
-      }
+  .toolbar-main {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
 
-      .menu-wrap {
-        grid-area: menu;
-        display: flex;
-        justify-content: flex-end;
-        align-self: start;
-        justify-self: end;
-      }
+  .toolbar-controls {
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 10px;
+  }
 
-      .menu-popup {
-        right: 0;
-        left: auto;
-      }
+  .search-wrap {
+    min-width: 100%;
+    flex: 1 1 100%;
+  }
 
-      .tool-chip,
-      .tool-select,
-      .toolbar-delete-btn {
-        flex: 1 1 calc(50% - 5px);
-        min-width: 0;
-        width: 100%;
-        min-height: 44px;
-        padding: 10px 12px;
-        border-radius: 12px;
-        font-size: 12px;
-        box-sizing: border-box;
-      }
+  .delete-check-wrap {
+    display: none;
+  }
 
-      .tool-chip {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+  .word-inline {
+    display: flex;
+    align-items: baseline;
+    flex-direction: row;
+    gap: 6px;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
 
-      .tool-chip label {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-      }
+  .info-inline {
+    align-items: baseline;
+    flex-direction: row;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
 
-      .tool-select,
-      .toolbar-delete-btn,
-      .tool-chip {
-        min-height: 44px;
-      }
+  .word-area {
+    grid-area: word;
+    width: 100%;
+    padding-right: 8px;
+  }
 
-      .toolbar-box,
-      .note-item,
-      .info-box,
-      .bulk-box {
-        border-radius: 16px;
-      }
+  .note-line > div[data-load] {
+    width: 100%;
+  }
 
-      .note-item {
-        padding: 16px;
-      }
+  .note-line > div[data-load]:has(.note-meaning) {
+    grid-area: meaning;
+  }
 
-      .floating-hide-button {
-        top: 16px;
-        right: 16px;
-        width: 38px;
-        height: 38px;
-        font-size: 11px;
-      }
-    }
+  .pos-buttons {
+    grid-area: pos;
+    transform: none;
+    margin-right: 0;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .check-row {
+    grid-area: checks;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    width: 100%;
+    min-width: 0;
+    margin-top: 2px;
+  }
+
+  .check-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 13px;
+    white-space: nowrap;
+    flex: 0 0 auto;
+  }
+
+  .menu-wrap {
+    grid-area: menu;
+    display: flex;
+    justify-content: flex-end;
+    align-self: start;
+    justify-self: end;
+  }
+
+  .menu-popup {
+    right: 0;
+    left: auto;
+  }
+
+  .tool-chip,
+  .tool-select,
+  .toolbar-delete-btn {
+    flex: 1 1 calc(50% - 5px);
+    min-width: 0;
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    box-sizing: border-box;
+  }
+
+  .tool-chip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tool-chip label {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .tool-select,
+  .toolbar-delete-btn,
+  .tool-chip {
+    min-height: 44px;
+  }
+
+  .toolbar-box,
+  .note-item,
+  .info-box,
+  .bulk-box {
+    border-radius: 16px;
+  }
+
+  .note-item {
+    padding: 16px;
+  }
+
+  .floating-hide-button {
+    top: 16px;
+    right: 16px;
+    width: 38px;
+    height: 38px;
+    font-size: 11px;
+  }
+}
   </style>
 </head>
 <body>
   <div class="password-screen" id="passwordScreen">
     <div class="password-box">
-      <div class="password-title">영단어 오답노트</div>
+      <div class="password-title">단어장</div>
       <div class="password-desc">
         사용하려면 비밀번호를 입력하세요.<br>
         한 번 통과하면 같은 브라우저에서는 다시 묻지 않습니다.
