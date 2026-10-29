@@ -149,7 +149,8 @@
     .action-btn:hover,
     .file-label:hover,
     .top-button:hover,
-    .password-btn:hover { background: #444; }
+    .password-btn:hover,
+    .floating-hide-button:hover { background: #444; }
 
     .danger-btn,
     .modal-btn.danger { background: #c94f4f; }
@@ -190,7 +191,8 @@
     .tool-select,
     .password-title,
     .password-desc,
-    .password-message {
+    .password-message,
+    .floating-hide-button {
       font-family: "바탕", Batang, serif;
     }
 
@@ -684,36 +686,31 @@
 
     .top-button.show { display: block; }
 
+    .floating-hide-button {
+      position: fixed;
+      top: 22px;
+      right: 22px;
+      width: 48px;
+      height: 48px;
+      border: none;
+      border-radius: 999px;
+      background: rgba(17, 17, 17, 0.8);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.16);
+      display: none;
+      z-index: 70;
+    }
+
+    .floating-hide-button.active {
+      background: rgba(216, 91, 91, 0.8);
+    }
+
     .app-shell.hidden,
     .password-screen.hidden {
       display: none;
-    }
-
-    .floating-hide-box {
-      position: fixed;
-      right: 16px;
-      bottom: 82px;
-      z-index: 70;
-      background: #111;
-      color: #fff;
-      padding: 12px 14px;
-      border-radius: 14px;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.16);
-      font-size: 12px;
-      font-family: "바탕", Batang, serif;
-      display: none;
-    }
-
-    .floating-hide-box label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-    }
-
-    .floating-hide-box input[type="checkbox"] {
-      width: 14px;
-      height: 14px;
     }
 
     .password-screen {
@@ -924,11 +921,12 @@
         padding: 16px;
       }
 
-      .floating-hide-box {
-        right: 12px;
-        bottom: 76px;
-        padding: 10px 12px;
-        font-size: 11px;
+      .floating-hide-button {
+        top: 16px;
+        right: 16px;
+        width: 44px;
+        height: 44px;
+        font-size: 13px;
       }
     }
   </style>
@@ -1118,13 +1116,7 @@
   </div>
 
   <button id="topButton" class="top-button" type="button">↑</button>
-
-  <div class="floating-hide-box" id="floatingHideBox">
-    <label>
-      <input type="checkbox" id="floatingHideMemorized" />
-      외운 단어 숨기기
-    </label>
-  </div>
+  <button id="floatingHideButton" class="floating-hide-button" type="button">숨</button>
 
   <script>
     const APP_PASSWORD = 'dhekqshxm';
@@ -1179,8 +1171,7 @@
       previewCancel: $('previewCancel'),
       previewConfirm: $('previewConfirm'),
       topButton: $('topButton'),
-      floatingHideBox: $('floatingHideBox'),
-      floatingHideMemorized: $('floatingHideMemorized')
+      floatingHideButton: $('floatingHideButton')
     };
 
     let pendingUpdateWord = null;
@@ -1201,21 +1192,25 @@
       return localStorage.getItem(UNLOCK_KEY) === 'true';
     }
 
-    function showFloatingHideBox() {
-      if (els.floatingHideBox) {
-        els.floatingHideBox.style.display = 'block';
+    function showFloatingHideButton() {
+      if (els.floatingHideButton) {
+        els.floatingHideButton.style.display = 'block';
       }
     }
 
-    function hideFloatingHideBox() {
-      if (els.floatingHideBox) {
-        els.floatingHideBox.style.display = 'none';
+    function hideFloatingHideButton() {
+      if (els.floatingHideButton) {
+        els.floatingHideButton.style.display = 'none';
       }
     }
 
     function syncHideMemorizedUI() {
-      if (els.hideMemorized && els.floatingHideMemorized) {
-        els.floatingHideMemorized.checked = els.hideMemorized.checked;
+      if (els.hideMemorized && els.floatingHideButton) {
+        els.floatingHideButton.classList.toggle('active', els.hideMemorized.checked);
+        els.floatingHideButton.textContent = '숨';
+        els.floatingHideButton.title = els.hideMemorized.checked
+          ? '외운 단어 숨기기 해제'
+          : '외운 단어 숨기기';
       }
     }
 
@@ -1223,7 +1218,7 @@
       localStorage.setItem(UNLOCK_KEY, 'true');
       els.passwordScreen.classList.add('hidden');
       els.appShell.classList.remove('hidden');
-      showFloatingHideBox();
+      showFloatingHideButton();
 
       setTimeout(() => {
         updateWordInputFont();
@@ -1238,7 +1233,7 @@
       localStorage.removeItem(UNLOCK_KEY);
       els.appShell.classList.add('hidden');
       els.passwordScreen.classList.remove('hidden');
-      hideFloatingHideBox();
+      hideFloatingHideButton();
       els.passwordInput.value = '';
       els.passwordMessage.textContent = '잠금이 다시 설정되었습니다.';
       els.passwordInput.focus();
@@ -1925,9 +1920,10 @@
       renderNotes();
     });
 
-    if (els.floatingHideMemorized) {
-      els.floatingHideMemorized.addEventListener('change', () => {
-        els.hideMemorized.checked = els.floatingHideMemorized.checked;
+    if (els.floatingHideButton) {
+      els.floatingHideButton.addEventListener('click', () => {
+        els.hideMemorized.checked = !els.hideMemorized.checked;
+        syncHideMemorizedUI();
         renderNotes();
       });
     }
@@ -1978,7 +1974,7 @@
       if (isUnlocked()) {
         unlockApp();
       } else {
-        hideFloatingHideBox();
+        hideFloatingHideButton();
         els.passwordScreen.classList.remove('hidden');
         els.appShell.classList.add('hidden');
         els.passwordInput.focus();
