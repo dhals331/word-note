@@ -1438,11 +1438,11 @@
         <button class="action-btn" id="naverButton" type="button">사전</button>
         <button class="action-btn" id="saveButton" type="button">저장</button>
         <button class="action-btn" id="backToListButton" type="button">제자리</button>
-        <label class="file-label" for="fileInput">파일 불러오기</label>
-        <input class="hidden-file" type="file" id="fileInput" accept=".txt,.csv" />
-        <button class="action-btn" id="bulkToggleButton" type="button">복붙 가져오기</button>
-        <button class="action-btn" id="saveBackupButton" type="button">백업 저장</button>
-        <button class="action-btn" id="restoreBackupButton" type="button">백업 복원</button>
+       <label class="file-label" for="fileInput">파일 불러오기</label>
+<input class="hidden-file" type="file" id="fileInput" accept=".txt,.csv" />
+<button class="action-btn" id="bulkToggleButton" type="button">복붙 가져오기</button>
+<button class="action-btn" id="saveBackupButton" type="button">백업 저장</button>
+<button class="action-btn" id="restoreBackupButton" type="button">백업 복원</button>
       </div>
 
       <div class="bulk-box" id="bulkBox">
@@ -1450,7 +1450,7 @@
         <textarea
           id="bulkInput"
           class="bulk-textarea"
-          placeholder="예시&#10;run: 달리다 : 런 : 동, 명&#10;and: 그리고 : 앤드 : 접&#10;wow: 와! : 와우 : 감&#10;give up: 포기하다 : 기브 업 : 숙"
+          placeholder="예시&#10;run: 달리다, 달리기 : 런 : 동, 명&#10;and: 그리고 : 앤드 : 접&#10;wow: 와! : 와우 : 감"
         ></textarea>
         <div class="bulk-actions">
           <button class="action-btn" id="bulkPreviewButton" type="button">미리보기</button>
@@ -1516,7 +1516,7 @@
     </div>
   </div>
 
-  <div class="modal-backdrop" id="confirmModal">
+    <div class="modal-backdrop" id="confirmModal">
     <div class="modal">
       <div class="modal-title">이미 저장된 단어입니다</div>
       <div class="modal-text" id="modalText"></div>
@@ -1575,1153 +1575,1093 @@
   </div>
 
   <button id="quizButton" class="floating-mini-button floating-quiz-button" type="button">퀴즈</button>
-  <button id="floatingLockButton" class="floating-mini-button floating-lock-button" type="button">잠금</button>
-  <button id="floatingHideButton" class="floating-mini-button floating-hide-button" type="button">숨김</button>
+<button id="floatingLockButton" class="floating-mini-button floating-lock-button" type="button">잠금</button>
+<button id="floatingHideButton" class="floating-mini-button floating-hide-button" type="button">숨김</button>
 
   <script>
-    const APP_PASSWORD = 'dhekqshxm';
-    const UNLOCK_KEY = 'wrongAnswerWordsUnlocked';
-    const NOTES_KEY = 'wrongAnswerWords';
-    const BACKUP_KEY = 'wrongAnswerWordsBackup';
+  const APP_PASSWORD = 'dhekqshxm';
+  const UNLOCK_KEY = 'wrongAnswerWordsUnlocked';
+  const NOTES_KEY = 'wrongAnswerWords';
+  const BACKUP_KEY = 'wrongAnswerWordsBackup';
 
-    const $ = id => document.getElementById(id);
+  const $ = id => document.getElementById(id);
 
-    const els = {
-      passwordScreen: $('passwordScreen'),
-      appShell: $('appShell'),
-      passwordInput: $('passwordInput'),
-      passwordSubmitButton: $('passwordSubmitButton'),
-      passwordMessage: $('passwordMessage'),
+  const els = {
+    passwordScreen: $('passwordScreen'),
+    appShell: $('appShell'),
+    passwordInput: $('passwordInput'),
+    passwordSubmitButton: $('passwordSubmitButton'),
+    passwordMessage: $('passwordMessage'),
 
-      wordInput: $('wordInput'),
-      meaningInput: $('meaningInput'),
-      pronunciationInput: $('pronunciationInput'),
-      resetButton: $('resetButton'),
-      naverButton: $('naverButton'),
-      saveButton: $('saveButton'),
-      backToListButton: $('backToListButton'),
-      saveBackupButton: $('saveBackupButton'),
-      restoreBackupButton: $('restoreBackupButton'),
-      fileInput: $('fileInput'),
-      bulkToggleButton: $('bulkToggleButton'),
-      bulkBox: $('bulkBox'),
-      bulkInput: $('bulkInput'),
-      bulkPreviewButton: $('bulkPreviewButton'),
-      bulkClearButton: $('bulkClearButton'),
+    wordInput: $('wordInput'),
+    meaningInput: $('meaningInput'),
+    pronunciationInput: $('pronunciationInput'),
+    resetButton: $('resetButton'),
+    naverButton: $('naverButton'),
+    saveButton: $('saveButton'),
+    backToListButton: $('backToListButton'),
+    saveBackupButton: $('saveBackupButton'),
+    restoreBackupButton: $('restoreBackupButton'),
+    fileInput: $('fileInput'),
+    bulkToggleButton: $('bulkToggleButton'),
+    bulkBox: $('bulkBox'),
+    bulkInput: $('bulkInput'),
+    bulkPreviewButton: $('bulkPreviewButton'),
+    bulkClearButton: $('bulkClearButton'),
+    resultWord: $('resultWord'),
+    resultPronunciation: $('resultPronunciation'),
+    resultMeaning: $('resultMeaning'),
+    message: $('message'),
+    searchInput: $('searchInput'),
+    searchClearButton: $('searchClearButton'),
+    statsText: $('statsText'),
+    noteList: $('noteList'),
+    hideMemorized: $('hideMemorized'),
+    sortSelect: $('sortSelect'),
+    selectAllDelete: $('selectAllDelete'),
+    deleteSelectedButton: $('deleteSelectedButton'),
+    confirmModal: $('confirmModal'),
+    modalText: $('modalText'),
+    modalCancel: $('modalCancel'),
+    modalConfirm: $('modalConfirm'),
+    deleteConfirmModal: $('deleteConfirmModal'),
+    deleteModalTitle: $('deleteModalTitle'),
+    deleteModalText: $('deleteModalText'),
+    deleteModalCancel: $('deleteModalCancel'),
+    deleteModalConfirm: $('deleteModalConfirm'),
 
-      resultWord: $('resultWord'),
-      resultPronunciation: $('resultPronunciation'),
-      resultMeaning: $('resultMeaning'),
-      message: $('message'),
+    floatingLockButton: $('floatingLockButton'),
+    floatingHideButton: $('floatingHideButton'),
+    quizButton: $('quizButton'),
 
-      searchInput: $('searchInput'),
-      searchClearButton: $('searchClearButton'),
-      statsText: $('statsText'),
-      noteList: $('noteList'),
-      hideMemorized: $('hideMemorized'),
-      sortSelect: $('sortSelect'),
-      selectAllDelete: $('selectAllDelete'),
-      deleteSelectedButton: $('deleteSelectedButton'),
+    quizModal: $('quizModal'),
+    quizHideMeaningButton: $('quizHideMeaningButton'),
+    quizHideWordButton: $('quizHideWordButton'),
+    quizStatus: $('quizStatus'),
+    quizFrontLabel: $('quizFrontLabel'),
+    quizFront: $('quizFront'),
+    quizAnswerWrap: $('quizAnswerWrap'),
+    quizBackLabel: $('quizBackLabel'),
+    quizBack: $('quizBack'),
+    quizPronunciation: $('quizPronunciation'),
+    quizActionsBefore: $('quizActionsBefore'),
+    quizActionsAfter: $('quizActionsAfter'),
+    quizRevealButton: $('quizRevealButton'),
+    quizDontKnowButton: $('quizDontKnowButton'),
+    quizCloseButton: $('quizCloseButton'),
+    quizMemorizedButton: $('quizMemorizedButton'),
+    quizStudyAgainButton: $('quizStudyAgainButton'),
+    quizNextButton: $('quizNextButton')
+  };
 
-      confirmModal: $('confirmModal'),
-      modalText: $('modalText'),
-      modalCancel: $('modalCancel'),
-      modalConfirm: $('modalConfirm'),
+  let pendingUpdateWord = null;
+  let editingId = null;
+  let pendingDeleteAction = null;
+  let lastScrollY = 0;
+  let canReturnToList = false;
 
-      deleteConfirmModal: $('deleteConfirmModal'),
-      deleteModalTitle: $('deleteModalTitle'),
-      deleteModalText: $('deleteModalText'),
-      deleteModalCancel: $('deleteModalCancel'),
-      deleteModalConfirm: $('deleteModalConfirm'),
+  let quizPool = [];
+  let quizCurrent = null;
+  let quizMode = 'hideMeaning';
+  let quizAnswerShown = false;
+  let quizRepeatQueue = [];
 
-      floatingLockButton: $('floatingLockButton'),
-      floatingHideButton: $('floatingHideButton'),
-      quizButton: $('quizButton'),
+  const POS_MAP = {
+    '명': '명', '명사': '명',
+    '동': '동', '동사': '동',
+    '형': '형', '형용사': '형',
+    '부': '부', '부사': '부',
+    '접': '접', '접속사': '접',
+    '감': '감', '감탄사': '감'
+  };
 
-      quizModal: $('quizModal'),
-      quizHideMeaningButton: $('quizHideMeaningButton'),
-      quizHideWordButton: $('quizHideWordButton'),
-      quizStatus: $('quizStatus'),
-      quizFrontLabel: $('quizFrontLabel'),
-      quizFront: $('quizFront'),
-      quizAnswerWrap: $('quizAnswerWrap'),
-      quizBackLabel: $('quizBackLabel'),
-      quizBack: $('quizBack'),
-      quizPronunciation: $('quizPronunciation'),
-      quizActionsBefore: $('quizActionsBefore'),
-      quizActionsAfter: $('quizActionsAfter'),
-      quizRevealButton: $('quizRevealButton'),
-      quizDontKnowButton: $('quizDontKnowButton'),
-      quizCloseButton: $('quizCloseButton'),
-      quizMemorizedButton: $('quizMemorizedButton'),
-      quizStudyAgainButton: $('quizStudyAgainButton'),
-      quizNextButton: $('quizNextButton')
-    };
+  function isUnlocked() {
+    return localStorage.getItem(UNLOCK_KEY) === 'true';
+  }
 
-    let pendingUpdateWord = null;
-    let editingId = null;
-    let pendingDeleteAction = null;
-    let lastScrollY = 0;
-    let canReturnToList = false;
-    let messageTimer = null;
+  function getNotes() {
+    return JSON.parse(localStorage.getItem(NOTES_KEY) || '[]').map(note => ({
+      ...note,
+      pronunciation: note.pronunciation || '',
+      pos: Array.isArray(note.pos) ? note.pos : [],
+      checkedForDelete: Boolean(note.checkedForDelete)
+    }));
+  }
 
-    let quizPool = [];
-    let quizCurrent = null;
-    let quizMode = 'hideMeaning';
-    let quizAnswerShown = false;
-    let quizRepeatQueue = [];
+  function saveNotes(notes) {
+    localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
+  }
 
-    const POS_MAP = {
-      '명': '명', '명사': '명',
-      '동': '동', '동사': '동',
-      '형': '형', '형용사': '형',
-      '부': '부', '부사': '부',
-      '접': '접', '접속사': '접',
-      '감': '감', '감탄사': '감',
-      '숙': '숙', '숙어': '숙'
-    };
+  function hasBackup() {
+    return localStorage.getItem(BACKUP_KEY) !== null;
+  }
 
-    const POS_BUTTONS = [
-      ['명', 'active-noun'],
-      ['동', 'active-verb'],
-      ['형', 'active-adj'],
-      ['부', 'active-adv'],
-      ['접', 'active-conj'],
-      ['감', 'active-excl'],
-      ['숙', 'active-phrase']
-    ];
+  function saveManualBackup() {
+    localStorage.setItem(BACKUP_KEY, localStorage.getItem(NOTES_KEY) || '[]');
+    showMessage('현재 상태를 백업했습니다.');
+  }
 
-    function getStorageJson(key, fallback = []) {
-      try {
-        return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback));
-      } catch {
-        return fallback;
-      }
+  function restoreBackupNotes() {
+    if (!hasBackup()) {
+      showMessage('복원할 백업이 없습니다. 먼저 백업 저장을 눌러주세요.');
+      return;
     }
 
-    function setVisible(el, visible, displayValue = 'block') {
-      if (!el) return;
-      el.style.display = visible ? displayValue : 'none';
+    const backup = localStorage.getItem(BACKUP_KEY);
+    localStorage.setItem(NOTES_KEY, backup || '[]');
+    clearInputs();
+    renderNotes();
+    showMessage('백업한 상태로 복원했습니다.');
+  }
+
+  function showFloatingButtons() {
+    if (els.floatingHideButton) els.floatingHideButton.style.display = 'block';
+    if (els.floatingLockButton) els.floatingLockButton.style.display = 'block';
+    if (els.quizButton) els.quizButton.style.display = 'block';
+  }
+
+  function hideFloatingButtons() {
+    if (els.floatingHideButton) els.floatingHideButton.style.display = 'none';
+    if (els.floatingLockButton) els.floatingLockButton.style.display = 'none';
+    if (els.quizButton) els.quizButton.style.display = 'none';
+  }
+
+  function showBackToListButton() {
+    if (els.backToListButton) {
+      els.backToListButton.classList.add('show');
     }
+  }
 
-    function getNotes() {
-      return getStorageJson(NOTES_KEY, []).map(note => ({
-        ...note,
-        pronunciation: note.pronunciation || '',
-        pos: Array.isArray(note.pos) ? note.pos : [],
-        checkedForDelete: Boolean(note.checkedForDelete),
-        checkWord: Boolean(note.checkWord),
-        checkMeaning: Boolean(note.checkMeaning),
-        checkMemorized: Boolean(note.checkMemorized),
-        createdAt: note.createdAt || Date.now()
-      }));
+  function hideBackToListButton() {
+    if (els.backToListButton) {
+      els.backToListButton.classList.remove('show');
     }
+  }
 
-    function saveNotes(notes) {
-      localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
-    }
-
-    function isUnlocked() {
-      return localStorage.getItem(UNLOCK_KEY) === 'true';
-    }
-
-    function hasBackup() {
-      return localStorage.getItem(BACKUP_KEY) !== null;
-    }
-
-    function escapeHtml(text) {
-      return String(text)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    }
-
-    function normalizeText(value) {
-      return String(value || '').trim().replace(/\s+/g, ' ');
-    }
-
-    function normalizePosList(posText) {
-      if (!posText) return [];
-      return String(posText)
-        .split(',')
-        .map(v => v.trim())
-        .map(v => POS_MAP[v] || '')
-        .filter(Boolean)
-        .filter((v, i, arr) => arr.indexOf(v) === i);
-    }
-
-    function isEnglishWord(word) {
-      return /^[A-Za-z][A-Za-z\s'-]*$/.test(word);
-    }
-
-    function showMessage(text) {
-      els.message.textContent = text;
-      clearTimeout(messageTimer);
-      messageTimer = setTimeout(() => {
-        els.message.textContent = '';
-      }, 2200);
-    }
-
-    function resetResult() {
-      els.resultWord.textContent = '';
-      els.resultPronunciation.textContent = '';
-      els.resultMeaning.textContent = '';
-    }
-
-    function updateWordInputFont() {
-      const value = els.wordInput.value.trim();
-      els.wordInput.classList.toggle('is-english', !!value && isEnglishWord(value));
-    }
-
-    function clearInputs() {
-      els.wordInput.value = '';
-      els.meaningInput.value = '';
-      els.pronunciationInput.value = '';
-      editingId = null;
-      updateWordInputFont();
-      resetResult();
-      hideBackToListButton();
-      canReturnToList = false;
-    }
-
-    function setTopFields(word, meaning, pronunciation = '') {
-      els.wordInput.value = word || '';
-      els.meaningInput.value = meaning || '';
-      els.pronunciationInput.value = pronunciation || '';
-      updateWordInputFont();
-      els.resultWord.textContent = word || '';
-      els.resultPronunciation.textContent = pronunciation || '';
-      els.resultMeaning.textContent = meaning || '';
-    }
-
-    function showFloatingButtons() {
-      setVisible(els.floatingHideButton, true);
-      setVisible(els.floatingLockButton, true);
-      setVisible(els.quizButton, true);
-    }
-
-    function hideFloatingButtons() {
-      setVisible(els.floatingHideButton, false);
-      setVisible(els.floatingLockButton, false);
-      setVisible(els.quizButton, false);
-    }
-
-    function showBackToListButton() {
-      els.backToListButton?.classList.add('show');
-    }
-
-    function hideBackToListButton() {
-      els.backToListButton?.classList.remove('show');
-    }
-
-    function syncHideMemorizedUI() {
-      const isActive = els.hideMemorized?.checked;
-      if (!els.floatingHideButton) return;
-
+  function syncHideMemorizedUI() {
+    if (els.hideMemorized && els.floatingHideButton) {
+      const isActive = els.hideMemorized.checked;
       els.floatingHideButton.classList.toggle('active', isActive);
       els.floatingHideButton.textContent = isActive ? '풀기' : '숨김';
       els.floatingHideButton.title = isActive ? '외운 단어 숨기기 해제' : '외운 단어 숨기기';
     }
+  }
 
-    function unlockApp() {
-      localStorage.setItem(UNLOCK_KEY, 'true');
-      els.passwordScreen.classList.add('hidden');
-      els.appShell.classList.remove('hidden');
-      showFloatingButtons();
+  function unlockApp() {
+    localStorage.setItem(UNLOCK_KEY, 'true');
+    els.passwordScreen.classList.add('hidden');
+    els.appShell.classList.remove('hidden');
+    showFloatingButtons();
 
-      setTimeout(() => {
-        updateWordInputFont();
-        resetResult();
-        syncHideMemorizedUI();
-        hideBackToListButton();
-        renderNotes();
-        els.wordInput.focus();
-      }, 0);
-    }
-
-    function lockApp() {
-      localStorage.removeItem(UNLOCK_KEY);
-      els.appShell.classList.add('hidden');
-      els.passwordScreen.classList.remove('hidden');
-      hideFloatingButtons();
+    setTimeout(() => {
+      updateWordInputFont();
+      resetResult();
+      syncHideMemorizedUI();
       hideBackToListButton();
-      closeQuizModal();
-      canReturnToList = false;
-      els.passwordInput.value = '';
-      els.passwordMessage.textContent = '잠금이 다시 설정되었습니다.';
-      els.passwordInput.focus();
-    }
-
-    function tryUnlock() {
-      if (els.passwordInput.value === APP_PASSWORD) {
-        els.passwordMessage.textContent = '';
-        unlockApp();
-      } else {
-        els.passwordMessage.textContent = '비밀번호가 올바르지 않습니다.';
-        els.passwordInput.select();
-      }
-    }
-
-    function saveManualBackup() {
-      localStorage.setItem(BACKUP_KEY, localStorage.getItem(NOTES_KEY) || '[]');
-      showMessage('현재 상태를 백업했습니다.');
-    }
-
-    function restoreBackupNotes() {
-      if (!hasBackup()) {
-        showMessage('복원할 백업이 없습니다. 먼저 백업 저장을 눌러주세요.');
-        return;
-      }
-
-      localStorage.setItem(BACKUP_KEY, localStorage.getItem(BACKUP_KEY) || '[]');
-      localStorage.setItem(NOTES_KEY, localStorage.getItem(BACKUP_KEY) || '[]');
-      clearInputs();
       renderNotes();
-      showMessage('백업한 상태로 복원했습니다.');
+      els.wordInput.focus();
+    }, 0);
+  }
+
+  function lockApp() {
+    localStorage.removeItem(UNLOCK_KEY);
+    els.appShell.classList.add('hidden');
+    els.passwordScreen.classList.remove('hidden');
+    hideFloatingButtons();
+    hideBackToListButton();
+    closeQuizModal();
+    canReturnToList = false;
+    els.passwordInput.value = '';
+    els.passwordMessage.textContent = '잠금이 다시 설정되었습니다.';
+    els.passwordInput.focus();
+  }
+
+  function tryUnlock() {
+    const value = els.passwordInput.value;
+    if (value === APP_PASSWORD) {
+      els.passwordMessage.textContent = '';
+      unlockApp();
+    } else {
+      els.passwordMessage.textContent = '비밀번호가 올바르지 않습니다.';
+      els.passwordInput.select();
     }
+  }
 
-    function fetchMeaning(word) {
-      const cleanedWord = word.trim().toLowerCase();
+  function escapeHtml(text) {
+    return String(text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
 
-      if (!cleanedWord) {
-        resetResult();
-        return false;
-      }
+  function showMessage(text) {
+    els.message.textContent = text;
+    setTimeout(() => {
+      els.message.textContent = '';
+    }, 2200);
+  }
 
-      if (!isEnglishWord(cleanedWord)) {
-        els.resultWord.textContent = cleanedWord;
-        els.resultPronunciation.textContent = '';
-        els.resultMeaning.textContent = '정확한 영어 단어를 입력해주세요.';
-        return false;
-      }
+  function resetResult() {
+    els.resultWord.textContent = '';
+    els.resultPronunciation.textContent = '';
+    els.resultMeaning.textContent = '';
+  }
 
-      els.resultWord.textContent = cleanedWord;
+  function clearInputs() {
+    els.wordInput.value = '';
+    els.meaningInput.value = '';
+    els.pronunciationInput.value = '';
+    editingId = null;
+    updateWordInputFont();
+    resetResult();
+    hideBackToListButton();
+    canReturnToList = false;
+  }
 
-      const savedNote = getNotes().find(item => item.word.toLowerCase() === cleanedWord);
+  function setTopFields(word, meaning, pronunciation = '') {
+    els.wordInput.value = word || '';
+    els.meaningInput.value = meaning || '';
+    els.pronunciationInput.value = pronunciation || '';
+    updateWordInputFont();
+    els.resultWord.textContent = word || '';
+    els.resultPronunciation.textContent = pronunciation || '';
+    els.resultMeaning.textContent = meaning || '';
+  }
 
-      if (savedNote) {
-        els.resultPronunciation.textContent = savedNote.pronunciation || '';
-        els.resultMeaning.textContent = savedNote.meaning;
+  function isEnglishWord(word) {
+    return /^[A-Za-z][A-Za-z\s'-]*$/.test(word);
+  }
 
-        if (!els.meaningInput.value.trim()) {
-          els.meaningInput.value = savedNote.meaning;
-        }
+  function normalizeText(value) {
+    return String(value || '').trim().replace(/\s+/g, ' ');
+  }
 
-        if (!els.pronunciationInput.value.trim() && savedNote.pronunciation) {
-          els.pronunciationInput.value = savedNote.pronunciation;
-        }
+  function normalizePosList(posText) {
+    if (!posText) return [];
+    return String(posText)
+      .split(',')
+      .map(v => v.trim())
+      .map(v => POS_MAP[v] || '')
+      .filter(Boolean)
+      .filter((v, i, arr) => arr.indexOf(v) === i);
+  }
 
-        return true;
-      }
+  function updateWordInputFont() {
+    const value = els.wordInput.value.trim();
+    if (value && isEnglishWord(value)) {
+      els.wordInput.classList.add('is-english');
+    } else {
+      els.wordInput.classList.remove('is-english');
+    }
+  }
 
-      els.resultPronunciation.textContent = '';
-      els.resultMeaning.textContent = '저장된 단어가 없습니다.';
+  function fetchMeaning(word) {
+    const cleanedWord = word.trim().toLowerCase();
+
+    if (!cleanedWord) {
+      resetResult();
       return false;
     }
 
-    function openNaverDictionary(word) {
-      const cleanedWord = word.trim();
-      if (!cleanedWord) {
-        showMessage('사전으로 찾을 단어를 입력해주세요.');
-        return;
+    if (!isEnglishWord(cleanedWord)) {
+      els.resultWord.textContent = cleanedWord;
+      els.resultPronunciation.textContent = '';
+      els.resultMeaning.textContent = '정확한 영어 단어를 입력해주세요.';
+      return false;
+    }
+
+    els.resultWord.textContent = cleanedWord;
+
+    const notes = getNotes();
+    const savedNote = notes.find(item => item.word.toLowerCase() === cleanedWord);
+
+    if (savedNote) {
+      els.resultPronunciation.textContent = savedNote.pronunciation || '';
+      els.resultMeaning.textContent = savedNote.meaning;
+
+      if (!els.meaningInput.value.trim()) {
+        els.meaningInput.value = savedNote.meaning;
       }
 
-      window.open(
-        'https://en.dict.naver.com/#/search?query=' + encodeURIComponent(cleanedWord),
-        '_blank'
-      );
+      if (!els.pronunciationInput.value.trim() && savedNote.pronunciation) {
+        els.pronunciationInput.value = savedNote.pronunciation;
+      }
+
+      return true;
     }
 
-    function findNoteIndex(word, notes = getNotes()) {
-      return notes.findIndex(item => item.word.toLowerCase() === word.toLowerCase());
+    els.resultPronunciation.textContent = '';
+    els.resultMeaning.textContent = '저장된 단어가 없습니다.';
+    return false;
+  }
+
+  function openNaverDictionary(word) {
+    const cleanedWord = word.trim();
+    if (!cleanedWord) {
+      showMessage('사전으로 찾을 단어를 입력해주세요.');
+      return;
+    }
+    window.open('https://en.dict.naver.com/#/search?query=' + encodeURIComponent(cleanedWord), '_blank');
+  }
+
+  function findNoteIndex(word, notes = getNotes()) {
+    return notes.findIndex(item => item.word.toLowerCase() === word.toLowerCase());
+  }
+
+  function createNote({ word, meaning, pronunciation = '', pos = [] }) {
+    return {
+      id: Date.now() + Math.random(),
+      word,
+      meaning,
+      pronunciation,
+      pos,
+      checkWord: false,
+      checkMeaning: false,
+      checkMemorized: false,
+      checkedForDelete: false,
+      createdAt: Date.now()
+    };
+  }
+
+  function sortNotes(notes) {
+    const type = els.sortSelect.value;
+    if (type === 'alphabet') return [...notes].sort((a, b) => a.word.localeCompare(b.word));
+    if (type === 'memorized') return [...notes].sort((a, b) => Number(a.checkMemorized) - Number(b.checkMemorized));
+    return [...notes].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+  }
+
+  function getFilteredNotes(sourceNotes = getNotes()) {
+    const keyword = els.searchInput.value.trim().toLowerCase();
+    const hideChecked = els.hideMemorized.checked;
+
+    let filtered = sourceNotes.filter(note =>
+      note.word.toLowerCase().includes(keyword) ||
+      note.meaning.toLowerCase().includes(keyword) ||
+      String(note.pronunciation || '').toLowerCase().includes(keyword) ||
+      note.pos.join(',').toLowerCase().includes(keyword)
+    );
+
+    if (hideChecked) filtered = filtered.filter(note => !note.checkMemorized);
+    return sortNotes(filtered);
+  }
+
+  function updateSearchClearButton() {
+    els.searchClearButton.classList.toggle('show', !!els.searchInput.value.trim());
+  }
+
+  function updateStats(notes = getNotes()) {
+    const hiddenCount = notes.filter(note => note.checkMemorized).length;
+    els.statsText.textContent = `전체 ${notes.length}개 · 숨김 ${hiddenCount}개`;
+  }
+
+  function syncSelectAllState(notes) {
+    const visibleNotes = getFilteredNotes(notes);
+    els.selectAllDelete.checked = visibleNotes.length > 0 && visibleNotes.every(note => note.checkedForDelete);
+  }
+
+  function renderNotes() {
+    const notes = getNotes();
+    const filtered = getFilteredNotes(notes);
+
+    els.noteList.innerHTML = '';
+    updateStats(notes);
+    updateSearchClearButton();
+    syncSelectAllState(notes);
+    syncHideMemorizedUI();
+
+    if (!filtered.length) {
+      els.noteList.innerHTML = '<div class="empty-text">저장된 오답노트가 없습니다.</div>';
+      return;
     }
 
-    function createNote({ word, meaning, pronunciation = '', pos = [] }) {
-      return {
-        id: Date.now() + Math.random(),
+    filtered.forEach(note => {
+      const posList = note.pos || [];
+      const posText = posList.join(' · ');
+      const item = document.createElement('div');
+
+      item.className =
+        'note-item note-clickable' +
+        (note.checkMemorized ? ' memorized' : '') +
+        (note.checkedForDelete ? ' selected-delete' : '');
+
+      item.innerHTML = `
+        <div class="note-line">
+          <div class="delete-check-wrap">
+            <input type="checkbox" ${note.checkedForDelete ? 'checked' : ''} data-delete-check="${note.id}">
+          </div>
+
+          <div class="word-area" data-load="${note.id}">
+            <div class="word-inline">
+              <span class="note-word ${note.checkWord ? 'highlight-word' : ''}">${escapeHtml(note.word)}</span>
+              <span class="note-pron">${escapeHtml(note.pronunciation || '')}</span>
+            </div>
+            ${posText ? `<div class="selected-pos-text">${escapeHtml(posText)}</div>` : ''}
+          </div>
+
+          <div data-load="${note.id}">
+            <span class="note-meaning ${note.checkMeaning ? 'highlight-meaning' : ''}">${escapeHtml(note.meaning)}</span>
+          </div>
+
+          <div class="pos-buttons">
+            ${createPosButton(note.id, posList, '명', 'active-noun')}
+            ${createPosButton(note.id, posList, '동', 'active-verb')}
+            ${createPosButton(note.id, posList, '형', 'active-adj')}
+            ${createPosButton(note.id, posList, '부', 'active-adv')}
+            ${createPosButton(note.id, posList, '접', 'active-conj')}
+            ${createPosButton(note.id, posList, '감', 'active-excl')}
+          </div>
+
+          <div class="check-row">
+            ${createCheckLabel(note.id, 'checkWord', note.checkWord, '단어')}
+            ${createCheckLabel(note.id, 'checkMeaning', note.checkMeaning, '뜻')}
+            ${createCheckLabel(note.id, 'checkMemorized', note.checkMemorized, '외움')}
+          </div>
+
+          <div class="menu-wrap">
+            <button class="menu-btn" data-menu-btn="${note.id}" type="button">⋯</button>
+            <div class="menu-popup" id="menu-${note.id}">
+              <button class="menu-item" data-edit="${note.id}" type="button">수정</button>
+              <button class="menu-item" data-delete="${note.id}" type="button">삭제</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      els.noteList.appendChild(item);
+    });
+
+    bindNoteEvents();
+  }
+
+  function createPosButton(id, posList, label, activeClass) {
+    return `<button class="pos-btn ${posList.includes(label) ? activeClass : ''}" data-pos-id="${id}" data-pos="${label}" type="button">${label}</button>`;
+  }
+
+  function createCheckLabel(id, key, checked, label) {
+    return `
+      <label class="check-box">
+        <input type="checkbox" ${checked ? 'checked' : ''} data-id="${id}" data-key="${key}">
+        ${label}
+      </label>
+    `;
+  }
+
+  function bindNoteEvents() {
+    els.noteList.querySelectorAll('input[type="checkbox"]').forEach(box => {
+      box.addEventListener('click', e => e.stopPropagation());
+    });
+
+    els.noteList.querySelectorAll('[data-delete-check]').forEach(box => {
+      box.addEventListener('change', () => toggleDeleteCheck(Number(box.dataset.deleteCheck)));
+    });
+
+    els.noteList.querySelectorAll('input[data-id][data-key]').forEach(box => {
+      box.addEventListener('change', () => toggleCheck(Number(box.dataset.id), box.dataset.key));
+    });
+
+    els.noteList.querySelectorAll('[data-delete]').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        deleteNote(Number(btn.dataset.delete));
+      });
+    });
+
+    els.noteList.querySelectorAll('[data-edit]').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        startEdit(Number(btn.dataset.edit));
+        closeAllMenus();
+      });
+    });
+
+    els.noteList.querySelectorAll('[data-menu-btn]').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const menu = $('menu-' + btn.dataset.menuBtn);
+        const isShown = menu.classList.contains('show');
+        closeAllMenus();
+        if (!isShown) menu.classList.add('show');
+      });
+    });
+
+    els.noteList.querySelectorAll('[data-pos-id]').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        togglePos(Number(btn.dataset.posId), btn.dataset.pos);
+      });
+    });
+
+    els.noteList.querySelectorAll('[data-load]').forEach(area => {
+      area.addEventListener('click', () => loadNoteToTop(Number(area.dataset.load)));
+    });
+  }
+
+  function saveCurrentNote(forceUpdate = false) {
+    const word = normalizeText(els.wordInput.value);
+    const meaning = normalizeText(els.meaningInput.value);
+    const pronunciation = normalizeText(els.pronunciationInput.value);
+
+    if (!word) return showMessage('단어를 입력해주세요.');
+    if (!meaning) return showMessage('뜻을 입력해주세요.');
+
+    const notes = getNotes();
+
+    if (editingId !== null) {
+      const target = notes.find(item => item.id === editingId);
+      if (target) {
+        target.word = word;
+        target.meaning = meaning;
+        target.pronunciation = pronunciation;
+        saveNotes(notes);
+        showMessage('수정되었습니다.');
+      }
+      clearInputs();
+      renderNotes();
+      return;
+    }
+
+    const existingIndex = findNoteIndex(word, notes);
+
+    if (existingIndex > -1 && !forceUpdate) {
+      const oldMeaning = notes[existingIndex].meaning || '';
+      const oldPron = notes[existingIndex].pronunciation || '(없음)';
+      const newPron = pronunciation || '(없음)';
+
+      els.modalText.textContent =
+        '이전에 저장된 내용과 현재 입력한 내용이 다를 수 있습니다.\n\n' +
+        '이전 뜻: ' + oldMeaning + '\n' +
+        '새 뜻: ' + meaning + '\n\n' +
+        '이전 발음: ' + oldPron + '\n' +
+        '새 발음: ' + newPron + '\n\n' +
+        '수정하시겠습니까?';
+
+      pendingUpdateWord = word;
+      els.confirmModal.classList.add('show');
+      return;
+    }
+
+    if (existingIndex > -1) {
+      notes[existingIndex].meaning = meaning;
+      notes[existingIndex].pronunciation = pronunciation;
+      saveNotes(notes);
+      showMessage('기존 단어를 수정했습니다.');
+    } else {
+      notes.push(createNote({
         word,
         meaning,
         pronunciation,
-        pos,
-        checkWord: false,
-        checkMeaning: false,
-        checkMemorized: false,
-        checkedForDelete: false,
-        createdAt: Date.now()
-      };
+        pos: []
+      }));
+      saveNotes(notes);
+      showMessage('오답노트에 저장되었습니다.');
     }
 
-    function sortNotes(notes) {
-      const type = els.sortSelect.value;
+    clearInputs();
+    renderNotes();
+  }
 
-      if (type === 'alphabet') {
-        return [...notes].sort((a, b) => a.word.localeCompare(b.word));
-      }
+  function startEdit(id) {
+    const target = getNotes().find(item => item.id === id);
+    if (!target) return;
+    lastScrollY = window.scrollY;
+    canReturnToList = true;
+    showBackToListButton();
+    editingId = id;
+    setTopFields(target.word, target.meaning, target.pronunciation || '');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    showMessage('수정할 내용을 위 입력칸에서 바꾼 뒤 저장하세요.');
+  }
 
-      if (type === 'memorized') {
-        return [...notes].sort((a, b) => Number(a.checkMemorized) - Number(b.checkMemorized));
-      }
+  function loadNoteToTop(id) {
+    const target = getNotes().find(item => item.id === id);
+    if (!target) return;
+    lastScrollY = window.scrollY;
+    canReturnToList = true;
+    showBackToListButton();
+    editingId = null;
+    setTopFields(target.word, target.meaning, target.pronunciation || '');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
-      return [...notes].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+  function backToSavedPosition() {
+    if (!canReturnToList) return;
+    window.scrollTo({ top: lastScrollY, behavior: 'smooth' });
+    hideBackToListButton();
+    canReturnToList = false;
+  }
+
+  function toggleCheck(id, key) {
+    const notes = getNotes();
+    const target = notes.find(item => item.id === id);
+    if (!target) return;
+    target[key] = !target[key];
+    saveNotes(notes);
+    renderNotes();
+  }
+
+  function toggleDeleteCheck(id) {
+    const notes = getNotes();
+    const target = notes.find(item => item.id === id);
+    if (!target) return;
+    target.checkedForDelete = !target.checkedForDelete;
+    saveNotes(notes);
+    renderNotes();
+  }
+
+  function togglePos(id, pos) {
+    const notes = getNotes();
+    const target = notes.find(item => item.id === id);
+    if (!target) return;
+    target.pos = target.pos || [];
+    target.pos = target.pos.includes(pos)
+      ? target.pos.filter(item => item !== pos)
+      : [...target.pos, pos];
+    saveNotes(notes);
+    renderNotes();
+  }
+
+  function deleteNote(id) {
+    const notes = getNotes();
+    const target = notes.find(item => item.id === id);
+    if (!target) return;
+
+    pendingDeleteAction = () => {
+      saveNotes(notes.filter(item => item.id !== id));
+      clearInputs();
+      renderNotes();
+      showMessage('삭제되었습니다.');
+    };
+
+    els.deleteModalTitle.textContent = '삭제 확인';
+    els.deleteModalText.textContent = `"${target.word}" 단어를 삭제하시겠습니까?`;
+    els.deleteConfirmModal.classList.add('show');
+  }
+
+  function deleteSelectedNotes() {
+    const notes = getNotes();
+    const selected = notes.filter(note => note.checkedForDelete);
+
+    if (!selected.length) {
+      showMessage('삭제할 항목을 먼저 선택해주세요.');
+      return;
     }
 
-    function getFilteredNotes(sourceNotes = getNotes()) {
-      const keyword = els.searchInput.value.trim().toLowerCase();
-      const hideChecked = els.hideMemorized.checked;
+    pendingDeleteAction = () => {
+      saveNotes(notes.filter(note => !note.checkedForDelete));
+      els.selectAllDelete.checked = false;
+      clearInputs();
+      renderNotes();
+      showMessage(`${selected.length}개 항목을 삭제했습니다.`);
+    };
 
-      let filtered = sourceNotes.filter(note => {
-        const posText = (note.pos || []).join(',');
-        return (
-          note.word.toLowerCase().includes(keyword) ||
-          note.meaning.toLowerCase().includes(keyword) ||
-          String(note.pronunciation || '').toLowerCase().includes(keyword) ||
-          posText.toLowerCase().includes(keyword)
-        );
-      });
+    els.deleteModalTitle.textContent = '선택 삭제 확인';
+    els.deleteModalText.textContent = `선택한 ${selected.length}개 항목을 삭제하시겠습니까?`;
+    els.deleteConfirmModal.classList.add('show');
+  }
 
-      if (hideChecked) {
-        filtered = filtered.filter(note => !note.checkMemorized);
-      }
+  function closeConfirmModal() {
+    els.confirmModal.classList.remove('show');
+    pendingUpdateWord = null;
+  }
 
-      return sortNotes(filtered);
+  function closeDeleteConfirm() {
+    els.deleteConfirmModal.classList.remove('show');
+    pendingDeleteAction = null;
+  }
+
+  function parseLine(line, modeHint = '') {
+    const raw = String(line || '').trim();
+    if (!raw) return null;
+
+    const makeRow = parts => {
+      const word = normalizeText(parts[0] || '');
+      const meaning = normalizeText(parts[1] || '');
+      const pronunciation = normalizeText(parts[2] || '');
+      const pos = normalizePosList(parts[3] || '');
+      return word && meaning ? { word, meaning, pronunciation, pos } : null;
+    };
+
+    if (modeHint === 'csv') return makeRow(raw.split(',').map(v => v.trim()));
+    if (raw.includes('\t')) return makeRow(raw.split('\t').map(v => v.trim()));
+    if (raw.includes(':')) return makeRow(raw.split(':').map(v => v.trim()));
+    if (raw.includes(' - ')) return makeRow(raw.split(' - ').map(v => v.trim()));
+    if (raw.includes(' = ')) return makeRow(raw.split(' = ').map(v => v.trim()));
+    return null;
+  }
+
+  function parseImportText(text, fileName = '') {
+    const lines = String(text || '').split(/\r?\n/).map(v => v.trim()).filter(Boolean);
+    if (!lines.length) return [];
+
+    const isCsv = fileName.toLowerCase().endsWith('.csv');
+    const dataLines = isCsv && lines[0].toLowerCase().includes('word') && lines[0].toLowerCase().includes('meaning')
+      ? lines.slice(1)
+      : lines;
+
+    return dataLines.map(line => parseLine(line, isCsv ? 'csv' : '')).filter(Boolean);
+  }
+
+  function importWordPairs(rows) {
+    if (!rows.length) {
+      showMessage('가져올 데이터가 없습니다.');
+      return;
     }
 
-    function updateSearchClearButton() {
-      els.searchClearButton.classList.toggle('show', !!els.searchInput.value.trim());
-    }
+    const notes = getNotes();
+    let added = 0, updated = 0, skipped = 0;
 
-    function updateStats(notes = getNotes()) {
-      const hiddenCount = notes.filter(note => note.checkMemorized).length;
-      els.statsText.textContent = `전체 ${notes.length}개 · 숨김 ${hiddenCount}개`;
-    }
+    rows.forEach(({ word, meaning, pronunciation, pos }) => {
+      const cleanWord = normalizeText(word);
+      const cleanMeaning = normalizeText(meaning);
+      const cleanPron = normalizeText(pronunciation);
+      const cleanPos = Array.isArray(pos) ? pos : [];
 
-    function syncSelectAllState(notes) {
-      const visibleNotes = getFilteredNotes(notes);
-      els.selectAllDelete.checked =
-        visibleNotes.length > 0 && visibleNotes.every(note => note.checkedForDelete);
-    }
-
-    function createPosButton(id, posList, label, activeClass) {
-      return `<button class="pos-btn ${posList.includes(label) ? activeClass : ''}" data-pos-id="${id}" data-pos="${label}" type="button">${label}</button>`;
-    }
-
-    function createCheckLabel(id, key, checked, label) {
-      return `
-        <label class="check-box">
-          <input type="checkbox" ${checked ? 'checked' : ''} data-id="${id}" data-key="${key}">
-          ${label}
-        </label>
-      `;
-    }
-
-    function renderNotes() {
-      const notes = getNotes();
-      const filtered = getFilteredNotes(notes);
-
-      els.noteList.innerHTML = '';
-      updateStats(notes);
-      updateSearchClearButton();
-      syncSelectAllState(notes);
-      syncHideMemorizedUI();
-
-      if (!filtered.length) {
-        els.noteList.innerHTML = '<div class="empty-text">저장된 오답노트가 없습니다.</div>';
+      if (!cleanWord || !cleanMeaning) {
+        skipped++;
         return;
       }
 
-      filtered.forEach(note => {
-        const posList = note.pos || [];
-        const posText = posList.join(' · ');
-        const posButtonsHtml = POS_BUTTONS
-          .map(([label, activeClass]) => createPosButton(note.id, posList, label, activeClass))
-          .join('');
-
-        const item = document.createElement('div');
-        item.className =
-          'note-item note-clickable' +
-          (note.checkMemorized ? ' memorized' : '') +
-          (note.checkedForDelete ? ' selected-delete' : '');
-
-        item.innerHTML = `
-          <div class="note-line">
-            <div class="delete-check-wrap">
-              <input type="checkbox" ${note.checkedForDelete ? 'checked' : ''} data-delete-check="${note.id}">
-            </div>
-
-            <div class="word-area" data-load="${note.id}">
-              <div class="word-inline">
-                <span class="note-word ${note.checkWord ? 'highlight-word' : ''}">${escapeHtml(note.word)}</span>
-                <span class="note-pron">${escapeHtml(note.pronunciation || '')}</span>
-              </div>
-              ${posText ? `<div class="selected-pos-text">${escapeHtml(posText)}</div>` : ''}
-            </div>
-
-            <div data-load="${note.id}">
-              <span class="note-meaning ${note.checkMeaning ? 'highlight-meaning' : ''}">${escapeHtml(note.meaning)}</span>
-            </div>
-
-            <div class="pos-buttons">
-              ${posButtonsHtml}
-            </div>
-
-            <div class="check-row">
-              ${createCheckLabel(note.id, 'checkWord', note.checkWord, '단어')}
-              ${createCheckLabel(note.id, 'checkMeaning', note.checkMeaning, '뜻')}
-              ${createCheckLabel(note.id, 'checkMemorized', note.checkMemorized, '외움')}
-            </div>
-
-            <div class="menu-wrap">
-              <button class="menu-btn" data-menu-btn="${note.id}" type="button">⋯</button>
-              <div class="menu-popup" id="menu-${note.id}">
-                <button class="menu-item" data-edit="${note.id}" type="button">수정</button>
-                <button class="menu-item" data-delete="${note.id}" type="button">삭제</button>
-              </div>
-            </div>
-          </div>
-        `;
-
-        els.noteList.appendChild(item);
-      });
-
-      bindNoteEvents();
-    }
-
-    function bindNoteEvents() {
-      els.noteList.querySelectorAll('input[type="checkbox"]').forEach(box => {
-        box.addEventListener('click', e => e.stopPropagation());
-      });
-
-      els.noteList.querySelectorAll('[data-delete-check]').forEach(box => {
-        box.addEventListener('change', () => toggleDeleteCheck(Number(box.dataset.deleteCheck)));
-      });
-
-      els.noteList.querySelectorAll('input[data-id][data-key]').forEach(box => {
-        box.addEventListener('change', () => toggleCheck(Number(box.dataset.id), box.dataset.key));
-      });
-
-      els.noteList.querySelectorAll('[data-delete]').forEach(btn => {
-        btn.addEventListener('click', e => {
-          e.stopPropagation();
-          deleteNote(Number(btn.dataset.delete));
-        });
-      });
-
-      els.noteList.querySelectorAll('[data-edit]').forEach(btn => {
-        btn.addEventListener('click', e => {
-          e.stopPropagation();
-          startEdit(Number(btn.dataset.edit));
-          closeAllMenus();
-        });
-      });
-
-      els.noteList.querySelectorAll('[data-menu-btn]').forEach(btn => {
-        btn.addEventListener('click', e => {
-          e.stopPropagation();
-          const menu = $('menu-' + btn.dataset.menuBtn);
-          const isShown = menu.classList.contains('show');
-          closeAllMenus();
-          if (!isShown) menu.classList.add('show');
-        });
-      });
-
-      els.noteList.querySelectorAll('[data-pos-id]').forEach(btn => {
-        btn.addEventListener('click', e => {
-          e.stopPropagation();
-          togglePos(Number(btn.dataset.posId), btn.dataset.pos);
-        });
-      });
-
-      els.noteList.querySelectorAll('[data-load]').forEach(area => {
-        area.addEventListener('click', () => loadNoteToTop(Number(area.dataset.load)));
-      });
-    }
-
-    function saveCurrentNote(forceUpdate = false) {
-      const word = normalizeText(els.wordInput.value);
-      const meaning = normalizeText(els.meaningInput.value);
-      const pronunciation = normalizeText(els.pronunciationInput.value);
-
-      if (!word) return showMessage('단어를 입력해주세요.');
-      if (!meaning) return showMessage('뜻을 입력해주세요.');
-
-      const notes = getNotes();
-
-      if (editingId !== null) {
-        const target = notes.find(item => item.id === editingId);
-        if (target) {
-          target.word = word;
-          target.meaning = meaning;
-          target.pronunciation = pronunciation;
-          saveNotes(notes);
-          showMessage('수정되었습니다.');
-        }
-        clearInputs();
-        renderNotes();
-        return;
-      }
-
-      const existingIndex = findNoteIndex(word, notes);
-
-      if (existingIndex > -1 && !forceUpdate) {
-        const oldMeaning = notes[existingIndex].meaning || '';
-        const oldPron = notes[existingIndex].pronunciation || '(없음)';
-        const newPron = pronunciation || '(없음)';
-
-        els.modalText.textContent =
-          '이전에 저장된 내용과 현재 입력한 내용이 다를 수 있습니다.\n\n' +
-          '이전 뜻: ' + oldMeaning + '\n' +
-          '새 뜻: ' + meaning + '\n\n' +
-          '이전 발음: ' + oldPron + '\n' +
-          '새 발음: ' + newPron + '\n\n' +
-          '수정하시겠습니까?';
-
-        pendingUpdateWord = word;
-        els.confirmModal.classList.add('show');
-        return;
-      }
-
+      const existingIndex = findNoteIndex(cleanWord, notes);
       if (existingIndex > -1) {
-        notes[existingIndex].meaning = meaning;
-        notes[existingIndex].pronunciation = pronunciation;
-        saveNotes(notes);
-        showMessage('기존 단어를 수정했습니다.');
+        notes[existingIndex].meaning = cleanMeaning;
+        notes[existingIndex].pronunciation = cleanPron;
+        notes[existingIndex].pos = cleanPos;
+        updated++;
       } else {
-        notes.push(
-          createNote({
-            word,
-            meaning,
-            pronunciation,
-            pos: []
-          })
-        );
-        saveNotes(notes);
-        showMessage('오답노트에 저장되었습니다.');
-      }
-
-      clearInputs();
-      renderNotes();
-    }
-
-    function startEdit(id) {
-      const target = getNotes().find(item => item.id === id);
-      if (!target) return;
-
-      lastScrollY = window.scrollY;
-      canReturnToList = true;
-      showBackToListButton();
-      editingId = id;
-      setTopFields(target.word, target.meaning, target.pronunciation || '');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      showMessage('수정할 내용을 위 입력칸에서 바꾼 뒤 저장하세요.');
-    }
-
-    function loadNoteToTop(id) {
-      const target = getNotes().find(item => item.id === id);
-      if (!target) return;
-
-      lastScrollY = window.scrollY;
-      canReturnToList = true;
-      showBackToListButton();
-      editingId = null;
-      setTopFields(target.word, target.meaning, target.pronunciation || '');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function backToSavedPosition() {
-      if (!canReturnToList) return;
-      window.scrollTo({ top: lastScrollY, behavior: 'smooth' });
-      hideBackToListButton();
-      canReturnToList = false;
-    }
-
-    function toggleCheck(id, key) {
-      const notes = getNotes();
-      const target = notes.find(item => item.id === id);
-      if (!target) return;
-
-      target[key] = !target[key];
-      saveNotes(notes);
-      renderNotes();
-    }
-
-    function toggleDeleteCheck(id) {
-      const notes = getNotes();
-      const target = notes.find(item => item.id === id);
-      if (!target) return;
-
-      target.checkedForDelete = !target.checkedForDelete;
-      saveNotes(notes);
-      renderNotes();
-    }
-
-    function togglePos(id, pos) {
-      const notes = getNotes();
-      const target = notes.find(item => item.id === id);
-      if (!target) return;
-
-      target.pos = target.pos || [];
-      target.pos = target.pos.includes(pos)
-        ? target.pos.filter(item => item !== pos)
-        : [...target.pos, pos];
-
-      saveNotes(notes);
-      renderNotes();
-    }
-
-    function deleteNote(id) {
-      const notes = getNotes();
-      const target = notes.find(item => item.id === id);
-      if (!target) return;
-
-      pendingDeleteAction = () => {
-        saveNotes(notes.filter(item => item.id !== id));
-        clearInputs();
-        renderNotes();
-        showMessage('삭제되었습니다.');
-      };
-
-      els.deleteModalTitle.textContent = '삭제 확인';
-      els.deleteModalText.textContent = `"${target.word}" 단어를 삭제하시겠습니까?`;
-      els.deleteConfirmModal.classList.add('show');
-    }
-
-    function deleteSelectedNotes() {
-      const notes = getNotes();
-      const selected = notes.filter(note => note.checkedForDelete);
-
-      if (!selected.length) {
-        showMessage('삭제할 항목을 먼저 선택해주세요.');
-        return;
-      }
-
-      pendingDeleteAction = () => {
-        saveNotes(notes.filter(note => !note.checkedForDelete));
-        els.selectAllDelete.checked = false;
-        clearInputs();
-        renderNotes();
-        showMessage(`${selected.length}개 항목을 삭제했습니다.`);
-      };
-
-      els.deleteModalTitle.textContent = '선택 삭제 확인';
-      els.deleteModalText.textContent = `선택한 ${selected.length}개 항목을 삭제하시겠습니까?`;
-      els.deleteConfirmModal.classList.add('show');
-    }
-
-    function closeConfirmModal() {
-      els.confirmModal.classList.remove('show');
-      pendingUpdateWord = null;
-    }
-
-    function closeDeleteConfirm() {
-      els.deleteConfirmModal.classList.remove('show');
-      pendingDeleteAction = null;
-    }
-
-    function parseLine(line, modeHint = '') {
-      const raw = String(line || '').trim();
-      if (!raw) return null;
-
-      const makeRow = parts => {
-        const word = normalizeText(parts[0] || '');
-        const meaning = normalizeText(parts[1] || '');
-        const pronunciation = normalizeText(parts[2] || '');
-        const pos = normalizePosList(parts[3] || '');
-        return word && meaning ? { word, meaning, pronunciation, pos } : null;
-      };
-
-      if (modeHint === 'csv') return makeRow(raw.split(',').map(v => v.trim()));
-      if (raw.includes('\t')) return makeRow(raw.split('\t').map(v => v.trim()));
-      if (raw.includes(':')) return makeRow(raw.split(':').map(v => v.trim()));
-      if (raw.includes(' - ')) return makeRow(raw.split(' - ').map(v => v.trim()));
-      if (raw.includes(' = ')) return makeRow(raw.split(' = ').map(v => v.trim()));
-
-      return null;
-    }
-
-    function parseImportText(text, fileName = '') {
-      const lines = String(text || '')
-        .split(/\r?\n/)
-        .map(v => v.trim())
-        .filter(Boolean);
-
-      if (!lines.length) return [];
-
-      const isCsv = fileName.toLowerCase().endsWith('.csv');
-      const hasHeader =
-        isCsv &&
-        lines[0].toLowerCase().includes('word') &&
-        lines[0].toLowerCase().includes('meaning');
-
-      const dataLines = hasHeader ? lines.slice(1) : lines;
-      return dataLines.map(line => parseLine(line, isCsv ? 'csv' : '')).filter(Boolean);
-    }
-
-    function importWordPairs(rows) {
-      if (!rows.length) {
-        showMessage('가져올 데이터가 없습니다.');
-        return;
-      }
-
-      const notes = getNotes();
-      let added = 0;
-      let updated = 0;
-      let skipped = 0;
-
-      rows.forEach(({ word, meaning, pronunciation, pos }) => {
-        const cleanWord = normalizeText(word);
-        const cleanMeaning = normalizeText(meaning);
-        const cleanPron = normalizeText(pronunciation);
-        const cleanPos = Array.isArray(pos) ? pos : [];
-
-        if (!cleanWord || !cleanMeaning) {
-          skipped++;
-          return;
-        }
-
-        const existingIndex = findNoteIndex(cleanWord, notes);
-
-        if (existingIndex > -1) {
-          notes[existingIndex].meaning = cleanMeaning;
-          notes[existingIndex].pronunciation = cleanPron;
-          notes[existingIndex].pos = cleanPos;
-          updated++;
-        } else {
-          notes.push(
-            createNote({
-              word: cleanWord,
-              meaning: cleanMeaning,
-              pronunciation: cleanPron,
-              pos: cleanPos
-            })
-          );
-          added++;
-        }
-      });
-
-      saveNotes(notes);
-      clearInputs();
-      renderNotes();
-      showMessage(`가져오기 완료: 추가 ${added}개, 수정 ${updated}개, 건너뜀 ${skipped}개`);
-    }
-
-    function previewImportText(text, fileName = '') {
-      const rows = parseImportText(text, fileName);
-
-      if (!rows.length) {
-        showMessage('형식을 읽을 수 없습니다. 예: run: 달리다 : 런 : 동, 명');
-        return;
-      }
-
-      const ok = confirm(`총 ${rows.length}개 항목을 가져옵니다. 계속하시겠습니까?`);
-      if (!ok) return;
-
-      importWordPairs(rows);
-    }
-
-    function closeAllMenus() {
-      document.querySelectorAll('.menu-popup').forEach(menu => menu.classList.remove('show'));
-    }
-
-    function shuffleArray(arr) {
-      const copy = [...arr];
-      for (let i = copy.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [copy[i], copy[j]] = [copy[j], copy[i]];
-      }
-      return copy;
-    }
-
-    function resetQuizButtons() {
-      els.quizActionsBefore.style.display = 'flex';
-      els.quizActionsAfter.style.display = 'none';
-      els.quizAnswerWrap.classList.remove('show');
-      quizAnswerShown = false;
-    }
-
-    function updateQuizModeButtons() {
-      els.quizHideMeaningButton.classList.toggle('active', quizMode === 'hideMeaning');
-      els.quizHideWordButton.classList.toggle('active', quizMode === 'hideWord');
-    }
-
-    function updateQuizStatus() {
-      const remaining = quizPool.length + (quizCurrent ? 1 : 0);
-      const repeats = quizRepeatQueue.length;
-      els.quizStatus.textContent = `남은 카드 ${remaining}개 · 다시 볼 카드 ${repeats}개`;
-    }
-
-    function renderQuizCard() {
-      if (!quizCurrent) {
-        els.quizFrontLabel.textContent = '';
-        els.quizFront.textContent = '퀴즈가 끝났습니다.';
-        els.quizBackLabel.textContent = '';
-        els.quizBack.textContent = '';
-        els.quizPronunciation.textContent = '';
-        els.quizAnswerWrap.classList.remove('show');
-        els.quizActionsBefore.style.display = 'none';
-        els.quizActionsAfter.style.display = 'none';
-        updateQuizStatus();
-        return;
-      }
-
-      resetQuizButtons();
-      updateQuizModeButtons();
-
-      if (quizMode === 'hideMeaning') {
-        els.quizFrontLabel.textContent = '단어';
-        els.quizFront.textContent = quizCurrent.word;
-        els.quizBackLabel.textContent = '뜻';
-        els.quizBack.textContent = quizCurrent.meaning;
-      } else {
-        els.quizFrontLabel.textContent = '뜻';
-        els.quizFront.textContent = quizCurrent.meaning;
-        els.quizBackLabel.textContent = '단어';
-        els.quizBack.textContent = quizCurrent.word;
-      }
-
-      els.quizPronunciation.textContent = quizCurrent.pronunciation || '';
-      updateQuizStatus();
-    }
-
-    function getNextQuizCard() {
-      if (!quizPool.length && quizRepeatQueue.length) {
-        quizPool = shuffleArray(quizRepeatQueue);
-        quizRepeatQueue = [];
-      }
-
-      quizCurrent = quizPool.shift() || null;
-      renderQuizCard();
-    }
-
-    function openQuizModal() {
-      const notes = getNotes().filter(note => !note.checkMemorized);
-
-      if (!notes.length) {
-        showMessage('퀴즈에 사용할 단어가 없습니다. 외움 체크 안 된 단어를 확인해주세요.');
-        return;
-      }
-
-      quizPool = shuffleArray(notes);
-      quizRepeatQueue = [];
-      quizCurrent = null;
-      quizMode = 'hideMeaning';
-      updateQuizModeButtons();
-      els.quizModal.classList.add('show');
-      getNextQuizCard();
-    }
-
-    function closeQuizModal() {
-      els.quizModal?.classList.remove('show');
-      quizPool = [];
-      quizRepeatQueue = [];
-      quizCurrent = null;
-      quizAnswerShown = false;
-    }
-
-    function revealQuizAnswer() {
-      if (!quizCurrent) return;
-      quizAnswerShown = true;
-      els.quizAnswerWrap.classList.add('show');
-      els.quizActionsBefore.style.display = 'none';
-      els.quizActionsAfter.style.display = 'flex';
-    }
-
-    function enqueueCurrentQuiz() {
-      if (!quizCurrent) return;
-      quizRepeatQueue.push({ ...quizCurrent });
-    }
-
-    function quizDontKnow() {
-      if (!quizCurrent) return;
-      enqueueCurrentQuiz();
-      revealQuizAnswer();
-    }
-
-    function quizStudyAgain() {
-      if (!quizCurrent) return;
-      enqueueCurrentQuiz();
-      getNextQuizCard();
-    }
-
-    function markQuizMemorized() {
-      if (!quizCurrent) return;
-
-      const notes = getNotes();
-      const target = notes.find(note => note.id === quizCurrent.id);
-
-      if (target) {
-        target.checkMemorized = true;
-        saveNotes(notes);
-        renderNotes();
-      }
-
-      getNextQuizCard();
-    }
-
-    function setQuizMode(mode) {
-      quizMode = mode;
-      updateQuizModeButtons();
-      if (quizCurrent) renderQuizCard();
-    }
-
-    function closeModalByBackdrop(modal) {
-      if (modal === els.confirmModal) closeConfirmModal();
-      if (modal === els.deleteConfirmModal) closeDeleteConfirm();
-      if (modal === els.quizModal) closeQuizModal();
-    }
-
-    els.passwordSubmitButton.addEventListener('click', tryUnlock);
-
-    els.passwordInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        tryUnlock();
+        notes.push(createNote({
+          word: cleanWord,
+          meaning: cleanMeaning,
+          pronunciation: cleanPron,
+          pos: cleanPos
+        }));
+        added++;
       }
     });
 
-    els.resetButton.addEventListener('click', clearInputs);
-    els.naverButton.addEventListener('click', () => openNaverDictionary(els.wordInput.value));
-    els.saveButton.addEventListener('click', () => saveCurrentNote());
-    els.backToListButton.addEventListener('click', backToSavedPosition);
-    els.saveBackupButton.addEventListener('click', saveManualBackup);
-    els.restoreBackupButton.addEventListener('click', restoreBackupNotes);
-    els.bulkToggleButton.addEventListener('click', () => els.bulkBox.classList.toggle('show'));
+    saveNotes(notes);
+    clearInputs();
+    renderNotes();
+    showMessage(`가져오기 완료: 추가 ${added}개, 수정 ${updated}개, 건너뜀 ${skipped}개`);
+  }
 
-    els.floatingLockButton?.addEventListener('click', lockApp);
+  function previewImportText(text, fileName = '') {
+    const rows = parseImportText(text, fileName);
+    if (!rows.length) {
+      showMessage('형식을 읽을 수 없습니다. 예: run: 달리다: 런: 동, 명');
+      return;
+    }
 
-    els.floatingHideButton?.addEventListener('click', () => {
+    const ok = confirm(`총 ${rows.length}개 항목을 가져옵니다. 계속하시겠습니까?`);
+    if (!ok) return;
+
+    importWordPairs(rows);
+  }
+
+  function closeAllMenus() {
+    document.querySelectorAll('.menu-popup').forEach(menu => menu.classList.remove('show'));
+  }
+
+  function shuffleArray(arr) {
+    const copy = [...arr];
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+
+  function resetQuizButtons() {
+    els.quizActionsBefore.style.display = 'flex';
+    els.quizActionsAfter.style.display = 'none';
+    els.quizAnswerWrap.classList.remove('show');
+    quizAnswerShown = false;
+  }
+
+  function updateQuizModeButtons() {
+    els.quizHideMeaningButton.classList.toggle('active', quizMode === 'hideMeaning');
+    els.quizHideWordButton.classList.toggle('active', quizMode === 'hideWord');
+  }
+
+  function updateQuizStatus() {
+    const remaining = quizPool.length + (quizCurrent ? 1 : 0);
+    const repeats = quizRepeatQueue.length;
+    els.quizStatus.textContent = `남은 카드 ${remaining}개 · 다시 볼 카드 ${repeats}개`;
+  }
+
+  function renderQuizCard() {
+    if (!quizCurrent) {
+      els.quizFrontLabel.textContent = '';
+      els.quizFront.textContent = '퀴즈가 끝났습니다.';
+      els.quizBackLabel.textContent = '';
+      els.quizBack.textContent = '';
+      els.quizPronunciation.textContent = '';
+      els.quizAnswerWrap.classList.remove('show');
+      els.quizActionsBefore.style.display = 'none';
+      els.quizActionsAfter.style.display = 'none';
+      updateQuizStatus();
+      return;
+    }
+
+    resetQuizButtons();
+    updateQuizModeButtons();
+
+    if (quizMode === 'hideMeaning') {
+      els.quizFrontLabel.textContent = '단어';
+      els.quizFront.textContent = quizCurrent.word;
+      els.quizBackLabel.textContent = '뜻';
+      els.quizBack.textContent = quizCurrent.meaning;
+      els.quizPronunciation.textContent = quizCurrent.pronunciation || '';
+    } else {
+      els.quizFrontLabel.textContent = '뜻';
+      els.quizFront.textContent = quizCurrent.meaning;
+      els.quizBackLabel.textContent = '단어';
+      els.quizBack.textContent = quizCurrent.word;
+      els.quizPronunciation.textContent = quizCurrent.pronunciation || '';
+    }
+
+    updateQuizStatus();
+  }
+
+  function getNextQuizCard() {
+    if (!quizPool.length && quizRepeatQueue.length) {
+      quizPool = shuffleArray(quizRepeatQueue);
+      quizRepeatQueue = [];
+    }
+
+    quizCurrent = quizPool.shift() || null;
+    renderQuizCard();
+  }
+
+  function openQuizModal() {
+    const notes = getNotes().filter(note => !note.checkMemorized);
+
+    if (!notes.length) {
+      showMessage('퀴즈에 사용할 단어가 없습니다. 외움 체크 안 된 단어를 확인해주세요.');
+      return;
+    }
+
+    quizPool = shuffleArray(notes);
+    quizRepeatQueue = [];
+    quizCurrent = null;
+    quizMode = 'hideMeaning';
+    updateQuizModeButtons();
+    els.quizModal.classList.add('show');
+    getNextQuizCard();
+  }
+
+  function closeQuizModal() {
+    if (els.quizModal) els.quizModal.classList.remove('show');
+    quizPool = [];
+    quizRepeatQueue = [];
+    quizCurrent = null;
+    quizAnswerShown = false;
+  }
+
+  function revealQuizAnswer() {
+    if (!quizCurrent) return;
+    quizAnswerShown = true;
+    els.quizAnswerWrap.classList.add('show');
+    els.quizActionsBefore.style.display = 'none';
+    els.quizActionsAfter.style.display = 'flex';
+  }
+
+  function enqueueCurrentQuiz() {
+    if (!quizCurrent) return;
+    quizRepeatQueue.push({ ...quizCurrent });
+  }
+
+  function quizDontKnow() {
+    if (!quizCurrent) return;
+    enqueueCurrentQuiz();
+    revealQuizAnswer();
+  }
+
+  function quizStudyAgain() {
+    if (!quizCurrent) return;
+    enqueueCurrentQuiz();
+    getNextQuizCard();
+  }
+
+  function markQuizMemorized() {
+    if (!quizCurrent) return;
+
+    const notes = getNotes();
+    const target = notes.find(note => note.id === quizCurrent.id);
+    if (target) {
+      target.checkMemorized = true;
+      saveNotes(notes);
+      renderNotes();
+    }
+
+    getNextQuizCard();
+  }
+
+  function setQuizMode(mode) {
+    quizMode = mode;
+    updateQuizModeButtons();
+    if (quizCurrent) renderQuizCard();
+  }
+
+  els.passwordSubmitButton.addEventListener('click', tryUnlock);
+
+  els.passwordInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      tryUnlock();
+    }
+  });
+
+  els.resetButton.addEventListener('click', clearInputs);
+  els.naverButton.addEventListener('click', () => openNaverDictionary(els.wordInput.value));
+  els.saveButton.addEventListener('click', () => saveCurrentNote());
+  els.backToListButton.addEventListener('click', backToSavedPosition);
+  els.saveBackupButton.addEventListener('click', saveManualBackup);
+  els.restoreBackupButton.addEventListener('click', restoreBackupNotes);
+  els.bulkToggleButton.addEventListener('click', () => els.bulkBox.classList.toggle('show'));
+
+  if (els.floatingLockButton) {
+    els.floatingLockButton.addEventListener('click', lockApp);
+  }
+
+  if (els.floatingHideButton) {
+    els.floatingHideButton.addEventListener('click', () => {
       els.hideMemorized.checked = !els.hideMemorized.checked;
       syncHideMemorizedUI();
       renderNotes();
     });
+  }
 
-    els.quizButton?.addEventListener('click', openQuizModal);
+  if (els.quizButton) {
+    els.quizButton.addEventListener('click', openQuizModal);
+  }
 
-    els.bulkPreviewButton.addEventListener('click', () => {
-      previewImportText(els.bulkInput.value, 'bulk.txt');
+  els.bulkPreviewButton.addEventListener('click', () => previewImportText(els.bulkInput.value, 'bulk.txt'));
+
+  els.bulkClearButton.addEventListener('click', () => {
+    els.bulkInput.value = '';
+    els.bulkInput.focus();
+  });
+
+  els.fileInput.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = event => {
+      previewImportText(event.target.result, file.name);
+      els.fileInput.value = '';
+    };
+    reader.readAsText(file, 'utf-8');
+  });
+
+  els.selectAllDelete.addEventListener('change', () => {
+    const visibleIds = getFilteredNotes(getNotes()).map(item => item.id);
+    const notes = getNotes();
+
+    notes.forEach(note => {
+      if (visibleIds.includes(note.id)) {
+        note.checkedForDelete = els.selectAllDelete.checked;
+      }
     });
 
-    els.bulkClearButton.addEventListener('click', () => {
-      els.bulkInput.value = '';
-      els.bulkInput.focus();
-    });
+    saveNotes(notes);
+    renderNotes();
+  });
 
-    els.fileInput.addEventListener('change', e => {
-      const file = e.target.files[0];
-      if (!file) return;
+  els.deleteSelectedButton.addEventListener('click', deleteSelectedNotes);
 
-      const reader = new FileReader();
-      reader.onload = event => {
-        previewImportText(event.target.result, file.name);
-        els.fileInput.value = '';
-      };
-      reader.readAsText(file, 'utf-8');
-    });
+  els.wordInput.addEventListener('input', () => {
+    updateWordInputFont();
+    fetchMeaning(els.wordInput.value);
+  });
 
-    els.selectAllDelete.addEventListener('change', () => {
-      const visibleIds = new Set(getFilteredNotes(getNotes()).map(item => item.id));
-      const notes = getNotes();
-
-      notes.forEach(note => {
-        if (visibleIds.has(note.id)) {
-          note.checkedForDelete = els.selectAllDelete.checked;
-        }
-      });
-
-      saveNotes(notes);
-      renderNotes();
-    });
-
-    els.deleteSelectedButton.addEventListener('click', deleteSelectedNotes);
-
-    els.wordInput.addEventListener('input', () => {
-      updateWordInputFont();
+  els.wordInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
       fetchMeaning(els.wordInput.value);
+      els.meaningInput.focus();
+    }
+  });
+
+  els.meaningInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      els.pronunciationInput.focus();
+    }
+  });
+
+  els.pronunciationInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      saveCurrentNote();
+    }
+  });
+
+  els.searchInput.addEventListener('input', renderNotes);
+
+  els.hideMemorized.addEventListener('change', () => {
+    syncHideMemorizedUI();
+    renderNotes();
+  });
+
+  els.searchClearButton.addEventListener('click', () => {
+    els.searchInput.value = '';
+    renderNotes();
+  });
+
+  els.sortSelect.addEventListener('change', renderNotes);
+
+  els.modalCancel.addEventListener('click', closeConfirmModal);
+
+  els.modalConfirm.addEventListener('click', () => {
+    if (pendingUpdateWord) saveCurrentNote(true);
+    closeConfirmModal();
+  });
+
+  els.deleteModalCancel.addEventListener('click', closeDeleteConfirm);
+
+  els.deleteModalConfirm.addEventListener('click', () => {
+    if (typeof pendingDeleteAction === 'function') pendingDeleteAction();
+    closeDeleteConfirm();
+  });
+
+  els.quizHideMeaningButton.addEventListener('click', () => setQuizMode('hideMeaning'));
+  els.quizHideWordButton.addEventListener('click', () => setQuizMode('hideWord'));
+  els.quizRevealButton.addEventListener('click', revealQuizAnswer);
+  els.quizDontKnowButton.addEventListener('click', quizDontKnow);
+  els.quizCloseButton.addEventListener('click', closeQuizModal);
+  els.quizMemorizedButton.addEventListener('click', markQuizMemorized);
+  els.quizStudyAgainButton.addEventListener('click', quizStudyAgain);
+  els.quizNextButton.addEventListener('click', getNextQuizCard);
+
+  [els.confirmModal, els.deleteConfirmModal, els.quizModal].forEach(modal => {
+    modal.addEventListener('click', e => {
+      if (e.target !== modal) return;
+      if (modal === els.confirmModal) closeConfirmModal();
+      if (modal === els.deleteConfirmModal) closeDeleteConfirm();
+      if (modal === els.quizModal) closeQuizModal();
     });
+  });
 
-    els.wordInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        fetchMeaning(els.wordInput.value);
-        els.meaningInput.focus();
-      }
-    });
+  document.addEventListener('click', closeAllMenus);
 
-    els.meaningInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        els.pronunciationInput.focus();
-      }
-    });
+  window.addEventListener('load', () => {
+    syncHideMemorizedUI();
 
-    els.pronunciationInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        saveCurrentNote();
-      }
-    });
+    if (isUnlocked()) {
+      unlockApp();
+    } else {
+      hideFloatingButtons();
+      hideBackToListButton();
+      els.passwordScreen.classList.remove('hidden');
+      els.appShell.classList.add('hidden');
+      els.passwordInput.focus();
+    }
+  });
 
-    els.searchInput.addEventListener('input', renderNotes);
-
-    els.hideMemorized.addEventListener('change', () => {
-      syncHideMemorizedUI();
-      renderNotes();
-    });
-
-    els.searchClearButton.addEventListener('click', () => {
-      els.searchInput.value = '';
-      renderNotes();
-    });
-
-    els.sortSelect.addEventListener('change', renderNotes);
-
-    els.modalCancel.addEventListener('click', closeConfirmModal);
-
-    els.modalConfirm.addEventListener('click', () => {
-      if (pendingUpdateWord) saveCurrentNote(true);
-      closeConfirmModal();
-    });
-
-    els.deleteModalCancel.addEventListener('click', closeDeleteConfirm);
-
-    els.deleteModalConfirm.addEventListener('click', () => {
-      if (typeof pendingDeleteAction === 'function') pendingDeleteAction();
-      closeDeleteConfirm();
-    });
-
-    els.quizHideMeaningButton.addEventListener('click', () => setQuizMode('hideMeaning'));
-    els.quizHideWordButton.addEventListener('click', () => setQuizMode('hideWord'));
-    els.quizRevealButton.addEventListener('click', revealQuizAnswer);
-    els.quizDontKnowButton.addEventListener('click', quizDontKnow);
-    els.quizCloseButton.addEventListener('click', closeQuizModal);
-    els.quizMemorizedButton.addEventListener('click', markQuizMemorized);
-    els.quizStudyAgainButton.addEventListener('click', quizStudyAgain);
-    els.quizNextButton.addEventListener('click', getNextQuizCard);
-
-    [els.confirmModal, els.deleteConfirmModal, els.quizModal].forEach(modal => {
-      modal.addEventListener('click', e => {
-        if (e.target === modal) closeModalByBackdrop(modal);
-      });
-    });
-
-    document.addEventListener('click', closeAllMenus);
-
-    window.addEventListener('load', () => {
-      syncHideMemorizedUI();
-
-      if (isUnlocked()) {
-        unlockApp();
-      } else {
-        hideFloatingButtons();
-        hideBackToListButton();
-        els.passwordScreen.classList.remove('hidden');
-        els.appShell.classList.add('hidden');
-        els.passwordInput.focus();
-      }
-    });
-
-    window.lockApp = lockApp;
-  </script>
+  window.lockApp = lockApp;
+</script>
 </body>
 </html>
