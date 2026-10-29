@@ -262,7 +262,6 @@
       color: #666;
     }
 
-    <!-- 저장된 단어 툴바-->
     .toolbar-box {
   background: #fcfcfc;
   margin-bottom: 16px;
@@ -1908,7 +1907,6 @@
 
   els.searchInput.addEventListener('input', renderNotes);
 
-    <!-- 일단 플로팅 작업-->
 els.floatingHideMemorized.addEventListener('change', () => {
   els.hideMemorized.checked = els.floatingHideMemorized.checked;
   renderNotes();
