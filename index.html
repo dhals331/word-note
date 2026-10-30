@@ -552,6 +552,7 @@
   .pos-btn.active-adv  { background: #af8cff; color: #fff; border-color: #af8cff; }
   .pos-btn.active-conj { background: #67cfc5; color: #fff; border-color: #67cfc5; }
   .pos-btn.active-excl { background: #f48db3; color: #fff; border-color: #f48db3; }
+  .pos-btn.active-phrase { background: #8f84e8; color: #fff; border-color: #8f84e8; }
 
 .check-row {
   display: flex;
@@ -1302,7 +1303,7 @@
         <textarea
           id="bulkInput"
           class="bulk-textarea"
-          placeholder="예시&#10;run: 달리다, 달리기 : 런 : 동, 명&#10;and: 그리고 : 앤드 : 접&#10;wow: 와! : 와우 : 감"
+          placeholder="예시&#10;run: 달리다, 달리기 : 런 : 동, 명&#10;and: 그리고 : 앤드 : 접&#10;wow: 와! : 와우 : 감&#10;look after: 돌보다 : 룩 애프터 : 동, 숙"
         ></textarea>
         <div class="bulk-actions">
           <button class="action-btn" id="bulkPreviewButton" type="button">미리보기</button>
@@ -1333,7 +1334,7 @@
               type="text"
               id="searchInput"
               class="search-input"
-              placeholder="검색 / 단어 / 뜻 / 발음 / 품사"
+              placeholder="검색 / 단어 / 뜻 / 발음 / 품사 / 숙어"
             />
             <button id="searchClearButton" class="search-clear-btn" type="button">×</button>
           </div>
@@ -1525,6 +1526,7 @@
     '부': '부', '부사': '부',
     '접': '접', '접속사': '접',
     '감': '감', '감탄사': '감'
+    '숙': '숙', '숙어': '숙'
   };
 
   function isUnlocked() {
@@ -1863,6 +1865,7 @@
             ${createPosButton(note.id, posList, '부', 'active-adv')}
             ${createPosButton(note.id, posList, '접', 'active-conj')}
             ${createPosButton(note.id, posList, '감', 'active-excl')}
+            ${createPosButton(note.id, posList, '숙', 'active-phrase')}
           </div>
 
           <div class="check-row">
