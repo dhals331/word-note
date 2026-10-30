@@ -1436,6 +1436,7 @@
         <table class="preview-table">
           <thead>
             <tr>
+              <th>상태</th>
               <th>단어</th>
               <th>뜻</th>
               <th>발음</th>
@@ -1448,12 +1449,41 @@
 
       <div class="modal-actions">
         <button class="modal-btn cancel" id="previewCancelButton" type="button">취소</button>
-        <button class="modal-btn" id="previewImportButton" type="button">가져오기</button>
+        <button class="modal-btn" id="previewImportButton" type="button">다음</button>
       </div>
     </div>
   </div>
 
-  
+  <div class="modal-backdrop" id="updateCheckModal">
+    <div class="modal">
+      <div class="modal-title">수정 내용 확인</div>
+      <div class="preview-note" id="updateCheckNote"></div>
+
+      <div class="preview-table-wrap">
+        <table class="preview-table">
+          <thead>
+            <tr>
+              <th>단어</th>
+              <th>이전 뜻</th>
+              <th>새 뜻</th>
+              <th>이전 발음</th>
+              <th>새 발음</th>
+              <th>이전 품사</th>
+              <th>새 품사</th>
+            </tr>
+          </thead>
+          <tbody id="updateCheckTableBody"></tbody>
+        </table>
+      </div>
+
+      <div class="modal-actions">
+        <button class="modal-btn cancel" id="updateCheckCancelButton" type="button">전체 취소</button>
+        <button class="modal-btn" id="updateCheckAddOnlyButton" type="button">새 단어만 저장</button>
+        <button class="modal-btn" id="updateCheckApplyButton" type="button">수정 포함 저장</button>
+      </div>
+    </div>
+  </div>
+
   <button id="quizButton" class="floating-mini-button floating-quiz-button" type="button">퀴즈</button>
 <button id="floatingLockButton" class="floating-mini-button floating-lock-button" type="button">잠금</button>
 <button id="floatingHideButton" class="floating-mini-button floating-hide-button" type="button">숨김</button>
@@ -1537,7 +1567,14 @@
     previewNote: $('previewNote'),
     previewTableBody: $('previewTableBody'),
     previewCancelButton: $('previewCancelButton'),
-    previewImportButton: $('previewImportButton')    
+    previewImportButton: $('previewImportButton'),
+
+    updateCheckModal: $('updateCheckModal'),
+    updateCheckNote: $('updateCheckNote'),
+    updateCheckTableBody: $('updateCheckTableBody'),
+    updateCheckCancelButton: $('updateCheckCancelButton'),
+    updateCheckAddOnlyButton: $('updateCheckAddOnlyButton'),
+    updateCheckApplyButton: $('updateCheckApplyButton')
   };
 
   let pendingUpdateWord = null;
@@ -1552,6 +1589,7 @@
   let quizAnswerShown = false;
   let quizRepeatQueue = [];
   let pendingImportRows = [];
+  let pendingImportSummary = null;
 
   const POS_MAP = {
     '명': '명', '명사': '명',
@@ -2160,11 +2198,58 @@
     pendingDeleteAction = null;
   }
 
-function openPreviewModal(rows) {
-    pendingImportRows = rows;
+  function analyzeImportRows(rows) {
+    const notes = getNotes();
 
-    els.previewTableBody.innerHTML = rows.map(row => `
+    const result = {
+      addRows: [],
+      updateRows: [],
+      skipRows: []
+    };
+
+    rows.forEach(row => {
+      const word = String(row.word || '').trim().toLowerCase();
+      const existing = notes.find(note => note.word.toLowerCase() === word);
+
+      if (!existing) {
+        result.addRows.push(row);
+        return;
+      }
+
+      const sameMeaning = normalizeText(existing.meaning) === normalizeText(row.meaning);
+      const samePron = normalizeText(existing.pronunciation || '') === normalizeText(row.pronunciation || '');
+      const samePos =
+        JSON.stringify([...(existing.pos || [])].sort()) ===
+        JSON.stringify([...(row.pos || [])].sort());
+
+      if (sameMeaning && samePron && samePos) {
+        result.skipRows.push(row);
+      } else {
+        result.updateRows.push(row);
+      }
+    });
+
+    return result;
+  }
+    
+  function openPreviewModal(rows) {
+    const summary = analyzeImportRows(rows);
+    pendingImportSummary = summary;
+    pendingImportRows = [...summary.addRows, ...summary.updateRows];
+
+    const previewRows = [
+      ...summary.addRows.map(row => ({ ...row, _status: '추가' })),
+      ...summary.updateRows.map(row => ({ ...row, _status: '수정' }))
+    ];
+
+    if (!previewRows.length) {
+      showMessage('모든 항목이 기존 내용과 같아서 가져올 내용이 없습니다.');
+      return;
+    }
+
+    els.previewTableBody.innerHTML = previewRows.map(row => `
       <tr>
+        <td>${escapeHtml(row._status)}</td>
         <td>${escapeHtml(row.word || '')}</td>
         <td>${escapeHtml(row.meaning || '')}</td>
         <td>${escapeHtml(row.pronunciation || '')}</td>
@@ -2172,14 +2257,57 @@ function openPreviewModal(rows) {
       </tr>
     `).join('');
 
-    els.previewNote.textContent = `총 ${rows.length}개 항목을 가져올 예정입니다.`;
+    els.previewNote.textContent =
+      `추가 ${summary.addRows.length}개, 수정 ${summary.updateRows.length}개, 중복 제외 ${summary.skipRows.length}개`;
+
+    els.previewImportButton.textContent = summary.updateRows.length ? '다음' : '가져오기';
     els.previewModal.classList.add('show');
   }
 
-  function closePreviewModal() {
+    function closePreviewModal() {
     els.previewModal.classList.remove('show');
     pendingImportRows = [];
+    pendingImportSummary = null;
     els.previewTableBody.innerHTML = '';
+  }
+
+  function openUpdateCheckModal() {
+    if (!pendingImportSummary || !pendingImportSummary.updateRows.length) return;
+
+    const notes = getNotes();
+
+    els.updateCheckTableBody.innerHTML = pendingImportSummary.updateRows.map(row => {
+      const existing = notes.find(note => note.word.toLowerCase() === String(row.word || '').toLowerCase());
+
+      const oldMeaning = existing?.meaning || '';
+      const newMeaning = row.meaning || '';
+      const oldPron = existing?.pronunciation || '';
+      const newPron = row.pronunciation || '';
+      const oldPos = (existing?.pos || []).join(', ');
+      const newPos = (row.pos || []).join(', ');
+
+      return `
+        <tr>
+          <td>${escapeHtml(row.word || '')}</td>
+          <td>${escapeHtml(oldMeaning || '(없음)')}</td>
+          <td>${escapeHtml(newMeaning || '(없음)')}</td>
+          <td>${escapeHtml(oldPron || '(없음)')}</td>
+          <td>${escapeHtml(newPron || '(없음)')}</td>
+          <td>${escapeHtml(oldPos || '(없음)')}</td>
+          <td>${escapeHtml(newPos || '(없음)')}</td>
+        </tr>
+      `;
+    }).join('');
+
+    els.updateCheckNote.textContent =
+      `새 단어 ${pendingImportSummary.addRows.length}개, 수정 ${pendingImportSummary.updateRows.length}개, 중복 제외 ${pendingImportSummary.skipRows.length}개`;
+
+    els.updateCheckModal.classList.add('show');
+  }
+
+  function closeUpdateCheckModal() {
+    els.updateCheckModal.classList.remove('show');
+    els.updateCheckTableBody.innerHTML = '';
   }
     
   function parseLine(line, modeHint = '') {
@@ -2467,14 +2595,57 @@ function openPreviewModal(rows) {
 els.previewCancelButton.addEventListener('click', closePreviewModal);
 
   els.previewImportButton.addEventListener('click', () => {
-    if (!pendingImportRows.length) {
-      showMessage('가져올 데이터가 없습니다.');
-      closePreviewModal();
+  if (!pendingImportSummary) {
+    showMessage('가져올 데이터가 없습니다.');
+    closePreviewModal();
+    return;
+  }
+
+  if (pendingImportSummary.updateRows.length) {
+    els.previewModal.classList.remove('show');
+    openUpdateCheckModal();
+    return;
+  }
+
+  const rows = [...pendingImportSummary.addRows];
+  closePreviewModal();
+  importWordPairs(rows);
+});
+
+els.updateCheckCancelButton.addEventListener('click', () => {
+    closeUpdateCheckModal();
+    closePreviewModal();
+    showMessage('가져오기를 취소했습니다.');
+  });
+
+  els.updateCheckAddOnlyButton.addEventListener('click', () => {
+    const rows = [...(pendingImportSummary?.addRows || [])];
+    closeUpdateCheckModal();
+    closePreviewModal();
+
+    if (!rows.length) {
+      showMessage('저장할 새 단어가 없습니다.');
       return;
     }
 
-    importWordPairs(pendingImportRows);
+    importWordPairs(rows);
+  });
+
+  els.updateCheckApplyButton.addEventListener('click', () => {
+    const rows = [
+      ...(pendingImportSummary?.addRows || []),
+      ...(pendingImportSummary?.updateRows || [])
+    ];
+
+    closeUpdateCheckModal();
     closePreviewModal();
+
+    if (!rows.length) {
+      showMessage('저장할 항목이 없습니다.');
+      return;
+    }
+
+    importWordPairs(rows);
   });
     
   els.selectAllDelete.addEventListener('change', () => {
@@ -2557,13 +2728,14 @@ els.previewCancelButton.addEventListener('click', closePreviewModal);
   els.quizStudyAgainButton.addEventListener('click', quizStudyAgain);
   els.quizNextButton.addEventListener('click', getNextQuizCard);
 
-    [els.confirmModal, els.deleteConfirmModal, els.quizModal, els.previewModal].forEach(modal => {
+      [els.confirmModal, els.deleteConfirmModal, els.quizModal, els.previewModal, els.updateCheckModal].forEach(modal => {
     modal.addEventListener('click', e => {
       if (e.target !== modal) return;
       if (modal === els.confirmModal) closeConfirmModal();
       if (modal === els.deleteConfirmModal) closeDeleteConfirm();
       if (modal === els.quizModal) closeQuizModal();
       if (modal === els.previewModal) closePreviewModal();
+      if (modal === els.updateCheckModal) closeUpdateCheckModal();
     });
   });
 
