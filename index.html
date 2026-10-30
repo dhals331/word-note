@@ -1533,7 +1533,7 @@
     quizStudyAgainButton: $('quizStudyAgainButton'),
     quizNextButton: $('quizNextButton'),
 
-previewModal: $('previewModal'),
+    previewModal: $('previewModal'),
     previewNote: $('previewNote'),
     previewTableBody: $('previewTableBody'),
     previewCancelButton: $('previewCancelButton'),
@@ -2464,6 +2464,19 @@ function openPreviewModal(rows) {
     reader.readAsText(file, 'utf-8');
   });
 
+els.previewCancelButton.addEventListener('click', closePreviewModal);
+
+  els.previewImportButton.addEventListener('click', () => {
+    if (!pendingImportRows.length) {
+      showMessage('가져올 데이터가 없습니다.');
+      closePreviewModal();
+      return;
+    }
+
+    importWordPairs(pendingImportRows);
+    closePreviewModal();
+  });
+    
   els.selectAllDelete.addEventListener('change', () => {
     const visibleIds = getFilteredNotes(getNotes()).map(item => item.id);
     const notes = getNotes();
@@ -2544,12 +2557,13 @@ function openPreviewModal(rows) {
   els.quizStudyAgainButton.addEventListener('click', quizStudyAgain);
   els.quizNextButton.addEventListener('click', getNextQuizCard);
 
-  [els.confirmModal, els.deleteConfirmModal, els.quizModal].forEach(modal => {
+    [els.confirmModal, els.deleteConfirmModal, els.quizModal, els.previewModal].forEach(modal => {
     modal.addEventListener('click', e => {
       if (e.target !== modal) return;
       if (modal === els.confirmModal) closeConfirmModal();
       if (modal === els.deleteConfirmModal) closeDeleteConfirm();
       if (modal === els.quizModal) closeQuizModal();
+      if (modal === els.previewModal) closePreviewModal();
     });
   });
 
