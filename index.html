@@ -1427,6 +1427,33 @@
     </div>
   </div>
 
+  <div class="modal-backdrop" id="previewModal">
+    <div class="modal">
+      <div class="modal-title">가져오기 미리보기</div>
+      <div class="preview-note" id="previewNote"></div>
+
+      <div class="preview-table-wrap">
+        <table class="preview-table">
+          <thead>
+            <tr>
+              <th>단어</th>
+              <th>뜻</th>
+              <th>발음</th>
+              <th>품사</th>
+            </tr>
+          </thead>
+          <tbody id="previewTableBody"></tbody>
+        </table>
+      </div>
+
+      <div class="modal-actions">
+        <button class="modal-btn cancel" id="previewCancelButton" type="button">취소</button>
+        <button class="modal-btn" id="previewImportButton" type="button">가져오기</button>
+      </div>
+    </div>
+  </div>
+
+  
   <button id="quizButton" class="floating-mini-button floating-quiz-button" type="button">퀴즈</button>
 <button id="floatingLockButton" class="floating-mini-button floating-lock-button" type="button">잠금</button>
 <button id="floatingHideButton" class="floating-mini-button floating-hide-button" type="button">숨김</button>
@@ -1504,7 +1531,13 @@
     quizCloseButton: $('quizCloseButton'),
     quizMemorizedButton: $('quizMemorizedButton'),
     quizStudyAgainButton: $('quizStudyAgainButton'),
-    quizNextButton: $('quizNextButton')
+    quizNextButton: $('quizNextButton'),
+
+previewModal: $('previewModal'),
+    previewNote: $('previewNote'),
+    previewTableBody: $('previewTableBody'),
+    previewCancelButton: $('previewCancelButton'),
+    previewImportButton: $('previewImportButton')    
   };
 
   let pendingUpdateWord = null;
@@ -1518,6 +1551,7 @@
   let quizMode = 'hideMeaning';
   let quizAnswerShown = false;
   let quizRepeatQueue = [];
+  let pendingImportRows = [];
 
   const POS_MAP = {
     '명': '명', '명사': '명',
@@ -2126,6 +2160,28 @@
     pendingDeleteAction = null;
   }
 
+function openPreviewModal(rows) {
+    pendingImportRows = rows;
+
+    els.previewTableBody.innerHTML = rows.map(row => `
+      <tr>
+        <td>${escapeHtml(row.word || '')}</td>
+        <td>${escapeHtml(row.meaning || '')}</td>
+        <td>${escapeHtml(row.pronunciation || '')}</td>
+        <td>${escapeHtml((row.pos || []).join(', '))}</td>
+      </tr>
+    `).join('');
+
+    els.previewNote.textContent = `총 ${rows.length}개 항목을 가져올 예정입니다.`;
+    els.previewModal.classList.add('show');
+  }
+
+  function closePreviewModal() {
+    els.previewModal.classList.remove('show');
+    pendingImportRows = [];
+    els.previewTableBody.innerHTML = '';
+  }
+    
   function parseLine(line, modeHint = '') {
     const raw = String(line || '').trim();
     if (!raw) return null;
@@ -2201,19 +2257,16 @@
     showMessage(`가져오기 완료: 추가 ${added}개, 수정 ${updated}개, 건너뜀 ${skipped}개`);
   }
 
-  function previewImportText(text, fileName = '') {
+    function previewImportText(text, fileName = '') {
     const rows = parseImportText(text, fileName);
     if (!rows.length) {
       showMessage('형식을 읽을 수 없습니다. 예: run: 달리다: 런: 동, 명');
       return;
     }
 
-    const ok = confirm(`총 ${rows.length}개 항목을 가져옵니다. 계속하시겠습니까?`);
-    if (!ok) return;
-
-    importWordPairs(rows);
+    openPreviewModal(rows);
   }
-
+    
   function closeAllMenus() {
     document.querySelectorAll('.menu-popup').forEach(menu => menu.classList.remove('show'));
   }
