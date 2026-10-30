@@ -5,724 +5,933 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>단어장</title>
   <style>
-    * { box-sizing: border-box; }
+  * { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      background: #fff;
-      color: #111;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      padding: 100px 24px 24px;
-    }
+  body {
+    margin: 0;
+    background: #fff;
+    color: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 24px;
+  }
 
-    .container {
-      width: 100%;
-      max-width: 1120px;
-    }
+  .container {
+    width: 100%;
+    max-width: 1120px;
+  }
 
-    .top-box,
-    .word-area,
-    .note-list {
-      display: flex;
-      flex-direction: column;
-    }
+  .top-box,
+  .word-area,
+  .note-list {
+    display: flex;
+    flex-direction: column;
+  }
 
-    .top-box { gap: 12px; margin-bottom: 24px; }
-    .word-area { gap: 2px; padding-left: 0; min-width: 0; }
-    .note-list { gap: 10px; }
+  .top-box { gap: 12px; margin-bottom: 24px; }
+  .word-area { gap: 4px; padding-left: 0; min-width: 0; }
+  .note-list { gap: 10px; }
 
-    .word-input,
-    .meaning-input,
-    .pronunciation-input,
-    .search-input,
-    .filter-select,
-    .bulk-textarea,
-    .tool-select,
-    .password-input {
-      width: 100%;
-      border: 1px solid #d8d8d8;
-      outline: none;
-      background: #fff;
-    }
+  .word-input,
+  .meaning-input,
+  .pronunciation-input,
+  .search-input,
+  .filter-select,
+  .bulk-textarea,
+  .tool-select,
+  .password-input {
+    width: 100%;
+    border: 1px solid #d8d8d8;
+    outline: none;
+    background: #fff;
+  }
 
-    .word-input,
-    .meaning-input,
-    .pronunciation-input,
-    .password-input {
-      padding: 14px;
-      font-size: 15px;
-      border-radius: 12px;
-    }
+  .word-input,
+  .meaning-input,
+  .pronunciation-input,
+  .password-input {
+    padding: 14px;
+    font-size: 15px;
+    border-radius: 12px;
+  }
 
-    .search-input,
-    .filter-select,
-    .bulk-textarea,
-    .tool-select {
-      border-color: #dcdcdc;
-    }
+  .search-input,
+  .filter-select,
+  .bulk-textarea,
+  .tool-select {
+    border-color: #dcdcdc;
+  }
 
-    .word-input {
-      font-family: "바탕", Batang, serif;
-    }
+  .word-input {
+    font-family: "바탕", Batang, serif;
+  }
 
-    .word-input.is-english {
-      font-family: "맑은 고딕", "Malgun Gothic", sans-serif;
-    }
+  .word-input.is-english {
+    font-family: "맑은 고딕", "Malgun Gothic", sans-serif;
+  }
 
-    .meaning-input,
-    .pronunciation-input,
-    .search-input,
-    .filter-select,
-    .bulk-textarea,
-    .tool-select,
-    .password-input {
-      font-family: "바탕", Batang, serif;
-    }
+  .meaning-input,
+  .pronunciation-input,
+  .search-input,
+  .filter-select,
+  .bulk-textarea,
+  .tool-select,
+  .password-input {
+    font-family: "바탕", Batang, serif;
+  }
 
-    .word-input:focus,
-    .meaning-input:focus,
-    .pronunciation-input:focus,
-    .search-input:focus,
-    .filter-select:focus,
-    .bulk-textarea:focus,
-    .tool-select:focus,
-    .password-input:focus {
-      border-color: #555;
-    }
+  .word-input:focus,
+  .meaning-input:focus,
+  .pronunciation-input:focus,
+  .search-input:focus,
+  .filter-select:focus,
+  .bulk-textarea:focus,
+  .tool-select:focus,
+  .password-input:focus {
+    border-color: #555;
+  }
 
-    .word-input::placeholder,
-    .meaning-input::placeholder,
-    .pronunciation-input::placeholder,
-    .search-input::placeholder,
-    .bulk-textarea::placeholder,
-    .password-input::placeholder {
-      font-size: 12px;
-      color: #888;
-      font-family: "바탕", Batang, serif;
-    }
+  .word-input::placeholder,
+  .meaning-input::placeholder,
+  .pronunciation-input::placeholder,
+  .search-input::placeholder,
+  .bulk-textarea::placeholder,
+  .password-input::placeholder {
+    font-size: 12px;
+    color: #888;
+    font-family: "바탕", Batang, serif;
+  }
 
-    .button-row,
-    .bulk-actions,
-    .modal-actions,
-    .info-inline,
-    .word-inline,
-    .toolbar-main,
-    .toolbar-controls,
-    .password-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+  .button-row,
+  .bulk-actions,
+  .modal-actions,
+  .info-inline,
+  .word-inline,
+  .toolbar-main,
+  .toolbar-controls,
+  .password-actions,
+  .quiz-mode-row,
+  .quiz-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
 
-    .info-inline,
-    .word-inline {
-      gap: 8px;
-      align-items: baseline;
-    }
+  .info-inline,
+  .word-inline {
+    gap: 8px;
+    align-items: baseline;
+  }
 
-    .word-inline {
-      display: flex;
-      flex-wrap: nowrap;
-      min-width: 0;
-      overflow: hidden;
-    }
+  .word-inline {
+    display: flex;
+    flex-wrap: nowrap;
+    min-width: 0;
+    overflow: hidden;
+  }
 
-    .action-btn,
-    .file-label,
-    .modal-btn,
-    .password-btn {
-      border: none;
-      color: #fff;
-      cursor: pointer;
-      text-align: center;
-    }
+  .action-btn,
+  .file-label,
+  .modal-btn,
+  .password-btn {
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+  }
 
-    .action-btn,
-    .file-label,
-    .password-btn {
-      flex: 1;
-      min-width: 120px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: #2f2f2f;
-      font-size: 12px;
-      font-family: "바탕", Batang, serif;
-      transition: background 0.2s ease;
-    }
+  .action-btn,
+  .file-label,
+  .password-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: 13px 14px;
+    border-radius: 12px;
+    background: #111;
+    font-size: 14px;
+    font-family: "바탕", Batang, serif;
+    transition: background 0.2s ease;
+  }
 
-    .action-btn:hover,
-    .file-label:hover,
-    .top-button:hover,
-    .password-btn:hover { background: #444; }
+  .action-btn:hover,
+  .file-label:hover,
+  .top-button:hover,
+  .password-btn:hover {
+    background: #333;
+  }
 
-    .floating-hide-button:hover {
-      background: rgba(17, 17, 17, 0.18);
-    }
+  .danger-btn,
+  .modal-btn.danger {
+    background: #c94f4f;
+  }
 
-    .danger-btn,
-    .modal-btn.danger { background: #c94f4f; }
+  .danger-btn:hover,
+  .modal-btn.danger:hover {
+    background: #b93c3c;
+  }
 
-    .danger-btn:hover,
-    .modal-btn.danger:hover { background: #b93c3c; }
+  #lockButton {
+    background: #999;
+  }
 
-    #lockButton {
-      background: #999;
-    }
+  #lockButton:hover {
+    background: #777;
+  }
 
-    #lockButton:hover {
-      background: #777;
-    }
+  #backToListButton {
+    display: none;
+    background: #8a8f98;
+  }
 
-    #backToListButton {
-      display: none;
-      background: #8a8f98;
-    }
+  #backToListButton:hover {
+    background: #727780;
+  }
 
-    #backToListButton:hover {
-      background: #727780;
-    }
+  #backToListButton.show {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-    #backToListButton.show {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-    }
+  #saveBackupButton {
+    background: #20a464;
+  }
 
-    #saveBackupButton {
-      background: #20a464;
-    }
+  #saveBackupButton:hover {
+    background: #188452;
+  }
 
-    #saveBackupButton:hover {
-      background: #188452;
-    }
+  #restoreBackupButton {
+    background: #2e7cf6;
+  }
 
-    #restoreBackupButton {
-      background: #2e7cf6;
-    }
+  #restoreBackupButton:hover {
+    background: #1f68d8;
+  }
 
-    #restoreBackupButton:hover {
-      background: #1f68d8;
-    }
+  .file-label {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-    .file-label {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-    }
+  .hidden-file { display: none; }
 
-    .hidden-file { display: none; }
+  .help-text,
+  .info-title,
+  .message,
+  .preview-note,
+  .selected-pos-text,
+  .check-box,
+  .menu-item,
+  .modal-title,
+  .modal-text,
+  .modal-btn,
+  .top-button,
+  .toolbar-title,
+  .toolbar-meta,
+  .tool-chip,
+  .tool-select,
+  .password-title,
+  .password-desc,
+  .password-message,
+  .floating-hide-button,
+  .floating-mini-button,
+  .quiz-status,
+  .quiz-label,
+  .quiz-pron {
+    font-family: "바탕", Batang, serif;
+  }
 
-    .help-text,
-    .info-title,
-    .message,
-    .selected-pos-text,
-    .check-box,
-    .menu-item,
-    .modal-title,
-    .modal-text,
-    .modal-btn,
-    .top-button,
-    .toolbar-title,
-    .toolbar-meta,
-    .tool-chip,
-    .tool-select,
-    .password-title,
-    .password-desc,
-    .password-message,
-    .floating-hide-button {
-      font-family: "바탕", Batang, serif;
-    }
+  .help-text {
+    font-size: 11px;
+    color: #777;
+    margin-top: -4px;
+  }
 
-    .help-text {
-      font-size: 11px;
-      color: #777;
-      margin-top: -4px;
-    }
+  .info-box,
+  .bulk-box,
+  .note-item,
+  .toolbar-box,
+  .password-box,
+  .quiz-card {
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    background: #fafafa;
+    padding: 14px;
+  }
 
-    .info-box,
-    .bulk-box,
-    .note-item,
-    .toolbar-box,
-    .password-box {
-      border: 1px solid #e5e5e5;
-      border-radius: 12px;
-      background: #fafafa;
-      padding: 14px;
-    }
+  .note-item {
+    background: #fff;
+    border-color: #e6e6e6;
+    position: relative;
+  }
 
-    .note-item {
-      background: #fff;
-      border-color: #e6e6e6;
-      position: relative;
-    }
+  .note-item.selected-delete {
+    border-color: #d36a6a;
+    background: #fff8f8;
+  }
 
-    .note-item.selected-delete {
-      border-color: #d36a6a;
-      background: #fff8f8;
-    }
+  .info-title {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+  }
 
-    .info-title {
-      font-size: 12px;
-      color: #666;
-      margin-bottom: 8px;
-    }
+  .info-word {
+    font-size: 18px;
+    font-weight: 700;
+    font-family: "맑은 고딕", "Malgun Gothic", sans-serif;
+  }
 
-    .info-word {
-      font-size: 18px;
-      font-weight: 700;
-      font-family: "맑은 고딕", "Malgun Gothic", sans-serif;
-    }
+  .info-pron {
+    font-size: 13px;
+    color: #666;
+    font-family: "바탕", Batang, serif;
+  }
 
-    .info-pron {
-      font-size: 13px;
-      color: #666;
-      font-family: "바탕", Batang, serif;
-    }
+  .info-meaning {
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    font-family: "바탕", Batang, serif;
+    color: #333;
+  }
 
-    .info-meaning {
-      font-size: 13px;
-      line-height: 1.5;
-      white-space: pre-wrap;
-      font-family: "바탕", Batang, serif;
-      color: #333;
-      margin-top: 6px;
-    }
+  .message {
+    min-height: 20px;
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+  }
 
-    .message {
-      min-height: 20px;
-      text-align: center;
-      font-size: 13px;
-      color: #666;
-    }
+  .toolbar-box {
+    background: #fcfcfc;
+    margin-bottom: 16px;
+    padding: 16px;
+  }
 
-    .toolbar-box {
-      background: #fcfcfc;
-      margin-bottom: 16px;
-      padding: 16px;
-    }
+  .toolbar-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 12px;
+  }
 
-    .toolbar-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-      gap: 12px;
-    }
+  .toolbar-title {
+    font-size: 14px;
+    color: #222;
+    font-weight: 700;
+  }
 
-    .toolbar-title {
-      font-size: 14px;
-      color: #222;
-      font-weight: 700;
-    }
+  .toolbar-meta {
+    font-size: 12px;
+    color: #666;
+  }
 
-    .toolbar-meta {
-      font-size: 12px;
-      color: #666;
+  .toolbar-main {
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  .toolbar-main::-webkit-scrollbar { height: 8px; }
+
+  .toolbar-main::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 999px;
+  }
+
+  .search-wrap {
+    position: relative;
+    min-width: 280px;
+    flex: 1 1 320px;
+  }
+
+  .search-input {
+    padding: 12px 40px 12px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    background: #fff;
+  }
+
+  .search-clear-btn {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    border: none;
+    border-radius: 999px;
+    background: #d9d9d9;
+    color: #444;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .search-clear-btn.show { display: inline-flex; }
+
+  .search-clear-btn:hover {
+    background: #bfbfbf;
+  }
+
+  .toolbar-controls {
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+
+  .tool-chip,
+  .tool-select {
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid #dfdfdf;
+    border-radius: 10px;
+    background: #fff;
+    font-size: 13px;
+    color: #333;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  }
+
+  .tool-chip label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .tool-select {
+    text-align-last: center;
+    cursor: pointer;
+    width: auto;
+  }
+
+  .toolbar-delete-btn,
+  .unlock-reset-btn {
+    min-height: 44px;
+    padding: 0 16px;
+    border-radius: 10px;
+    border: none;
+    background: #d85b5b;
+    color: #fff;
+    font-size: 13px;
+    font-family: "바탕", Batang, serif;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .toolbar-delete-btn:hover,
+  .unlock-reset-btn:hover {
+    background: #c74848;
+  }
+
+  .bulk-box { display: none; }
+  .bulk-box.show { display: block; }
+
+  .bulk-textarea {
+    min-height: 160px;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+    resize: vertical;
+  }
+
+  .note-clickable { cursor: pointer; }
+
+  .note-line {
+    display: grid;
+    grid-template-columns: 44px minmax(220px, 1.5fr) minmax(220px, 1.8fr) max-content auto auto auto auto;
+    column-gap: 14px;
+    row-gap: 10px;
+    align-items: center;
+  }
+
+  .pos-buttons {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 6px;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: max-content;
+    white-space: nowrap;
+    transform: translateX(-6px);
+    margin-right: 18px;
+  }
+
+  .delete-check-wrap,
+  .menu-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .menu-wrap {
+    position: relative;
+  }
+
+  .note-word {
+    font-size: 16px;
+    font-weight: 700;
+    word-break: break-word;
+    white-space: nowrap;
+    flex: 0 0 auto;
+    font-family: "맑은 고딕", "Malgun Gothic", sans-serif;
+    display: inline;
+  }
+
+  .note-pron {
+    font-size: 12px;
+    color: #666;
+    font-family: "바탕", Batang, serif;
+    display: inline-block;
+    margin-left: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .selected-pos-text {
+    font-size: 11px;
+    color: #777;
+    line-height: 1.3;
+    min-height: 14px;
+  }
+
+  .note-meaning {
+    font-size: 13px;
+    line-height: 1.4;
+    word-break: break-word;
+    font-family: "바탕", Batang, serif;
+    display: inline;
+  }
+
+  .pos-btn {
+    border: 1px solid #dfe6ff;
+    background: #fff;
+    color: #666;
+    border-radius: 999px;
+    padding: 4px 9px;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.2;
+    cursor: pointer;
+    font-family: "바탕", Batang, serif;
+    white-space: nowrap;
+    flex: 0 0 auto;
+  }
+
+  .pos-btn.active-noun { background: #7fb0ff; color: #fff; border-color: #7fb0ff; }
+  .pos-btn.active-verb { background: #ff8e8e; color: #fff; border-color: #ff8e8e; }
+  .pos-btn.active-adj  { background: #f3c76a; color: #fff; border-color: #f3c76a; }
+  .pos-btn.active-adv  { background: #af8cff; color: #fff; border-color: #af8cff; }
+  .pos-btn.active-conj { background: #67cfc5; color: #fff; border-color: #67cfc5; }
+  .pos-btn.active-excl { background: #f48db3; color: #fff; border-color: #f48db3; }
+
+  .check-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .menu-btn {
+    width: 34px;
+    height: 34px;
+    border: 1px solid #cfcfcf;
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .menu-btn:hover {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+  }
+
+  .menu-popup {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    min-width: 140px;
+    background: #fff;
+    border: 1px solid #d8d8d8;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    overflow: hidden;
+    z-index: 10;
+  }
+
+  .menu-popup.show { display: block; }
+
+  .menu-item {
+    width: 100%;
+    padding: 10px 12px;
+    border: none;
+    background: #fff;
+    text-align: center;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  .menu-item:hover { background: #f2f2f2; }
+
+  .highlight-word,
+  .highlight-meaning {
+    border-radius: 2px;
+    padding: 0 1px;
+    display: inline;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .highlight-word { background: linear-gradient(transparent 55%, #fff2a8 55%); }
+  .highlight-meaning { background: linear-gradient(transparent 55%, #b9f3c9 55%); }
+
+  .memorized { opacity: 0.55; }
+
+  .empty-text {
+    color: #888;
+    font-size: 14px;
+    text-align: center;
+    padding: 24px 0;
+    font-family: "바탕", Batang, serif;
+  }
+
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.28);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 50;
+  }
+
+  .modal-backdrop.show { display: flex; }
+
+  .modal {
+    width: 100%;
+    max-width: 760px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+    max-height: 90vh;
+    overflow: auto;
+  }
+
+  .modal.small { max-width: 460px; }
+
+  .modal-title {
+    font-size: 16px;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .modal-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #444;
+    white-space: pre-line;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .modal-btn {
+    flex: 1;
+    padding: 11px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    background: #111;
+  }
+
+  .modal-btn.cancel { background: #999; }
+
+  .preview-table-wrap {
+    overflow-x: auto;
+    border: 1px solid #e2e2e2;
+    border-radius: 10px;
+    margin-bottom: 14px;
+  }
+
+  .preview-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    font-family: "바탕", Batang, serif;
+    font-size: 13px;
+  }
+
+  .preview-table th,
+  .preview-table td {
+    border-bottom: 1px solid #ececec;
+    padding: 10px 8px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: pre-wrap;
+  }
+
+  .preview-table th {
+    background: #f7f7f7;
+    font-weight: 700;
+  }
+
+  .preview-note {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .top-button {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 999px;
+    background: #111;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.16);
+    display: none;
+    z-index: 60;
+  }
+
+  .top-button.show { display: block; }
+
+  .floating-hide-button,
+  .floating-mini-button {
+    position: fixed;
+    border: none;
+    border-radius: 999px;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+    display: none;
+    z-index: 70;
+    text-align: center;
+  }
+
+  .floating-hide-button {
+    top: 22px;
+    right: 22px;
+    width: 42px;
+    height: 42px;
+    background: rgba(17, 17, 17, 0.1);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .floating-hide-button:hover {
+    background: rgba(17, 17, 17, 0.18);
+  }
+
+  .floating-hide-button.active {
+    background: rgba(70, 130, 255, 0.88);
+  }
+
+  .floating-hide-button.active:hover {
+    background: rgba(70, 130, 255, 0.98);
+  }
+
+  .floating-mini-button {
+    width: 48px;
+    height: 48px;
+    background: rgba(17, 17, 17, 0.16);
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 1;
+    padding: 0;
+    font-family: "바탕", Batang, serif;
+  }
+
+  .floating-lock-button {
+    top: 22px;
+    right: 78px;
+  }
+
+  .floating-quiz-button {
+    right: 22px;
+    bottom: 22px;
+  }
+
+  .app-shell.hidden,
+  .password-screen.hidden {
+    display: none;
+  }
+
+  .password-screen {
+    width: 100%;
+    max-width: 460px;
+    margin: 0 auto;
+  }
+
+  .password-box {
+    background: #fff;
+    padding: 22px;
+  }
+
+  .password-title {
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .password-desc {
+    font-size: 13px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+
+  .password-message {
+    min-height: 20px;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 13px;
+    color: #c74848;
+  }
+
+  .password-sub {
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  .quiz-modal {
+    max-width: 520px;
+  }
+
+  .quiz-mode-row {
+    margin-bottom: 12px;
+  }
+
+  .quiz-mode-btn {
+    flex: 1;
+  }
+
+  .quiz-mode-btn.active {
+    background: #4a78ff;
+  }
+
+  .quiz-status {
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 14px;
+  }
+
+  .quiz-card {
+    padding: 18px 14px;
+    margin-bottom: 16px;
+  }
+
+  .quiz-label {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+
+  .quiz-front {
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+    color: #111;
+    line-height: 1.5;
+    word-break: break-word;
+    font-family: "맑은 고딕", "Malgun Gothic", sans-serif;
+  }
+
+  .quiz-answer-wrap {
+    display: none;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px dashed #d8d8d8;
+  }
+
+  .quiz-answer-wrap.show {
+    display: block;
+  }
+
+  .quiz-back {
+    font-size: 18px;
+    text-align: center;
+    color: #222;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: "바탕", Batang, serif;
+  }
+
+  .quiz-pron {
+    margin-top: 8px;
+    font-size: 13px;
+    text-align: center;
+    color: #666;
+  }
+
+  @media (max-width: 980px) {
+    .note-line {
+      grid-template-columns: 1fr;
     }
 
     .toolbar-main {
-      align-items: center;
-      gap: 10px;
-      flex-wrap: nowrap;
-      overflow-x: auto;
+      flex-wrap: wrap;
+      overflow-x: visible;
     }
 
-    .toolbar-main::-webkit-scrollbar { height: 8px; }
-
-    .toolbar-main::-webkit-scrollbar-thumb {
-      background: #ddd;
-      border-radius: 999px;
+    .toolbar-controls {
+      flex-wrap: wrap;
     }
 
     .search-wrap {
-      position: relative;
-      min-width: 280px;
-      flex: 1 1 320px;
+      min-width: 100%;
     }
 
-    .search-input {
-      min-height: 48px;
-      padding: 10px 40px 10px 10px;
-      border-radius: 10px;
-      font-size: 12px;
-      background: #fff;
-    }
-
-    .search-clear-btn {
-      position: absolute;
-      top: 50%;
-      right: 10px;
-      transform: translateY(-50%);
-      width: 22px;
-      height: 22px;
-      border: none;
-      border-radius: 999px;
-      background: #d9d9d9;
-      color: #444;
-      cursor: pointer;
-      font-size: 14px;
-      line-height: 1;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 0;
-    }
-
-    .search-clear-btn.show { display: inline-flex; }
-    .search-clear-btn:hover { background: #bfbfbf; }
-
-    .toolbar-controls {
-      align-items: center;
-      gap: 8px;
-      flex-wrap: nowrap;
-    }
-
-    .tool-chip,
-    .tool-select {
-      min-height: 48px;
-      padding: 10px 12px;
-      border: 1px solid #d8d8d8;
-      border-radius: 12px;
-      background: #fff;
-      font-size: 12px;
-      color: #333;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      white-space: nowrap;
-      font-family: "바탕", Batang, serif;
-    }
-
-    .tool-chip label {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .tool-select {
-      text-align-last: center;
-      cursor: pointer;
-      width: auto;
-    }
-
-    .toolbar-delete-btn {
-      min-height: 48px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: none;
-      background: #d85b5b;
-      color: #fff;
-      font-size: 12px;
-      font-family: "바탕", Batang, serif;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .toolbar-delete-btn:hover { background: #c74848; }
-
-    .bulk-box { display: none; }
-    .bulk-box.show { display: block; }
-
-    .bulk-textarea {
-      min-height: 160px;
-      padding: 12px;
-      border-radius: 10px;
-      font-size: 13px;
-      line-height: 1.5;
-      resize: vertical;
-    }
-
-    .note-clickable { cursor: pointer; }
-
-    .note-line {
-      display: grid;
-      grid-template-columns: 44px minmax(220px, 1.5fr) minmax(220px, 1.8fr) max-content auto auto auto auto;
-      column-gap: 14px;
-      row-gap: 10px;
-      align-items: center;
-    }
-
-    .pos-buttons {
-      display: flex;
-      flex-wrap: nowrap;
-      gap: 6px;
-      align-items: center;
+    .delete-check-wrap {
       justify-content: flex-start;
-      min-width: max-content;
-      white-space: nowrap;
-      transform: translateX(-6px);
-      margin-right: 18px;
     }
 
-    .delete-check-wrap,
-    .menu-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .word-inline,
+    .info-inline {
+      align-items: flex-start;
     }
+  }
 
-    .menu-wrap {
-      position: relative;
-    }
-
-    .note-word {
-      font-size: 16px;
-      font-weight: 700;
-      white-space: nowrap;
-      flex: 0 0 auto;
-      font-family: "맑은 고딕", "Malgun Gothic", sans-serif;
-      display: inline;
-    }
-
-    .note-pron {
-      font-size: 12px;
-      color: #666;
-      font-family: "바탕", Batang, serif;
-      display: inline-block;
-      margin-left: 6px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      min-width: 0;
-      flex: 1 1 auto;
-    }
-
-    .selected-pos-text {
-      font-size: 11px;
-      color: #777;
-      line-height: 1.3;
-      min-height: 14px;
-    }
-
-    .note-meaning {
-      font-size: 13px;
-      line-height: 1.4;
-      word-break: break-word;
-      font-family: "바탕", Batang, serif;
-      display: inline-block;
-      margin-top: 2px;
-    }
-
-    .pos-btn {
-      border: 1px solid #dfe6ff;
-      background: #fff;
-      color: #666;
-      border-radius: 999px;
-      padding: 4px 9px;
-      font-size: 11px;
-      font-weight: 400;
-      line-height: 1.2;
-      cursor: pointer;
-      font-family: "바탕", Batang, serif;
-      white-space: nowrap;
-      flex: 0 0 auto;
-    }
-
-    .pos-btn.active-noun { background: #7fb0ff; color: #fff; border-color: #7fb0ff; }
-    .pos-btn.active-verb { background: #ff8e8e; color: #fff; border-color: #ff8e8e; }
-    .pos-btn.active-adj  { background: #f3c76a; color: #fff; border-color: #f3c76a; }
-    .pos-btn.active-adv  { background: #af8cff; color: #fff; border-color: #af8cff; }
-    .pos-btn.active-conj { background: #67cfc5; color: #fff; border-color: #67cfc5; }
-    .pos-btn.active-excl { background: #f48db3; color: #fff; border-color: #f48db3; }
-
-    .check-row {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: nowrap;
-      white-space: nowrap;
-    }
-
-    .check-box {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      font-size: 11px;
-      white-space: nowrap;
-      text-align: center;
-    }
-
-    .check-box input[type="checkbox"] {
-      width: 14px;
-      height: 14px;
-    }
-
-    .menu-btn {
-      width: 34px;
-      height: 34px;
-      border: 1px solid #cfcfcf;
-      border-radius: 10px;
-      background: #fff;
-      cursor: pointer;
-      font-size: 18px;
-      line-height: 1;
-    }
-
-    .menu-btn:hover {
-      background: #111;
-      color: #fff;
-      border-color: #111;
-    }
-
-    .menu-popup {
-      display: none;
-      position: absolute;
-      top: 40px;
-      right: 0;
-      min-width: 140px;
-      background: #fff;
-      border: 1px solid #d8d8d8;
-      border-radius: 10px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-      overflow: hidden;
-      z-index: 10;
-    }
-
-    .menu-popup.show { display: block; }
-
-    .menu-item {
-      width: 100%;
-      padding: 10px 12px;
-      border: none;
-      background: #fff;
-      text-align: center;
-      cursor: pointer;
-      font-size: 13px;
-    }
-
-    .menu-item:hover { background: #f2f2f2; }
-
-    .highlight-word,
-    .highlight-meaning {
-      border-radius: 2px;
-      padding: 0 1px;
-      display: inline;
-      box-decoration-break: clone;
-      -webkit-box-decoration-break: clone;
-    }
-
-    .highlight-word { background: linear-gradient(transparent 55%, #fff2a8 55%); }
-    .highlight-meaning { background: linear-gradient(transparent 55%, #b9f3c9 55%); }
-
-    .memorized { opacity: 0.55; }
-
-    .empty-text {
-      color: #888;
-      font-size: 14px;
-      text-align: center;
-      padding: 24px 0;
-      font-family: "바탕", Batang, serif;
-    }
-
-    .modal-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.28);
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      z-index: 50;
-    }
-
-    .modal-backdrop.show { display: flex; }
-
-    .modal {
-      width: 100%;
-      max-width: 460px;
-      background: #fff;
-      border-radius: 14px;
-      padding: 20px;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.12);
-    }
-
-    .modal-title {
-      font-size: 16px;
-      margin-bottom: 12px;
-      text-align: center;
-      font-family: "바탕", Batang, serif;
-    }
-
-    .modal-text {
-      font-size: 13px;
-      line-height: 1.6;
-      color: #444;
-      white-space: pre-line;
-      margin-bottom: 16px;
-      text-align: center;
-      font-family: "바탕", Batang, serif;
-    }
-
-    .modal-btn {
-      flex: 1;
-      padding: 11px 12px;
-      border-radius: 10px;
-      font-size: 13px;
-      background: #111;
-      font-family: "바탕", Batang, serif;
-    }
-
-    .modal-btn.cancel { background: #999; }
-
-    .top-button {
-      position: fixed;
-      right: 22px;
-      bottom: 22px;
-      width: 48px;
-      height: 48px;
-      border: none;
-      border-radius: 999px;
-      background: #111;
-      color: #fff;
-      font-size: 20px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.16);
-      display: none;
-      z-index: 60;
-    }
-
-    .top-button.show { display: block; }
-
-    .floating-hide-button {
-      position: fixed;
-      top: 22px;
-      right: 22px;
-      width: 42px;
-      height: 42px;
-      border: none;
-      border-radius: 999px;
-      background: rgba(17, 17, 17, 0.1);
-      color: #fff;
-      font-size: 12px;
-      font-weight: 500;
-      cursor: pointer;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
-      display: none;
-      z-index: 70;
-    }
-
-    .floating-lock-button {
-  right: 126px;
-}
-
-    .floating-hide-button.active {
-      background: rgba(70, 130, 255, 0.1);
-    }
-
-    .floating-hide-button.active:hover {
-      background: rgba(70, 130, 255, 0.18);
-    }
-
-    .app-shell.hidden,
-    .password-screen.hidden {
-      display: none;
+  @media (max-width: 480px) {
+    body {
+      align-items: flex-start;
+      padding: 100px 24px 24px;
     }
 
     .password-screen {
@@ -741,645 +950,271 @@
       max-width: 460px;
     }
 
-    .password-title {
-      font-size: 20px;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-
     .password-desc {
-      font-size: 12px;
-      color: #666;
-      text-align: center;
-      margin-bottom: 16px;
+      font-size: 11px;
       line-height: 1.5;
     }
 
-    .password-message {
-      min-height: 20px;
-      margin-top: 10px;
-      text-align: center;
-      font-size: 13px;
-      color: #c74848;
+    .action-btn,
+    .file-label,
+    .password-btn {
+      padding: 10px 12px;
+      background: #2f2f2f;
+      font-size: 12px;
     }
 
-   @media (max-width: 480px) {
-  .password-desc {
-    font-size: 11px;
-    line-height: 1.5;
-  }
+    .action-btn:hover,
+    .file-label:hover,
+    .password-btn:hover {
+      background: #444;
+    }
 
+    .button-row {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+    }
 
-  .check-box input[type="checkbox"] {
-    width: 14px;
-    height: 14px;
-  }
+    .button-row > .action-btn,
+    .button-row > .file-label {
+      width: 100%;
+      min-width: 0;
+      flex: unset;
+    }
 
-  .button-row {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
-  }
+    #resetButton {
+      grid-column: span 2;
+      order: 1;
+    }
 
-  .button-row > .action-btn,
-  .button-row > .file-label {
-    width: 100%;
-    min-width: 0;
-    flex: unset;
-  }
+    #saveButton {
+      grid-column: span 2;
+      order: 2;
+    }
 
-  #resetButton {
-    grid-column: span 2;
-    order: 1;
-  }
+    #naverButton {
+      grid-column: span 2;
+      order: 3;
+    }
 
-  #saveButton {
-    grid-column: span 2;
-    order: 2;
-  }
+    .file-label[for="fileInput"] {
+      grid-column: span 3;
+      order: 4;
+    }
 
-  #naverButton {
-    grid-column: span 2;
-    order: 3;
-  }
+    #bulkToggleButton {
+      grid-column: span 3;
+      order: 5;
+    }
 
-  .file-label[for="fileInput"] {
-    grid-column: span 3;
-    order: 4;
-  }
+    #saveBackupButton {
+      grid-column: span 3;
+      order: 6;
+    }
 
-  #bulkToggleButton {
-    grid-column: span 3;
-    order: 5;
-  }
+    #restoreBackupButton {
+      grid-column: span 3;
+      order: 7;
+    }
 
-  #saveBackupButton {
-    grid-column: span 3;
-    order: 6;
-  }
+    #backToListButton.show {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      grid-column: 1 / -1;
+      order: 8;
+    }
 
-  #restoreBackupButton {
-    grid-column: span 3;
-    order: 7;
-  }
+    .search-input {
+      min-height: 48px;
+      padding: 10px 40px 10px 10px;
+      font-size: 12px;
+    }
 
-  #backToListButton.show {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    grid-column: 1 / -1;
-    order: 8;
-  }
+    .tool-chip,
+    .tool-select {
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      font-size: 12px;
+    }
 
-  .floating-hide-button {
-    top: 16px;
-    right: 16px;
-    width: 38px;
-    height: 38px;
-    font-size: 11px;
-  }
-
-  .floating-lock-button {
-    right: 60px;
-  }
-
-  .note-line {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      "word menu"
-      "meaning meaning"
-      "pos pos"
-      "checks checks";
-    column-gap: 10px;
-    row-gap: 14px;
-    align-items: start;
-  }
-
-  .toolbar-main {
-    flex-wrap: wrap;
-    overflow-x: visible;
-  }
-
-  .toolbar-controls {
-    flex-wrap: wrap;
-    width: 100%;
-    gap: 10px;
-  }
-
-  .search-wrap {
-    min-width: 100%;
-    flex: 1 1 100%;
-  }
-
-  .delete-check-wrap {
-    display: none;
-  }
-
-  .word-inline {
-    display: flex;
-    align-items: baseline;
-    flex-direction: row;
-    gap: 6px;
-    flex-wrap: nowrap;
-    overflow: hidden;
-  }
-
-  .info-inline {
-    align-items: baseline;
-    flex-direction: row;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-
-  .word-area {
-    grid-area: word;
-    width: 100%;
-    padding-right: 8px;
-  }
-
-  .note-line > div[data-load] {
-    width: 100%;
-  }
-
-  .note-line > div[data-load]:has(.note-meaning) {
-    grid-area: meaning;
-  }
-
-  .pos-buttons {
-    grid-area: pos;
-    transform: none;
-    margin-right: 0;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .check-row {
-    grid-area: checks;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 12px;
-    flex-wrap: nowrap;
-    white-space: nowrap;
-    width: 100%;
-    min-width: 0;
-    margin-top: 2px;
-  }
-
-  .check-box {
-    display: inline-flex;
-    align-items: center;
-    justify-content: flex-start;
-    font-size: 13px;
-    white-space: nowrap;
-    flex: 0 0 auto;
-  }
-
-  .menu-wrap {
-    grid-area: menu;
-    display: flex;
-    justify-content: flex-end;
-    align-self: start;
-    justify-self: end;
-  }
-
-  .menu-popup {
-    right: 0;
-    left: auto;
-  }
-
-  .tool-chip,
-  .tool-select,
-  .toolbar-delete-btn {
-    flex: 1 1 calc(50% - 5px);
-    min-width: 0;
-    width: 100%;
-    min-height: 44px;
-    padding: 10px 12px;
-    border-radius: 12px;
-    font-size: 12px;
-    box-sizing: border-box;
-  }
-
-  .tool-chip {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .tool-chip label {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-  }
-
-  .tool-select,
-  .toolbar-delete-btn,
-  .tool-chip {
-    min-height: 44px;
-  }
-
-  .toolbar-box,
-  .note-item,
-  .info-box,
-  .bulk-box {
-    border-radius: 16px;
-  }
-
-  .note-item {
-    padding: 16px;
-  }
-}
+    .toolbar-delete-btn {
+      min-height: 48px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
 
     .floating-mini-button {
-  position: fixed;
-  width: 48px;
-  height: 48px;
-  border: none;
-  border-radius: 50%;
-  background: rgba(17, 17, 17, 0.16);
-  color: #fff;
-  font-size: 10px;
-  font-weight: 400;
-  cursor: pointer;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
-  display: none;
-  z-index: 70;
-  font-family: "바탕", Batang, serif;
-  line-height: 1;
-  text-align: center;
-  padding: 0;
-}
+      width: 44px;
+      height: 44px;
+      font-size: 9px;
+    }
 
-.floating-hide-button {
-  top: 22px;
-  right: 22px;
-}
+    .floating-lock-button {
+      top: 16px;
+      right: 68px;
+    }
 
-.floating-lock-button {
-  top: 22px;
-  right: 78px;
-}
+    .floating-hide-button {
+      top: 16px;
+      right: 16px;
+      width: 38px;
+      height: 38px;
+      font-size: 11px;
+    }
 
-.floating-quiz-button {
-  right: 22px;
-  bottom: 22px;
-}
+    .floating-quiz-button {
+      right: 16px;
+      bottom: 16px;
+      top: auto;
+    }
 
-.floating-hide-button.active {
-  background: rgba(70, 130, 255, 0.88);
-}
+    .note-line {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "word menu"
+        "meaning meaning"
+        "pos pos"
+        "checks checks";
+      column-gap: 10px;
+      row-gap: 14px;
+      align-items: start;
+    }
 
-.floating-hide-button.active:hover {
-  background: rgba(70, 130, 255, 0.98);
-}
+    .toolbar-main {
+      flex-wrap: wrap;
+      overflow-x: visible;
+    }
 
-.quiz-modal {
-  max-width: 520px;
-}
+    .toolbar-controls {
+      flex-wrap: wrap;
+      width: 100%;
+      gap: 10px;
+    }
 
-.quiz-mode-row,
-.quiz-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
+    .search-wrap {
+      min-width: 100%;
+      flex: 1 1 100%;
+    }
 
-.quiz-mode-row {
-  margin-bottom: 12px;
-}
+    .delete-check-wrap {
+      display: none;
+    }
 
-.quiz-mode-btn {
-  flex: 1;
-}
+    .word-inline {
+      display: flex;
+      align-items: baseline;
+      flex-direction: row;
+      gap: 6px;
+      flex-wrap: nowrap;
+      overflow: hidden;
+    }
 
-.quiz-mode-btn.active {
-  background: #4a78ff;
-}
+    .info-inline {
+      align-items: baseline;
+      flex-direction: row;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
 
-.quiz-status {
-  font-size: 12px;
-  color: #666;
-  text-align: center;
-  margin-bottom: 14px;
-  font-family: "바탕", Batang, serif;
-}
+    .word-area {
+      grid-area: word;
+      width: 100%;
+      padding-right: 8px;
+    }
 
-.quiz-card {
-  border: 1px solid #e5e5e5;
-  border-radius: 12px;
-  background: #fafafa;
-  padding: 18px 14px;
-  margin-bottom: 16px;
-}
+    .note-line > div[data-load] {
+      width: 100%;
+    }
 
-.quiz-label {
-  font-size: 12px;
-  color: #666;
-  margin-bottom: 6px;
-  text-align: center;
-  font-family: "바탕", Batang, serif;
-}
+    .note-line > div[data-load]:has(.note-meaning) {
+      grid-area: meaning;
+    }
 
-.quiz-front {
-  font-size: 22px;
-  font-weight: 700;
-  text-align: center;
-  color: #111;
-  line-height: 1.5;
-  word-break: break-word;
-  font-family: "맑은 고딕", "Malgun Gothic", sans-serif;
-}
+    .pos-buttons {
+      grid-area: pos;
+      transform: none;
+      margin-right: 0;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
 
-.quiz-answer-wrap {
-  display: none;
-  margin-top: 16px;
-  padding-top: 14px;
-  border-top: 1px dashed #d8d8d8;
-}
+    .check-box {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+      font-size: 11px;
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
 
-.quiz-answer-wrap.show {
-  display: block;
-}
+    .check-box input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+    }
 
-.quiz-back {
-  font-size: 18px;
-  text-align: center;
-  color: #222;
-  line-height: 1.6;
-  white-space: pre-wrap;
-  word-break: break-word;
-  font-family: "바탕", Batang, serif;
-}
+    .menu-wrap {
+      grid-area: menu;
+      display: flex;
+      justify-content: flex-end;
+      align-self: start;
+      justify-self: end;
+    }
 
-.quiz-pron {
-  margin-top: 8px;
-  font-size: 13px;
-  text-align: center;
-  color: #666;
-  font-family: "바탕", Batang, serif;
-}
+    .menu-popup {
+      right: 0;
+      left: auto;
+    }
 
-@media (max-width: 480px) {
-  .password-desc {
-    font-size: 11px;
-    line-height: 1.5;
+    .tool-chip,
+    .tool-select,
+    .toolbar-delete-btn {
+      flex: 1 1 calc(50% - 5px);
+      min-width: 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .tool-chip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tool-chip label {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .toolbar-box,
+    .note-item,
+    .info-box,
+    .bulk-box,
+    .quiz-card {
+      border-radius: 16px;
+    }
+
+    .note-item {
+      padding: 16px;
+    }
+
+    .quiz-front {
+      font-size: 20px;
+    }
+
+    .quiz-back {
+      font-size: 17px;
+    }
   }
-
-  .check-box {
-    font-size: 11px;
-  }
-
-  .check-box input[type="checkbox"] {
-    width: 14px;
-    height: 14px;
-  }
-
-  .button-row {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
-  }
-
-  .button-row > .action-btn,
-  .button-row > .file-label {
-    width: 100%;
-    min-width: 0;
-    flex: unset;
-  }
-
-  #resetButton {
-    grid-column: span 2;
-    order: 1;
-  }
-
-  #saveButton {
-    grid-column: span 2;
-    order: 2;
-  }
-
-  #naverButton {
-    grid-column: span 2;
-    order: 3;
-  }
-
-  .file-label[for="fileInput"] {
-    grid-column: span 3;
-    order: 4;
-  }
-
-  #bulkToggleButton {
-    grid-column: span 3;
-    order: 5;
-  }
-
-  #saveBackupButton {
-    grid-column: span 3;
-    order: 6;
-  }
-
-  #restoreBackupButton {
-    grid-column: span 3;
-    order: 7;
-  }
-
-  #backToListButton.show {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    grid-column: 1 / -1;
-    order: 8;
-  }
-
-  .floating-mini-button {
-    width: 44px;
-    height: 44px;
-    font-size: 9px;
-  }
-
-  .floating-lock-button {
-    top: 16px;
-    right: 68px;
-  }
-
-  .floating-hide-button {
-    top: 16px;
-    right: 16px;
-  }
-
-  .floating-quiz-button {
-    right: 16px;
-    bottom: 16px;
-    top: auto;
-  }
-}
-
-  .note-line {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      "word menu"
-      "meaning meaning"
-      "pos pos"
-      "checks checks";
-    column-gap: 10px;
-    row-gap: 14px;
-    align-items: start;
-  }
-
-  .toolbar-main {
-    flex-wrap: wrap;
-    overflow-x: visible;
-  }
-
-  .toolbar-controls {
-    flex-wrap: wrap;
-    width: 100%;
-    gap: 10px;
-  }
-
-  .search-wrap {
-    min-width: 100%;
-    flex: 1 1 100%;
-  }
-
-  .delete-check-wrap {
-    display: none;
-  }
-
-  .word-inline {
-    display: flex;
-    align-items: baseline;
-    flex-direction: row;
-    gap: 6px;
-    flex-wrap: nowrap;
-    overflow: hidden;
-  }
-
-  .info-inline {
-    align-items: baseline;
-    flex-direction: row;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-
-  .word-area {
-    grid-area: word;
-    width: 100%;
-    padding-right: 8px;
-  }
-
-  .note-line > div[data-load] {
-    width: 100%;
-  }
-
-  .note-line > div[data-load]:has(.note-meaning) {
-    grid-area: meaning;
-  }
-
-  .pos-buttons {
-    grid-area: pos;
-    transform: none;
-    margin-right: 0;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .check-row {
-    grid-area: checks;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 12px;
-    flex-wrap: nowrap;
-    white-space: nowrap;
-    width: 100%;
-    min-width: 0;
-    margin-top: 2px;
-  }
-
-  .check-box {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-start;
-  font-size: 11px;
-  white-space: nowrap;
-  flex: 0 0 auto;
-}
-
-  .menu-wrap {
-    grid-area: menu;
-    display: flex;
-    justify-content: flex-end;
-    align-self: start;
-    justify-self: end;
-  }
-
-  .menu-popup {
-    right: 0;
-    left: auto;
-  }
-
-  .tool-chip,
-  .tool-select,
-  .toolbar-delete-btn {
-    flex: 1 1 calc(50% - 5px);
-    min-width: 0;
-    width: 100%;
-    min-height: 44px;
-    padding: 10px 12px;
-    border-radius: 12px;
-    font-size: 12px;
-    box-sizing: border-box;
-  }
-
-  .tool-chip {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .tool-chip label {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-  }
-
-  .tool-select,
-  .toolbar-delete-btn,
-  .tool-chip {
-    min-height: 44px;
-  }
-
-  .toolbar-box,
-  .note-item,
-  .info-box,
-  .bulk-box,
-  .quiz-card {
-    border-radius: 16px;
-  }
-
-  .note-item {
-    padding: 16px;
-  }
-
-  .quiz-front {
-    font-size: 20px;
-  }
-
-  .quiz-back {
-    font-size: 17px;
-  }
-}
-    
-  </style>
+</style>
 </head>
 <body>
   <div class="password-screen" id="passwordScreen">
